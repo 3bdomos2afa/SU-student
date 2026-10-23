@@ -1,0 +1,46 @@
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { LockOverlay, NetworkBanner } from '@/components/chrome';
+import { AppProvider, useApp } from '@/context/app-context';
+
+SplashScreen.preventAutoHideAsync().catch(() => {});
+
+function Shell() {
+  const { ready, scheme, palette } = useApp();
+  useEffect(() => {
+    if (ready) SplashScreen.hideAsync().catch(() => {});
+  }, [ready]);
+  if (!ready) return null;
+  return (
+    <View style={{ flex: 1, backgroundColor: palette.bg[0] }}>
+      <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false, animation: 'fade', contentStyle: { backgroundColor: palette.bg[0] } }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="login" />
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="service/[action]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
+        <Stack.Screen name="course/[code]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
+      </Stack>
+      <NetworkBanner />
+      <LockOverlay />
+    </View>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <AppProvider>
+          <Shell />
+        </AppProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+}
