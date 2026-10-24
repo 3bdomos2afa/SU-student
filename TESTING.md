@@ -1,3 +1,17 @@
+# Complete-folder delivery checks — 24 October 2026
+
+This archive restores the complete v1.1 source and adds direct-folder EAS build commands.
+It excludes node_modules, generated Android/iOS projects, credentials and restricted raw fonts.
+The build-command tests only use --dry-run; they do not submit cloud jobs.
+
+Final delivery validation is performed on a fresh extraction of the delivered ZIP:
+- npm ci and source-manifest checksum verification.
+- TypeScript and automated tests (13 existing plus 2 build-entry tests).
+- Expo Doctor, prebuild for Android/iOS, and Metro export for Android/iOS/web.
+
+These checks are NOT native compilation, signed binaries or real-device/live-account verification.
+Earlier browser smoke testing of v1.1 is recorded below and was not repeated for the packaging-only additions.
+
 # Verification and release gate — 24 October 2026
 
 ## Automated checks

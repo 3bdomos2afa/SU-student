@@ -1,87 +1,83 @@
 [
   {
-    "path": "src/context/app-context.tsx",
-    "sha256": "faa6e82ae06ca69b098a08133b558dd08bb608afb18bc65dfe0d4bc23351e2d3"
+    "path": ".gitignore",
+    "sha256": "75fdc6e245fee8dec89afdb0b35cc42c8ea9adf8039e0c11e485a1ef5b30ba29"
   },
   {
-    "path": "src/components/course-row.tsx",
-    "sha256": "99751738ae4f141a1e44ac59c0910a216c1d2da6c704c563d5fe2d2cad0916c7"
+    "path": "LICENSE",
+    "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
   },
   {
-    "path": "src/components/chrome.tsx",
-    "sha256": "89a810e51724549673184a20b2c418fa41d283d2d81d8a54a223a714487e2942"
+    "path": "README.md",
+    "sha256": "bcf55c4cd82cd0bc95eb2f4163de5179996a838016064077d67a437762e39996"
   },
   {
-    "path": "src/components/error-boundary.tsx",
-    "sha256": "6e89e43f04f5e657a47dc5dce4358467ce1a705e7304fb1ce8d88f0f451a1eef"
+    "path": "START_HERE_AR.md",
+    "sha256": "19295565f00ddde02c8cc14798c9d0ebf2090b8444e25a21665dca3afb817635"
   },
   {
-    "path": "src/components/ui.tsx",
-    "sha256": "5ac2f3ae593a88d55298ee6290e19ce6421c38239a73eb89b59a41c38eed05e9"
+    "path": "TESTING.md",
+    "sha256": "b15c0066802cfe402d5e0e39305b7b6234b5eeb9485de069ac121f6e93046b82"
   },
   {
-    "path": "src/components/portal-modal.tsx",
-    "sha256": "b03b0bbf91c9936323840136d49f711144b646d350a3db6a9af8e77fc7095eac"
+    "path": "app.json",
+    "sha256": "c42735077c40e2955f75f73738a5e6c295254b23075cee50dfb4fcc731cd1723"
   },
   {
-    "path": "src/app/index.tsx",
-    "sha256": "96a99a8c2c36a14be368fbd3a4c4f7f67cdadc97935bcc73208f48ea969db6db"
+    "path": "assets/fonts/Thmanyah-LICENSE.pdf",
+    "sha256": "07bbb2321bd2b944333c25f4d55140ca22625666132394d7399a365bd8b79a10"
   },
   {
-    "path": "src/app/study.tsx",
-    "sha256": "3b0e17ab4d3612c0bbc7f8533a3e030fe10b239c7167d6bd49811025b1643c3d"
+    "path": "assets/images/android-icon-foreground.png",
+    "sha256": "8d98d6a1a3e8becced5381365d7fc73782c6a8453109701d8b24450cb2eb7b60"
   },
   {
-    "path": "src/app/login.tsx",
-    "sha256": "c460b4f5648126aeb302d72af492702471fa0e08a9e0ab2e1e7f7d2649efbff7"
+    "path": "assets/images/favicon.png",
+    "sha256": "eb44c2f15fa5250bc1ec1637ec0adac64d89006f5f82b88b3dc1b3cec6cd4387"
   },
   {
-    "path": "src/app/_layout.tsx",
-    "sha256": "7f10ba77fd1cbe208a6373d2482cc7b23e8ecbe40be94f664431fbb9717b42f3"
+    "path": "assets/images/icon.png",
+    "sha256": "b7d259eaef4fc73d9bdf7b5ef5b170832458161e944391ba52aed7f554b752bf"
   },
   {
-    "path": "src/lib/i18n.ts",
-    "sha256": "6728e455f01f9e2813ff0cec2c5f84cd47899fd754e9a8a92dd70d0f384b23aa"
+    "path": "assets/images/splash-icon.png",
+    "sha256": "effa5f9ec3ee87ec63f81a7770b7e1f973c3fa83e67ecb68424aea466da9645d"
   },
   {
-    "path": "src/lib/portal.ts",
-    "sha256": "21294383cc8c59a174c5414af2553c3b6e50741b78788f9566949b9216af1e5c"
+    "path": "eas.json",
+    "sha256": "6dd2a08595747d0802cacad8a0744010b2dcf314cb43a5c2677fe3d20013203f"
   },
   {
-    "path": "src/lib/format.ts",
-    "sha256": "ae65aa5be2feb30dae3349006ddc2ccf1144d47b074da0e51df42b6fdbc121d8"
+    "path": "package-lock.json",
+    "sha256": "cdba46e41036f877506f2428d3715eb84c18708e2f24fd11e76466569373d83e"
   },
   {
-    "path": "src/lib/haptics.ts",
-    "sha256": "d88e53d00d77f860a2300ed9862fe69f6cc10748f1573a58a290a130d137e15c"
+    "path": "package.json",
+    "sha256": "c500743811f386d6672774a77c4b775024666b733252960f6568e21a0366cfd6"
   },
   {
-    "path": "src/lib/storage.ts",
-    "sha256": "bc137d0d0674ec0517f3b4e7d115c0e4ca8fe26fb6e4f5cbaca24984b5c6ae50"
+    "path": "plugins/with-portal-network.cjs",
+    "sha256": "719427406aec45878e125c14dd78f681e2e57cb6772f2b899fc41a824cbbcfbe"
   },
   {
-    "path": "src/lib/vault.ts",
-    "sha256": "2d13cc2ad89298a7e3528ea91a7dad947a77255b126962ee84d58aaf7aeed647"
+    "path": "scripts/build-preview.cjs",
+    "sha256": "3290affc365633598d47519852f2162548885ed31e9e5bbacf88a497b692d0cf"
   },
   {
-    "path": "src/lib/study-state.ts",
-    "sha256": "cada8592e369d8198f8ef9ea75f8fe0a7c68b2226ef5f365e254460094f8a3c5"
+    "path": "scripts/eas-fonts.cjs",
+    "sha256": "2c2378d8597ebbce668987f3d4724a95ce5a0f190762f634019953cfe6b39cd3"
   },
   {
-    "path": "src/lib/theme.ts",
-    "sha256": "ee95a90e57d096e1a8b018426cc7d0efb8b91896b17ce596d5be44b9e02e45a8"
+    "path": "scripts/prepare-fonts.cjs",
+    "sha256": "7a2f6f665647de099f94b365264029234df5775a0dc5a603a4bedb58cbb46336"
   },
   {
-    "path": "src/data/curriculum.ts",
-    "sha256": "ce295b97decfe367b6e8eaa2dbe0fe8ff9a7aa318255377aaceca0f0861893e5"
+    "path": "scripts/verify-source.cjs",
+    "sha256": "c327063abf1e89a8319ce250350969b6c95b238f34f2a1eee322cf2748028faa"
   },
   {
-    "path": "src/data/services.ts",
-    "sha256": "99cdf1cb054730ca66eb730310b436546db060ff089006156199932a624ceb34"
-  },
-  {
-    "path": "src/data/curriculum-helpers.ts",
-    "sha256": "a70cddc4b0a2e70add4dd116f2c7d5ee7bb225a96c9be6e1aeb8a3bdeab2aa95"
+    "path": "src/app/(tabs)/_layout.tsx",
+    "sha256": "e5cf1dec06f51d5cf1ce31d574d7d87ee1b1ec8bd69a734b9dd6b31b16f05b13"
   },
   {
     "path": "src/app/(tabs)/index.tsx",
@@ -96,36 +92,108 @@
     "sha256": "f1507f43d2e991ce33cffa3d54e869ee8f9df97653d2fedfb97c813a22251919"
   },
   {
-    "path": "src/app/(tabs)/tools.tsx",
-    "sha256": "8f5e8a9b3882694cf6aaceb8df113faec3dd25d565974d46234d265e4f0c8d87"
-  },
-  {
-    "path": "src/app/(tabs)/_layout.tsx",
-    "sha256": "e5cf1dec06f51d5cf1ce31d574d7d87ee1b1ec8bd69a734b9dd6b31b16f05b13"
-  },
-  {
     "path": "src/app/(tabs)/settings.tsx",
     "sha256": "9d57c8121459fc51d0c15de4c5780fe3a26fe57196a7ef6ca246575a12b2a11a"
   },
   {
-    "path": "src/app/service/[action].tsx",
-    "sha256": "abf2e59553bff37a9e3177c740b0e9b3c2503652ba7dc5b0cffdf2ed8206ddbd"
+    "path": "src/app/(tabs)/tools.tsx",
+    "sha256": "8f5e8a9b3882694cf6aaceb8df113faec3dd25d565974d46234d265e4f0c8d87"
+  },
+  {
+    "path": "src/app/_layout.tsx",
+    "sha256": "7f10ba77fd1cbe208a6373d2482cc7b23e8ecbe40be94f664431fbb9717b42f3"
   },
   {
     "path": "src/app/course/[code].tsx",
     "sha256": "d959780b8ac0cf030f36064bf6c95267eca94dba36d8020b3fc29404eacbc923"
   },
   {
-    "path": "scripts/prepare-fonts.cjs",
-    "sha256": "7a2f6f665647de099f94b365264029234df5775a0dc5a603a4bedb58cbb46336"
+    "path": "src/app/index.tsx",
+    "sha256": "96a99a8c2c36a14be368fbd3a4c4f7f67cdadc97935bcc73208f48ea969db6db"
   },
   {
-    "path": "scripts/eas-fonts.cjs",
-    "sha256": "2c2378d8597ebbce668987f3d4724a95ce5a0f190762f634019953cfe6b39cd3"
+    "path": "src/app/login.tsx",
+    "sha256": "c460b4f5648126aeb302d72af492702471fa0e08a9e0ab2e1e7f7d2649efbff7"
   },
   {
-    "path": "plugins/with-portal-network.cjs",
-    "sha256": "719427406aec45878e125c14dd78f681e2e57cb6772f2b899fc41a824cbbcfbe"
+    "path": "src/app/service/[action].tsx",
+    "sha256": "abf2e59553bff37a9e3177c740b0e9b3c2503652ba7dc5b0cffdf2ed8206ddbd"
+  },
+  {
+    "path": "src/app/study.tsx",
+    "sha256": "3b0e17ab4d3612c0bbc7f8533a3e030fe10b239c7167d6bd49811025b1643c3d"
+  },
+  {
+    "path": "src/components/chrome.tsx",
+    "sha256": "89a810e51724549673184a20b2c418fa41d283d2d81d8a54a223a714487e2942"
+  },
+  {
+    "path": "src/components/course-row.tsx",
+    "sha256": "99751738ae4f141a1e44ac59c0910a216c1d2da6c704c563d5fe2d2cad0916c7"
+  },
+  {
+    "path": "src/components/error-boundary.tsx",
+    "sha256": "6e89e43f04f5e657a47dc5dce4358467ce1a705e7304fb1ce8d88f0f451a1eef"
+  },
+  {
+    "path": "src/components/portal-modal.tsx",
+    "sha256": "b03b0bbf91c9936323840136d49f711144b646d350a3db6a9af8e77fc7095eac"
+  },
+  {
+    "path": "src/components/ui.tsx",
+    "sha256": "5ac2f3ae593a88d55298ee6290e19ce6421c38239a73eb89b59a41c38eed05e9"
+  },
+  {
+    "path": "src/context/app-context.tsx",
+    "sha256": "faa6e82ae06ca69b098a08133b558dd08bb608afb18bc65dfe0d4bc23351e2d3"
+  },
+  {
+    "path": "src/data/curriculum-helpers.ts",
+    "sha256": "a70cddc4b0a2e70add4dd116f2c7d5ee7bb225a96c9be6e1aeb8a3bdeab2aa95"
+  },
+  {
+    "path": "src/data/curriculum.ts",
+    "sha256": "ce295b97decfe367b6e8eaa2dbe0fe8ff9a7aa318255377aaceca0f0861893e5"
+  },
+  {
+    "path": "src/data/services.ts",
+    "sha256": "99cdf1cb054730ca66eb730310b436546db060ff089006156199932a624ceb34"
+  },
+  {
+    "path": "src/lib/format.ts",
+    "sha256": "ae65aa5be2feb30dae3349006ddc2ccf1144d47b074da0e51df42b6fdbc121d8"
+  },
+  {
+    "path": "src/lib/haptics.ts",
+    "sha256": "d88e53d00d77f860a2300ed9862fe69f6cc10748f1573a58a290a130d137e15c"
+  },
+  {
+    "path": "src/lib/i18n.ts",
+    "sha256": "6728e455f01f9e2813ff0cec2c5f84cd47899fd754e9a8a92dd70d0f384b23aa"
+  },
+  {
+    "path": "src/lib/portal.ts",
+    "sha256": "21294383cc8c59a174c5414af2553c3b6e50741b78788f9566949b9216af1e5c"
+  },
+  {
+    "path": "src/lib/storage.ts",
+    "sha256": "bc137d0d0674ec0517f3b4e7d115c0e4ca8fe26fb6e4f5cbaca24984b5c6ae50"
+  },
+  {
+    "path": "src/lib/study-state.ts",
+    "sha256": "cada8592e369d8198f8ef9ea75f8fe0a7c68b2226ef5f365e254460094f8a3c5"
+  },
+  {
+    "path": "src/lib/theme.ts",
+    "sha256": "ee95a90e57d096e1a8b018426cc7d0efb8b91896b17ce596d5be44b9e02e45a8"
+  },
+  {
+    "path": "src/lib/vault.ts",
+    "sha256": "2d13cc2ad89298a7e3528ea91a7dad947a77255b126962ee84d58aaf7aeed647"
+  },
+  {
+    "path": "tests/build-entry.test.ts",
+    "sha256": "40837bb2752bbb733c165e709d4222a2df2f6c74d53f6038a3c78b2848dbf812"
   },
   {
     "path": "tests/portal.test.ts",
@@ -136,59 +204,7 @@
     "sha256": "6b9a4af99cc5a89cf5a5379aaa60898e30b14d5a4b0f1ffeb11a04fa4f124d8d"
   },
   {
-    "path": "package.json",
-    "sha256": "a1671346088ab6c3a99b0324c3db7df92c4d43eab2db610300d0045f29a528b3"
-  },
-  {
-    "path": "package-lock.json",
-    "sha256": "cdba46e41036f877506f2428d3715eb84c18708e2f24fd11e76466569373d83e"
-  },
-  {
-    "path": "app.json",
-    "sha256": "c42735077c40e2955f75f73738a5e6c295254b23075cee50dfb4fcc731cd1723"
-  },
-  {
-    "path": "eas.json",
-    "sha256": "6dd2a08595747d0802cacad8a0744010b2dcf314cb43a5c2677fe3d20013203f"
-  },
-  {
     "path": "tsconfig.json",
     "sha256": "43a47fc02432399c03f07adb63f9fa7515e6d90111816304afdd947ebc3c6726"
-  },
-  {
-    "path": ".gitignore",
-    "sha256": "75fdc6e245fee8dec89afdb0b35cc42c8ea9adf8039e0c11e485a1ef5b30ba29"
-  },
-  {
-    "path": "README.md",
-    "sha256": "d90f8eb28fa77ce8585a3fe0e0c15c80871c690f5cf9bbc79f594399b4ae19d8"
-  },
-  {
-    "path": "TESTING.md",
-    "sha256": "41988913e9dcae063d30794ac7b2f4e43fb71c28f3b90f3037c772d4574ce0d0"
-  },
-  {
-    "path": "LICENSE",
-    "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
-  },
-  {
-    "path": "assets/images/icon.png",
-    "sha256": "b7d259eaef4fc73d9bdf7b5ef5b170832458161e944391ba52aed7f554b752bf"
-  },
-  {
-    "path": "assets/images/android-icon-foreground.png",
-    "sha256": "8d98d6a1a3e8becced5381365d7fc73782c6a8453109701d8b24450cb2eb7b60"
-  },
-  {
-    "path": "assets/images/splash-icon.png",
-    "sha256": "effa5f9ec3ee87ec63f81a7770b7e1f973c3fa83e67ecb68424aea466da9645d"
-  },
-  {
-    "path": "assets/images/favicon.png",
-    "sha256": "eb44c2f15fa5250bc1ec1637ec0adac64d89006f5f82b88b3dc1b3cec6cd4387"
-  },
-  {
-    "path": "assets/fonts/Thmanyah-LICENSE.pdf",
-    "sha256": "07bbb2321bd2b944333c25f4d55140ca22625666132394d7399a365bd8b79a10"
   }
 ]

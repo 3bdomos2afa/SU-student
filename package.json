@@ -53,7 +53,11 @@
     "postinstall": "node scripts/prepare-fonts.cjs",
     "typecheck": "tsc --noEmit",
     "eas-build-post-install": "node scripts/prepare-fonts.cjs",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "tsx --test tests/*.test.ts",
+    "verify:source": "node scripts/verify-source.cjs",
+    "build:android": "node scripts/build-preview.cjs android",
+    "build:ios": "node scripts/build-preview.cjs ios",
+    "build:all": "node scripts/build-preview.cjs all"
   },
   "private": true
 }
