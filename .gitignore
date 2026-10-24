@@ -1,0 +1,19 @@
+node_modules/
+.expo/
+dist*/
+android/
+ios/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+*.jks
+*.keystore
+
+assets/fonts/*.otf
+assets/fonts/Froople.ttf
+src/lib/fonts.ts
+
+# Optional local font-upload policy; do not commit.
+.easignore
