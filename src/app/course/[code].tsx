@@ -1,3 +1,4 @@
+import { CourseEvidence } from '@/components/course-evidence';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Pressable, View } from 'react-native';
@@ -10,13 +11,13 @@ import { courseByCode, courseStatus, creditCondition, earnedCredits, unlocksOf }
 export default function CourseScreen() {
   const { code = '' } = useLocalSearchParams<{ code: string }>();
   const { tr, palette, row, completed, toggleCompleted, draft, toggleDraft } = useApp();
-  const course = courseByCode.get(decodeURIComponent(code));
+  const course = courseByCode.get(code) ?? courseByCode.get(code.replace(/%20/g,' '));
   const close = () => (router.canGoBack() ? router.back() : router.replace('/(tabs)/plan'));
 
   if (!course) {
     return (
       <Screen padBottom={false}>
-        <Txt variant="h2">{tr('المادة مش موجودة', 'Course not found')}</Txt>
+        <Txt variant="h2">{code}</Txt><Txt variant="sub">{tr('خارج خريطة IT المرفقة','Not in the included IT curriculum')}</Txt><CourseEvidence code={code}/>
         <Button title={tr('رجوع', 'Back')} onPress={close} />
       </Screen>
     );
@@ -27,7 +28,7 @@ export default function CourseScreen() {
   const unlocks = unlocksOf(course.code);
   const inDraft = draft.includes(course.code);
   const statusColor = status === 'completed' ? palette.success : status === 'available' ? palette.accent : palette.warn;
-  const statusLabel = status === 'completed' ? tr('خلصتها ✅', 'Completed ✅') : status === 'available' ? tr('متاحة ليك', 'Available') : tr('مقفولة', 'Locked');
+  const statusLabel = status === 'completed' ? tr('نجاح يدوي', 'Manual pass') : status === 'available' ? tr('متاحة ليك', 'Available') : tr('مقفولة', 'Locked');
 
   return (
     <Screen padBottom={false}>
@@ -45,6 +46,7 @@ export default function CourseScreen() {
         </View>
       </View>
 
+      <CourseEvidence code={course.code}/>
       <Glass padding={16}>
         <Txt variant="h3">{tr('المتطلبات السابقة', 'Prerequisites')}</Txt>
         {course.prerequisites.length === 0 ? (
@@ -85,7 +87,7 @@ export default function CourseScreen() {
 
       <View style={{ flexDirection: row, gap: 10 }}>
         <Button
-          title={status === 'completed' ? tr('إلغاء "خلصت"', 'Unmark') : tr('خلصتها', 'Mark done')}
+          title={status === 'completed' ? tr('إلغاء "خلصت"', 'Unmark') : tr('علّم نجاح يدويًا', 'Mark passed manually')}
           icon={status === 'completed' ? 'close-circle' : 'checkmark-circle'}
           variant={status === 'completed' ? 'glass' : 'primary'}
           onPress={() => toggleCompleted(course.code)}

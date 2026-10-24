@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
-import { BlurView } from 'expo-blur';
-import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
+import { fontFamily } from '@/lib/fonts';
+
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useRef, type ReactNode } from 'react';
 import {
   ActivityIndicator,
+  AccessibilityInfo,
   Animated,
   Easing,
   Platform,
@@ -30,97 +31,25 @@ import { initials } from '@/lib/format';
 import { tap } from '@/lib/haptics';
 import { alpha, radius as R } from '@/lib/theme';
 
-export const BRAND_GRADIENT = ['#6366F1', '#A855F7', '#EC4899'] as const;
+export const BRAND_GRADIENT = ['#3261EC', '#6374F5'] as const;
 
-function detectLiquidGlass() {
-  if (Platform.OS !== 'ios') return false;
-  try {
-    return isLiquidGlassAvailable();
-  } catch {
-    return false;
-  }
-}
-const LIQUID_GLASS = detectLiquidGlass();
-
-/* ---------- Animated liquid background ---------- */
-
-function Blob({ color, size, style, dx, dy, t }: { color: string; size: number; style: ViewStyle; dx: number; dy: number; t: Animated.Value }) {
-  return (
-    <Animated.View
-      style={[
-        {
-          position: 'absolute',
-          width: size,
-          height: size,
-          borderRadius: size / 2,
-          overflow: 'hidden',
-          transform: [
-            { translateX: t.interpolate({ inputRange: [0, 1], outputRange: [0, dx] }) },
-            { translateY: t.interpolate({ inputRange: [0, 1], outputRange: [0, dy] }) },
-            { scale: t.interpolate({ inputRange: [0, 1], outputRange: [1, 1.18] }) },
-          ],
-        },
-        style,
-      ]}>
-      <LinearGradient colors={[alpha(color, 0.6), alpha(color, 0)]} start={{ x: 0.15, y: 0.15 }} end={{ x: 0.85, y: 0.85 }} style={StyleSheet.absoluteFill} />
-    </Animated.View>
-  );
-}
-
+// Glass-like rendering with ordinary views: no native glass compatibility risk.
 export function GlassBackground() {
-  const { palette } = useApp();
-  const t = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(t, { toValue: 1, duration: 9000, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-        Animated.timing(t, { toValue: 0, duration: 9000, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-      ]),
-    );
-    loop.start();
-    return () => loop.stop();
-  }, [t]);
-  return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
-      <LinearGradient colors={palette.bg} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-      <Blob t={t} color={palette.blobs[0]} size={360} dx={60} dy={40} style={{ top: -110, left: -90 }} />
-      <Blob t={t} color={palette.blobs[1]} size={320} dx={-50} dy={80} style={{ top: 240, right: -120 }} />
-      <Blob t={t} color={palette.blobs[2]} size={300} dx={40} dy={-70} style={{ bottom: -110, left: -20 }} />
-    </View>
-  );
+ const {palette}=useApp();
+ return <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+  <LinearGradient colors={palette.bg} style={StyleSheet.absoluteFill}/>
+  <View style={{position:'absolute',top:-95,right:-60,width:330,height:330,borderRadius:165,backgroundColor:alpha(palette.accent,0.12)}}/>
+  <View style={{position:'absolute',top:340,left:-170,width:340,height:340,borderRadius:170,backgroundColor:alpha(palette.pink,0.07)}}/>
+ </View>;
 }
-
-/* ---------- Glass surface ---------- */
-
-type GlassProps = { children?: ReactNode; style?: StyleProp<ViewStyle>; padding?: number; radius?: number; intensity?: number; tint?: string };
-
-export function Glass({ children, style, padding = 16, radius = R.lg, intensity = 45, tint }: GlassProps) {
-  const { palette, scheme } = useApp();
-  if (LIQUID_GLASS) {
-    // iOS 26+: native Liquid Glass material.
-    return (
-      <GlassView glassEffectStyle="regular" tintColor={tint} style={[{ borderRadius: radius, padding, overflow: 'hidden' }, style]}>
-        {children}
-      </GlassView>
-    );
-  }
-  const fill = tint ?? (Platform.OS === 'android' ? alpha(palette.card, scheme === 'dark' ? 0.62 : 0.7) : palette.glassTint);
-  return (
-    <View style={[{ borderRadius: radius, overflow: 'hidden', borderWidth: 1, borderColor: palette.glassBorder }, style]}>
-      {Platform.OS !== 'android' ? (
-        <BlurView intensity={intensity} tint={scheme === 'dark' ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
-      ) : null}
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: fill }]} />
-      <LinearGradient
-        pointerEvents="none"
-        colors={[palette.glassHighlight, 'rgba(255,255,255,0)']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.7, y: 0.7 }}
-        style={StyleSheet.absoluteFill}
-      />
-      <View style={{ padding }}>{children}</View>
-    </View>
-  );
+type GlassProps={children?:ReactNode;style?:StyleProp<ViewStyle>;padding?:number;radius?:number;intensity?:number;tint?:string};
+export function Glass({children,style,padding=20,radius=28,tint}:GlassProps){
+ const {palette,scheme}=useApp();
+ return <View style={[{borderRadius:radius,padding,overflow:'hidden',backgroundColor:tint??palette.card,borderWidth:1,borderColor:palette.glassBorder,boxShadow:scheme==='dark'?'0 8px 28px rgba(0,0,0,0.10)':'0 8px 28px rgba(47,74,135,0.06)'},style]}>
+  <LinearGradient pointerEvents="none" colors={scheme==='dark'?['rgba(255,255,255,0.055)','rgba(255,255,255,0)']:['rgba(255,255,255,0.8)','rgba(255,255,255,0.05)']} style={StyleSheet.absoluteFill}/>
+  <View pointerEvents="none" style={{height:1,position:'absolute',left:20,right:20,top:0,backgroundColor:palette.glassHighlight}}/>
+  {children}
+ </View>;
 }
 
 /* ---------- Text ---------- */
@@ -149,6 +78,7 @@ export function Txt({ variant = 'body', color, center, weight, style, ...rest }:
         { color: color ?? (muted ? palette.sub : palette.text), textAlign: center ? 'center' : align, writingDirection: isAr ? 'rtl' : 'ltr' },
         weight ? { fontWeight: weight } : null,
         style,
+        { fontFamily: fontFamily(isAr, !!weight || ['h1','h2','h3','label'].includes(variant), variant === 'h1'), fontWeight: 'normal' },
       ]}
     />
   );
@@ -167,24 +97,11 @@ type PressProps = {
 };
 
 export function PressScale({ children, onPress, onLongPress, style, disabled, haptic = true, label }: PressProps) {
-  const scale = useRef(new Animated.Value(1)).current;
-  const to = (v: number) => Animated.spring(scale, { toValue: v, useNativeDriver: true, speed: 40, bounciness: 6 }).start();
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      disabled={disabled}
-      onPressIn={() => to(0.96)}
-      onPressOut={() => to(1)}
-      onPress={() => {
-        if (haptic) tap();
-        onPress?.();
-      }}
-      onLongPress={onLongPress}
-      style={style}>
-      <Animated.View style={{ transform: [{ scale }], opacity: disabled ? 0.5 : 1 }}>{children}</Animated.View>
-    </Pressable>
-  );
+  return <Pressable accessibilityRole="button" accessibilityLabel={label} disabled={disabled}
+    onPress={()=>{ if(haptic)tap(); onPress?.(); }} onLongPress={onLongPress}
+    style={({pressed})=>[style,{opacity:disabled?0.45:pressed?0.75:1}]}>
+      {children}
+    </Pressable>;
 }
 
 type ButtonProps = {
@@ -205,7 +122,7 @@ export function Button({ title, onPress, icon, variant = 'primary', loading, dis
   const content = (
     <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'center', gap: 8, height: h, paddingHorizontal: small ? 14 : 20 }}>
       {loading ? <ActivityIndicator color={fg} size="small" /> : icon ? <Ionicons name={icon} size={small ? 16 : 19} color={fg} /> : null}
-      <Text style={{ color: fg, fontSize: small ? 13 : 16, fontWeight: '700' }}>{title}</Text>
+      <Txt style={{ color: fg, fontSize: small ? 13 : 16, fontWeight: '700' }}>{title}</Txt>
     </View>
   );
   return (
@@ -246,7 +163,7 @@ export function Chip({ label, active, onPress, icon, color }: { label?: string; 
         backgroundColor: active ? alpha(c, 0.2) : palette.inputBg,
       }}>
       {icon ? <Ionicons name={icon} size={15} color={active ? c : palette.sub} /> : null}
-      {label ? <Text style={{ color: active ? palette.text : palette.sub, fontWeight: active ? '700' : '500', fontSize: 13 }}>{label}</Text> : null}
+      {label ? <Txt style={{ color: active ? palette.text : palette.sub, fontWeight: active ? '700' : '500', fontSize: 13 }}>{label}</Txt> : null}
     </View>
   );
   return onPress ? <PressScale onPress={onPress} label={label}>{body}</PressScale> : body;
@@ -273,7 +190,7 @@ export function IconBadge({ icon, color, size = 44 }: { icon: IconName; color: s
 export function Avatar({ name, size = 48 }: { name: string; size?: number }) {
   return (
     <LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ color: '#fff', fontWeight: '800', fontSize: size * 0.36 }}>{initials(name)}</Text>
+      <Txt style={{ color: '#fff', fontWeight: '800', fontSize: size * 0.36 }}>{initials(name)}</Txt>
     </LinearGradient>
   );
 }
@@ -306,7 +223,7 @@ export function Segmented<T extends string>({ options, value, onChange }: { opti
               borderColor: alpha(palette.primary, 0.5),
             }}>
             {o.icon ? <Ionicons name={o.icon} size={15} color={active ? palette.text : palette.sub} /> : null}
-            <Text style={{ color: active ? palette.text : palette.sub, fontWeight: active ? '700' : '500', fontSize: 13 }}>{o.label}</Text>
+            <Txt style={{ color: active ? palette.text : palette.sub, fontWeight: active ? '700' : '500', fontSize: 13 }}>{o.label}</Txt>
           </Pressable>
         );
       })}
@@ -318,7 +235,7 @@ export function ProgressRing({ value, size = 120, stroke = 12, children }: { val
   const { palette } = useApp();
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const v = Math.max(0, Math.min(1, value));
+  const v = Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0;
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size} style={StyleSheet.absoluteFill}>
@@ -348,23 +265,28 @@ export function ProgressRing({ value, size = 120, stroke = 12, children }: { val
   );
 }
 
-export function ProgressBar({ value, color, height = 8 }: { value: number; color?: string; height?: number }) {
-  const { palette, isAr } = useApp();
-  const pct = Math.round(Math.max(0, Math.min(1, value)) * 100);
-  return (
-    <View style={{ height, borderRadius: height / 2, backgroundColor: palette.inputBg, overflow: 'hidden' }}>
-      <LinearGradient
-        colors={[color ?? palette.accent, palette.primary]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ width: `${pct}%` as `${number}%`, height: '100%', borderRadius: height / 2, alignSelf: isAr ? 'flex-end' : 'flex-start' }}
-      />
-    </View>
-  );
+export function ProgressBar({value,color,height=8}:{value:number;color?:string;height?:number}){
+ const {palette,isAr}=useApp();
+ const fraction=Number.isFinite(value)?Math.max(0,Math.min(1,value)):0;
+ const anim=useRef(new Animated.Value(0)).current;
+ useEffect(()=>{
+  let alive=true;let running:Animated.CompositeAnimation|undefined;
+  AccessibilityInfo.isReduceMotionEnabled().then(reduce=>{
+   if(!alive)return;
+   if(reduce)anim.setValue(fraction);
+   else{running=Animated.timing(anim,{toValue:fraction,duration:650,useNativeDriver:false});running.start();}
+  }).catch(()=>anim.setValue(fraction));
+  return()=>{alive=false;running?.stop();};
+ },[fraction,anim]);
+ return <View accessibilityRole="progressbar" accessibilityValue={{min:0,max:100,now:Math.round(fraction*100)}} style={{height,borderRadius:height/2,backgroundColor:palette.inputBg,overflow:'hidden'}}>
+  <Animated.View style={{width:anim.interpolate({inputRange:[0,1],outputRange:['0%','100%']}),height:'100%',alignSelf:isAr?'flex-end':'flex-start'}}>
+   <LinearGradient colors={[color??palette.accent,palette.primary]} style={{flex:1,borderRadius:height/2}} start={{x:0,y:0}} end={{x:1,y:0}}/>
+  </Animated.View>
+ </View>;
 }
 
 export function Field({ icon, style, ...props }: TextInputProps & { icon?: IconName }) {
-  const { palette, row, align } = useApp();
+  const { palette, row, align, isAr } = useApp();
   return (
     <View
       style={{
@@ -379,7 +301,7 @@ export function Field({ icon, style, ...props }: TextInputProps & { icon?: IconN
         minHeight: 50,
       }}>
       {icon ? <Ionicons name={icon} size={19} color={palette.sub} /> : null}
-      <TextInput placeholderTextColor={palette.faint} {...props} style={[{ flex: 1, color: palette.text, fontSize: 16, textAlign: align, paddingVertical: 12 }, style]} />
+      <TextInput placeholderTextColor={palette.faint} {...props} style={[{ flex: 1, color: palette.text, fontSize: 16, fontFamily: fontFamily(isAr), textAlign: align, paddingVertical: 12 }, style]} />
     </View>
   );
 }
@@ -440,7 +362,7 @@ export function SectionTitle({ title, action, onAction }: { title: string; actio
       <Txt variant="h3">{title}</Txt>
       {action ? (
         <Pressable onPress={onAction} hitSlop={10}>
-          <Text style={{ color: palette.primary, fontWeight: '700', fontSize: 13 }}>{action}</Text>
+          <Txt style={{ color: palette.primary, fontWeight: '700', fontSize: 13 }}>{action}</Txt>
         </Pressable>
       ) : null}
     </View>

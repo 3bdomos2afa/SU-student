@@ -1,3 +1,4 @@
+import { endpoints } from '@/lib/portal';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -26,7 +27,7 @@ export default function Services() {
 
   return (
     <Screen refreshing={refreshing} onRefresh={refreshAll}>
-      <Header title={tr('الخدمات', 'Services')} subtitle={tr(`${academicServices.length} خدمة من UnicodeSIS — بتتحفظ أوفلاين`, `${academicServices.length} UnicodeSIS services — saved offline`)} />
+      <Header title={tr('الخدمات', 'Services')} subtitle={tr('الخدمات المدعومة تُحفظ أوفلاين؛ الباقي من الموقع الرسمي', 'Supported records are saved offline; other services open on the official site')} />
       <Field icon="search" placeholder={tr('دوّر على خدمة…', 'Search services…')} value={q} onChangeText={setQ} />
       <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 8 }}>
         {groups.map((g) => (
@@ -37,7 +38,7 @@ export default function Services() {
         {list.map((s) => {
           const c = cache[s.action];
           return (
-            <PressScale key={s.action} onPress={() => router.push(`/service/${s.action}`)} style={{ width: '47%', flexGrow: 1 }} label={s.title[lang]}>
+            <PressScale key={s.action} onPress={() => router.push(s.action==='ACADEMIC_ANALYSIS'?'/tools':`/service/${s.action}`)} style={{ width: '47%', flexGrow: 1 }} label={s.title[lang]}>
               <Glass padding={14} style={{ minHeight: 150 }}>
                 <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <IconBadge icon={s.icon} color={palette[s.color]} />
@@ -50,7 +51,7 @@ export default function Services() {
                   {s.desc[lang]}
                 </Txt>
                 <Txt variant="caption" color={c ? palette.success : palette.faint} style={{ marginTop: 4 }} numberOfLines={1}>
-                  {c ? `${tr('محفوظ', 'Saved')} · ${timeAgo(c.at, lang)}` : tr('لسه متحمّلتش', 'Not loaded yet')}
+                  {c ? `${tr('محفوظ', 'Saved')} · ${timeAgo(c.at, lang)}` : endpoints[s.action] ? tr('جاهزة للمزامنة', 'Ready to sync') : tr('من الموقع الرسمي', 'Official site only')}
                 </Txt>
               </Glass>
             </PressScale>

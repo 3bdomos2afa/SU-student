@@ -1,6 +1,7 @@
+import type { BottomTabBarProps } from 'expo-router/tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useRef } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, Text, View, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Avatar, Button, Glass, GlassBackground, Txt } from '@/components/ui';
@@ -46,24 +47,25 @@ export function NetworkBanner() {
 
 /** Face ID / fingerprint lock shown on launch when enabled. */
 export function LockOverlay() {
-  const { locked, unlock, tr, session } = useApp();
+  const { locked, unlock, tr, session, signOut } = useApp();
   useEffect(() => {
     if (locked) unlock();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locked]);
   if (!locked) return null;
   return (
-    <View style={[StyleSheet.absoluteFill, { alignItems: 'center', justifyContent: 'center', padding: 24 }]}>
+    <Modal visible animationType="none" presentationStyle="fullScreen" onRequestClose={()=>{}}><View style={[StyleSheet.absoluteFill, { backgroundColor:"#173F3B", alignItems: 'center', justifyContent: 'center', padding: 24 }]}>
       <GlassBackground />
       <Glass padding={24} style={{ width: '100%', maxWidth: 380 }}>
         <View style={{ alignItems: 'center', gap: 12 }}>
-          <Avatar name={session?.name ?? 'U'} size={72} />
+          <Avatar name="SU" size={72} />
           <Txt variant="h2" center>{tr('أهلًا تاني', 'Welcome back')}</Txt>
           <Txt variant="sub" center>{tr('افتح التطبيق بالبصمة أو Face ID', 'Unlock with Face ID or fingerprint')}</Txt>
+          <Button variant="glass" title={tr('تسجيل الخروج', 'Sign out')} onPress={()=>{void signOut().catch(()=>{});}} />
           <Button title={tr('فتح', 'Unlock')} icon="finger-print" onPress={unlock} style={{ alignSelf: 'stretch', marginTop: 6 }} />
         </View>
       </Glass>
-    </View>
+    </View></Modal>
   );
 }
 
@@ -75,13 +77,10 @@ const TABS: Record<string, { on: IconName; off: IconName; ar: string; en: string
   settings: { on: 'settings', off: 'settings-outline', ar: 'الإعدادات', en: 'Settings' },
 };
 
-export type TabBarProps = {
-  state: { index: number; routes: { key: string; name: string }[] };
-  navigation: { navigate: (name: string) => void };
-};
+export type TabBarProps = BottomTabBarProps;
 
 /** Floating glass tab bar. */
-export function GlassTabBar({ state, navigation }: TabBarProps) {
+export function GlassTabBar({ state, emitter, navigateToTab }: TabBarProps) {
   const { palette, row, tr } = useApp();
   const insets = useSafeAreaInsets();
   return (
@@ -99,7 +98,8 @@ export function GlassTabBar({ state, navigation }: TabBarProps) {
                 accessibilityState={{ selected: active }}
                 onPress={() => {
                   tap();
-                  if (!active) navigation.navigate(route.name);
+                  const event = emitter.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
+                  if (!active && !event.defaultPrevented) navigateToTab(route.key);
                 }}
                 style={{
                   flex: 1,
@@ -110,9 +110,9 @@ export function GlassTabBar({ state, navigation }: TabBarProps) {
                   backgroundColor: active ? alpha(palette.primary, 0.22) : 'transparent',
                 }}>
                 <Ionicons name={active ? meta.on : meta.off} size={22} color={active ? palette.primary : palette.sub} />
-                <Text numberOfLines={1} style={{ fontSize: 10.5, marginTop: 2, fontWeight: active ? '700' : '500', color: active ? palette.text : palette.sub }}>
+                <Txt numberOfLines={1} style={{ fontSize: 10.5, marginTop: 2, fontWeight: active ? '700' : '500', color: active ? palette.text : palette.sub }}>
                   {tr(meta.ar, meta.en)}
-                </Text>
+                </Txt>
               </Pressable>
             );
           })}

@@ -9,17 +9,17 @@ export function setHapticsEnabled(value: boolean) {
 }
 
 export function tap() {
-  if (enabled) Haptics.selectionAsync().catch(() => {});
+  try { if (enabled) void Haptics.selectionAsync().catch(() => {}); } catch {}
 }
 
 export function impact() {
-  if (enabled) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+  try { if (enabled) void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {}); } catch {}
 }
 
 export function success() {
-  if (enabled) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
+  try { if (enabled) void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {}); } catch {}
 }
 
 export function warning() {
-  if (enabled) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning).catch(() => {});
+  try { if (enabled) void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning).catch(() => {}); } catch {}
 }

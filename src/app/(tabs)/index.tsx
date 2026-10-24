@@ -1,154 +1,63 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { View } from 'react-native';
-
-import { CourseRow } from '@/components/course-row';
-import { Avatar, Button, Chip, Divider, Glass, IconBadge, PressScale, ProgressRing, Screen, SectionTitle, Txt } from '@/components/ui';
 import { useApp } from '@/context/app-context';
+import { academic } from '@/lib/academic';
+import { earnedCredits, PROGRAM_TOTAL_CREDITS } from '@/data/curriculum-helpers';
 import { curriculumCourses } from '@/data/curriculum';
-import { PROGRAM_TOTAL_CREDITS, courseByCode, courseStatus, earnedCredits, unlocksOf } from '@/data/curriculum-helpers';
-import { quickActions, serviceByAction, type IconName } from '@/data/services';
+import { Avatar, Button, Chip, Glass, IconBadge, PressScale, ProgressBar, Screen, SectionTitle, Txt } from '@/components/ui';
+import { AbsenceCards, DaySchedule, TodayTasks } from '@/components/academic-cards';
+import type { IconName } from '@/data/services';
 import { timeAgo } from '@/lib/format';
-
-function Stat({ icon, color, label, value }: { icon: IconName; color: string; label: string; value: string }) {
-  const { row } = useApp();
-  return (
-    <View style={{ flexDirection: row, alignItems: 'center', gap: 8 }}>
-      <Ionicons name={icon} size={16} color={color} />
-      <Txt variant="caption" style={{ flex: 1 }}>
-        {label}
-      </Txt>
-      <Txt variant="label">{value}</Txt>
+export default function Home(){
+ const a=useApp();const {tr,lang,row,palette,session,cache}=a;const data=academic(cache);
+ const name=data.name||session?.name||tr('مساحتك الجامعية','Your campus space');
+ const metrics=[
+  {label:tr('مواد ناجحة محمّلة','Passed · loaded'),value:data.hasTranscript?data.passed.size:null,total:curriculumCourses.length,icon:'checkmark-circle-outline' as IconName,source:tr('من السجل المحمّل، قد لا يشمل كل السنوات','Loaded transcript may not cover all years')},
+  {label:tr('ساعات مكتسبة','Earned credits'),value:data.earned,total:PROGRAM_TOTAL_CREDITS,icon:'layers-outline' as IconName,source:tr('رصيد تراكمي · خطة IT: 144 ساعة','Cumulative credits · IT target: 144')},
+  {label:'CGPA',value:data.gpa,total:4,icon:'sparkles-outline' as IconName,source:tr('مقياس العرض 4.0؛ القيمة كما ترسلها الجامعة','4.0 display scale; value supplied by university')}
+ ];
+ return <Screen refreshing={a.refreshing} onRefresh={a.refreshAll}>
+  <View style={{flexDirection:row,justifyContent:'space-between',alignItems:'center'}}>
+   <Txt variant="label" color={palette.primary}>SU / CAMPUS</Txt><Chip label={lang==='ar'?'EN':'AR'} onPress={()=>a.updateSettings({lang:lang==='ar'?'en':'ar'})}/>
+  </View>
+  <Glass padding={24}><View style={{gap:16}}>
+   <View style={{flexDirection:row,alignItems:'center',gap:14}}><Avatar name={name} size={56}/><View style={{flex:1}}>
+    <Txt variant="caption">{tr('أهلًا بعودتك','WELCOME BACK')}</Txt><Txt variant="h2">{name}</Txt>
+    <Txt variant="caption">{session?`ID · ${session.studentId}`:tr('لم يتم ربط حساب','Account not connected')}</Txt>
+   </View></View>
+   <Txt variant="sub">{data.faculty||tr('كل يوم، أقرب للي نفسك فيه.','Every day, closer to your goals.')}</Txt>
+   <Button title={tr('جدول المذاكرة والمهام','Study schedule & tasks')} icon="calendar-outline" onPress={()=>router.push('/study')}/>
+  </View></Glass>
+  {!session?<Button title={tr('اربط حساب الجامعة','Connect university account')} icon="log-in-outline" onPress={()=>router.push('/login')}/>:null}
+  {a.authExpired?<Button title={tr('الجلسة انتهت — سجّل مجددًا','Session expired — sign in again')} onPress={()=>router.push('/settings')}/>:null}
+  {(a.syncErrors>0||a.storageError)?<Glass><Txt color={palette.warn}>{a.storageError?tr('تعذر حفظ بعض التغييرات. افحص مساحة الجهاز.','Some changes could not be saved. Check device space.'):tr('بعض الخدمات لم تتحدث؛ آخر بيانات محفوظة ما زالت ظاهرة.','Some services could not refresh; last saved records remain visible.')}</Txt></Glass>:null}
+  <SectionTitle title={tr('صورتك الأكاديمية','Academic overview')} action={tr('الخريطة','Map')} onAction={()=>router.push('/plan')}/>
+  <Glass><View style={{gap:20}}>
+   {metrics.map((m,i)=><View key={m.label} style={{gap:8}}>
+    <View style={{flexDirection:row,justifyContent:'space-between',alignItems:'center',gap:12}}>
+     <View style={{flexDirection:row,alignItems:'center',gap:10}}><IconBadge icon={m.icon} color={[palette.primary,palette.accent,palette.pink][i]} size={34}/><Txt variant="label">{m.label}</Txt></View>
+     <Txt variant="h2">{m.value===null?'—':i===2?m.value.toFixed(2):m.value} <Txt variant="caption">{m.value===null?'':`${Math.round(m.value/m.total*100)}%`}</Txt></Txt>
     </View>
-  );
-}
-
-export default function Home() {
-  const { session, tr, palette, row, completed, refreshAll, refreshing, lastSync, online, lang, cache, draft, isLive } = useApp();
-  const earned = earnedCredits(completed);
-  const available = curriculumCourses
-    .filter((c) => courseStatus(c, completed, earned).status === 'available')
-    .sort((a, b) => a.level - b.level || unlocksOf(b.code).length - unlocksOf(a.code).length);
-  const pct = Math.min(1, earned / PROGRAM_TOTAL_CREDITS);
-  const draftHours = draft.reduce((s, c) => s + (courseByCode.get(c)?.credits ?? 0), 0);
-  const hour = new Date().getHours();
-  const greet = hour < 12 ? tr('صباح الخير', 'Good morning') : hour < 18 ? tr('أهلًا بيك', 'Good afternoon') : tr('مساء الخير', 'Good evening');
-  const firstName = (session?.name ?? '').split(' ')[0];
-
-  return (
-    <Screen refreshing={refreshing} onRefresh={refreshAll}>
-      <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
-        <Avatar name={session?.name ?? 'U'} />
-        <View style={{ flex: 1 }}>
-          <Txt variant="sub">{greet} 👋</Txt>
-          <Txt variant="h2" numberOfLines={1}>
-            {firstName}
-          </Txt>
-        </View>
-        <Chip label={online ? tr('متصل', 'Online') : tr('أوفلاين', 'Offline')} icon={online ? 'radio-button-on' : 'cloud-offline'} color={online ? palette.success : palette.warn} active />
-      </View>
-
-      <Glass padding={18}>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 18 }}>
-          <ProgressRing value={pct} size={122}>
-            <Txt variant="h2" center>
-              {Math.round(pct * 100)}%
-            </Txt>
-            <Txt variant="caption" center>
-              {earned}/{PROGRAM_TOTAL_CREDITS} {tr('ساعة', 'cr')}
-            </Txt>
-          </ProgressRing>
-          <View style={{ flex: 1, gap: 10 }}>
-            <Txt variant="h3">{tr('تقدّمك في الخطة', 'Plan progress')}</Txt>
-            <Stat icon="checkmark-circle" color={palette.success} label={tr('مواد خلصتها', 'Completed')} value={`${completed.size}/${curriculumCourses.length}`} />
-            <Stat icon="lock-open" color={palette.accent} label={tr('متاحة دلوقتي', 'Available now')} value={`${available.length}`} />
-            <Stat icon="hourglass" color={palette.pink} label={tr('ساعات متبقية', 'Hours left')} value={`${Math.max(0, PROGRAM_TOTAL_CREDITS - earned)}`} />
-          </View>
-        </View>
-        {completed.size === 0 ? (
-          <Button small variant="glass" icon="git-network" title={tr('علّم المواد اللي خلصتها', 'Mark your completed courses')} onPress={() => router.push('/plan')} style={{ marginTop: 14 }} />
-        ) : null}
-      </Glass>
-
-      <Glass padding={14}>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
-          <IconBadge icon={isLive ? 'cloud-done' : 'flask'} color={isLive ? palette.accent : palette.warn} size={40} />
-          <View style={{ flex: 1 }}>
-            <Txt variant="label">{isLive ? tr('متصل بـ UnicodeSIS', 'Linked to UnicodeSIS') : tr('وضع تجريبي', 'Demo mode')}</Txt>
-            <Txt variant="caption">
-              {tr('آخر تحديث', 'Last sync')}: {timeAgo(lastSync, lang)} · {Object.keys(cache).length} {tr('محفوظ أوفلاين', 'saved offline')}
-            </Txt>
-          </View>
-          <Button small icon="refresh" title={tr('تحديث', 'Sync')} loading={refreshing} disabled={!online} onPress={refreshAll} />
-        </View>
-      </Glass>
-
-      <SectionTitle title={tr('وصول سريع', 'Quick access')} action={tr('كل الخدمات', 'All services')} onAction={() => router.push('/services')} />
-      <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 12 }}>
-        {quickActions.map((a) => {
-          const s = serviceByAction(a);
-          if (!s) return null;
-          const c = cache[a];
-          return (
-            <PressScale key={a} onPress={() => router.push(`/service/${a}`)} style={{ width: '47%', flexGrow: 1 }} label={s.title[lang]}>
-              <Glass padding={14}>
-                <View style={{ flexDirection: row }}>
-                  <IconBadge icon={s.icon} color={palette[s.color]} />
-                </View>
-                <Txt variant="label" style={{ marginTop: 10 }} numberOfLines={1}>
-                  {s.title[lang]}
-                </Txt>
-                <Txt variant="caption" numberOfLines={1}>
-                  {c ? `${tr('محفوظ', 'Saved')} · ${timeAgo(c.at, lang)}` : s.desc[lang]}
-                </Txt>
-              </Glass>
-            </PressScale>
-          );
-        })}
-      </View>
-
-      <SectionTitle title={tr('تقدر تاخدها دلوقتي', 'You can take now')} action={tr('الخطة كاملة', 'Full plan')} onAction={() => router.push('/plan')} />
-      <Glass padding={4}>
-        {available.slice(0, 4).map((c, i) => (
-          <View key={c.code}>
-            {i > 0 ? <Divider /> : null}
-            <CourseRow course={c} status="available" onPress={() => router.push(`/course/${encodeURIComponent(c.code)}`)} />
-          </View>
-        ))}
-        {available.length === 0 ? (
-          <Txt variant="sub" center style={{ padding: 14 }}>
-            {tr('مفيش مواد متاحة حسب اللي معلّمه — راجع خطتك.', 'Nothing available based on your marks — review your plan.')}
-          </Txt>
-        ) : null}
-      </Glass>
-
-      <PressScale onPress={() => router.push('/tools')}>
-        <Glass padding={14}>
-          <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
-            <IconBadge icon="clipboard" color={palette.pink} size={40} />
-            <View style={{ flex: 1 }}>
-              <Txt variant="label">{tr('مسودة التسجيل', 'Registration draft')}</Txt>
-              <Txt variant="caption">
-                {draft.length
-                  ? tr(`${draft.length} مواد · ${draftHours} ساعة`, `${draft.length} courses · ${draftHours} credits`)
-                  : tr('خلّي التطبيق يقترحلك جدول ذكي', 'Let the app suggest a smart draft')}
-              </Txt>
-            </View>
-            <Ionicons name={row === 'row' ? 'chevron-forward' : 'chevron-back'} size={20} color={palette.sub} />
-          </View>
-        </Glass>
-      </PressScale>
-
-      {!isLive ? (
-        <Glass padding={14} tint={undefined}>
-          <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
-            <Ionicons name="information-circle" size={22} color={palette.warn} />
-            <Txt variant="caption" style={{ flex: 1 }}>
-              {tr('الخدمات شغالة تجريبي. ضيف رابط n8n Webhook من الإعدادات عشان بياناتك الحقيقية من UnicodeSIS تظهر.', 'Services run in demo mode. Add your n8n webhook URL in Settings to load real UnicodeSIS data.')}
-            </Txt>
-          </View>
-        </Glass>
-      ) : null}
-    </Screen>
-  );
+    <ProgressBar value={(m.value??0)/m.total} color={[palette.primary,palette.accent,palette.pink][i]}/>
+    <Txt variant="caption">{m.value===null?tr('لم تصل بيانات مؤكدة بعد','No confirmed data yet'):m.source}</Txt>
+   </View>)}
+  </View></Glass>
+  {!session&&a.completed.size>0?<Txt variant="caption">{tr(`خطتك اليدوية منفصلة: ${a.completed.size} مواد، ${earnedCredits(a.completed)} ساعة.`,`Separate manual plan: ${a.completed.size} courses, ${earnedCredits(a.completed)} credits.`)}</Txt>:null}
+  <SectionTitle title={tr('يومك في الجامعة','Your campus day')} action={tr('الجدول الكامل','Full timetable')} onAction={()=>router.push('/timetable')}/>
+  <DaySchedule/>
+  <SectionTitle title={tr('الغياب تحت عينك','Absence overview')} action={tr('الكل','All')} onAction={()=>router.push('/service/SEC_ATTENDANCE')}/>
+  <AbsenceCards/>
+  <SectionTitle title={tr('درجاتك ومواعيدك','Grades & schedules')}/>
+  <View style={{flexDirection:row,flexWrap:'wrap',gap:12}}>
+   {[
+    {ar:'الميد والكورس ورك',en:'Midterm & coursework',icon:'create-outline',path:'/grades',color:palette.primary},
+    {ar:'نتائج الفاينل',en:'Final results',icon:'ribbon-outline',path:'/grades?mode=final',color:palette.pink},
+    {ar:'الجدول الكامل',en:'Full timetable',icon:'calendar-outline',path:'/timetable',color:palette.accent},
+    {ar:'الخدمات',en:'Student services',icon:'grid-outline',path:'/services',color:palette.success}
+   ].map(c=><PressScale key={c.en} label={tr(c.ar,c.en)} style={{width:'46%',flexGrow:1}} onPress={()=>router.push(c.path as never)}><Glass padding={18}><View style={{gap:16}}><IconBadge icon={c.icon as IconName} color={c.color}/><Txt variant="h3">{tr(c.ar,c.en)}</Txt></View></Glass></PressScale>)}
+  </View>
+  <SectionTitle title={tr('خطواتك النهارده','Today’s small wins')} action={tr('تنظيم','Organize')} onAction={()=>router.push('/study')}/>
+  <TodayTasks/>
+  <Txt variant="caption" center>{tr('أحدث مزامنة لخدمة','Latest service sync')} · {timeAgo(a.lastSync,lang)}</Txt>
+ </Screen>;
 }
