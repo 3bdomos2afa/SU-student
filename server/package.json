@@ -1,0 +1,12 @@
+{
+  "name": "su-student-sso-broker",
+  "version": "1.5.0",
+  "private": true,
+  "type": "module",
+  "description": "Google sign-in broker that turns a verified Google account into a UnicodeSIS student session for the SU Student app.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "node --test test/broker.test.mjs"
+  }
+}

@@ -15,6 +15,7 @@ export type AcademicService = {
 };
 
 export const academicServices: AcademicService[] = [
+  { action:'SEC_PERSONAL', group:'records', icon:'person-outline', color:'primary', title:{ar:'البيانات الشخصية',en:'Personal details'}, desc:{ar:'بيانات الطالب المسجلة بالجامعة',en:'Student details held by the university'} },
   { action: 'SEC_PROFILE', group: 'records', icon: 'person-circle', color: 'primary', title: { ar: 'الملف الأكاديمي', en: 'Academic profile' }, desc: { ar: 'بياناتك الأساسية من نظام الجامعة', en: 'Your core details from the university system' } },
   { action: 'SEC_ACADEMIC', group: 'records', icon: 'stats-chart', color: 'accent', title: { ar: 'المعدل والتقدم', en: 'GPA & progress' }, desc: { ar: 'GPA وCGPA والساعات', en: 'GPA, CGPA and credit hours' } },
   { action: 'SEC_TRANSCRIPT', group: 'records', icon: 'document-text', color: 'primary', title: { ar: 'السجل الدراسي', en: 'Transcript' }, desc: { ar: 'المواد والنتائج عبر الترمات', en: 'Courses and results across terms' } },
@@ -23,7 +24,7 @@ export const academicServices: AcademicService[] = [
   { action: 'SEC_MILITARY', group: 'records', icon: 'shield-checkmark', color: 'success', title: { ar: 'التربية العسكرية', en: 'Military education' }, desc: { ar: 'الحالة والمتطلبات', en: 'Status and requirements' } },
   { action: 'SEC_CURRENT', group: 'learning', icon: 'book', color: 'primary', title: { ar: 'المواد الحالية', en: 'Current courses' }, desc: { ar: 'مواد الترم ده', en: 'This term’s courses' } },
   { action: 'SEC_SCHEDULE', group: 'learning', icon: 'calendar', color: 'accent', title: { ar: 'الجدول الدراسي', en: 'Timetable' }, desc: { ar: 'المحاضرات والقاعات', en: 'Lectures and rooms' } },
-  { action: 'SEC_ATTENDANCE', group: 'learning', icon: 'checkmark-done-circle', color: 'success', title: { ar: 'الحضور', en: 'Attendance' }, desc: { ar: 'نسب الحضور لكل مادة', en: 'Attendance per course' } },
+  { action: 'SEC_ATTENDANCE', group: 'learning', icon: 'checkmark-done-circle', color: 'success', title: { ar: 'الحضور', en: 'Attendance' }, desc: { ar: 'نسب الغياب كما تعرضها الجامعة', en: 'Absence percentages reported by the university' } },
   { action: 'SEC_ABSENCE', group: 'learning', icon: 'time', color: 'warn', title: { ar: 'تفاصيل الغياب', en: 'Absence details' }, desc: { ar: 'مرات وتفاصيل الغياب', en: 'Absence records' } },
   { action: 'SEC_WARNINGS', group: 'learning', icon: 'warning', color: 'danger', title: { ar: 'إنذارات الغياب', en: 'Absence warnings' }, desc: { ar: 'تنبيهات محتاجة متابعة', en: 'Warnings that need attention' } },
   { action: 'KMOODLE', group: 'learning', icon: 'school', color: 'pink', title: { ar: 'Moodle والأنشطة', en: 'Moodle & activities' }, desc: { ar: 'أنشطة ومواعيد Moodle', en: 'Moodle activities and deadlines' } },
@@ -32,10 +33,10 @@ export const academicServices: AcademicService[] = [
   { action: 'SEC_REGISTRATION', group: 'registration', icon: 'create', color: 'primary', title: { ar: 'حالة التسجيل', en: 'Registration status' }, desc: { ar: 'الفترة والساعات المسموحة', en: 'Window and allowed hours' } },
   { action: 'SEC_ALLOWED', group: 'registration', icon: 'options', color: 'warn', title: { ar: 'ضوابط التسجيل', en: 'Registration rules' }, desc: { ar: 'المسموح والممنوع', en: 'What you can and can’t take' } },
   { action: 'SEC_ADVISING', group: 'registration', icon: 'compass', color: 'success', title: { ar: 'الإرشاد الأكاديمي', en: 'Academic advising' }, desc: { ar: 'ملاحظات وخطوات تالية', en: 'Notes and next steps' } },
-  { action: 'ACADEMIC_ANALYSIS', group: 'registration', icon: 'sparkles', color: 'pink', title: { ar: 'التحليل الذكي', en: 'Smart analysis' }, desc: { ar: 'قراءة ذكية لوضعك الأكاديمي', en: 'AI reading of your standing' } },
+  { action: 'ACADEMIC_ANALYSIS', group: 'registration', icon: 'sparkles', color: 'pink', title: { ar: 'التخطيط الدراسي', en: 'Study planning' }, desc: { ar: 'أدوات تخطيط محلية', en: 'Planning tools (local)' } },
 ];
 
-export const quickActions = ['SEC_SCHEDULE', 'SEC_ACADEMIC', 'SEC_ATTENDANCE', 'ACADEMIC_ANALYSIS'] as const;
+export const quickActions = ['SEC_SCHEDULE', 'SEC_TRANSCRIPT', 'SEC_ATTENDANCE', 'SEC_CURRENT'] as const;
 
 export function serviceByAction(action: string) {
   return academicServices.find((s) => s.action === action);
