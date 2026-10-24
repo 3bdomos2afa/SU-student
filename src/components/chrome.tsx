@@ -21,21 +21,21 @@ export function NetworkBanner() {
   }, [banner, y]);
   const offline = banner === 'offline';
   const synced = banner === 'synced';
-  const color = offline ? palette.warn : palette.success;
+  const color = offline || (synced && syncErrors > 0) ? palette.warn : palette.success;
   return (
     <Animated.View
       pointerEvents={banner ? 'box-none' : 'none'}
       style={{ position: 'absolute', top: insets.top + 6, left: 12, right: 12, transform: [{ translateY: y }] }}>
       <Glass padding={12} radius={20} intensity={70} tint={alpha(color, 0.2)}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 10 }}>
-          <Ionicons name={offline ? 'cloud-offline' : synced ? 'checkmark-circle' : 'wifi'} size={22} color={color} />
+          <Ionicons name={offline ? 'cloud-offline' : synced ? (syncErrors ? 'warning' : 'checkmark-circle') : 'wifi'} size={22} color={color} />
           <View style={{ flex: 1 }}>
-            <Txt variant="label">{offline ? tr('إنت أوفلاين', 'You are offline') : synced ? tr('تمت المزامنة ✅', 'Sync complete ✅') : tr('النت رجع ✅', 'Back online ✅')}</Txt>
+            <Txt variant="label">{offline ? tr('إنت أوفلاين', 'You are offline') : synced ? (syncErrors ? tr('التحديث لسه ناقص', 'Update incomplete') : tr('خلص التحديث ✅', 'Update finished ✅')) : tr('النت رجع ✅', 'Back online ✅')}</Txt>
             <Txt variant="caption">
               {offline
                 ? tr('بتشوف آخر بيانات محفوظة على جهازك', 'Showing the last data saved on this device')
                 : synced
-                ? (syncErrors ? tr(`بياناتك اتحدثت، و${syncErrors} خدمة هتتحدث المرة الجاية`, `Data updated; ${syncErrors} service(s) will retry`) : tr('كل بياناتك اتحدثت', 'All your data is up to date'))
+                ? (syncErrors ? tr(`بياناتك اتحدثت، و${syncErrors} خدمة محتاجة إعادة محاولة`, `Data updated; ${syncErrors} service(s) need another attempt`) : tr('الخدمات المتصلة اتحدثت', 'Connected services refreshed'))
                 : tr('حدّث دلوقتي عشان بياناتك تتحدث', 'Refresh now to update your data')}
             </Txt>
           </View>

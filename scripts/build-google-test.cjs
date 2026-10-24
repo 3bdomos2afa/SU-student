@@ -7,9 +7,11 @@ if (args.some(x => x !== '--dry-run') || args.length > 1) {
   console.error('Usage: npm run build:google-test [-- --dry-run]');
   process.exit(2);
 }
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'SOURCE-MANIFEST.json'), 'utf8'));
-const missing = manifest.filter(e => !fs.existsSync(path.join(root, e.path))).map(e => e.path);
-if (missing.length) { console.error('Extract the complete ZIP again. Missing:\n' + missing.join('\n')); process.exit(1); }
+const problems = require('./build-preflight.cjs').checkRelease(root);
+if (problems.length) {
+  console.error('Build blocked: extract the complete ZIP into a new folder.\n' + problems.join('\n'));
+  process.exit(1);
+}
 if (!fs.existsSync(path.join(root, 'node_modules/expo/package.json'))) {
   console.error('Run npm ci first.'); process.exit(1);
 }

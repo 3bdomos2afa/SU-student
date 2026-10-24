@@ -7,10 +7,9 @@ if (!['android', 'ios', 'all'].includes(platform) || extra.some(x=>x!=='--dry-ru
   console.error('Usage: node scripts/build-preview.cjs android|ios|all [--dry-run]');
   process.exit(2);
 }
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'SOURCE-MANIFEST.json'), 'utf8'));
-const missing = manifest.filter(e=>!fs.existsSync(path.join(root,e.path))).map(e=>e.path);
-if (missing.length) {
-  console.error('Incomplete folder. Extract the full ZIP again. Missing:\n'+missing.join('\n'));
+const problems = require('./build-preflight.cjs').checkRelease(root);
+if (problems.length) {
+  console.error('Build blocked: extract the complete ZIP into a new folder.\n' + problems.join('\n'));
   process.exit(1);
 }
 if (!fs.existsSync(path.join(root,'node_modules','expo','package.json'))) {

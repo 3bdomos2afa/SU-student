@@ -9,11 +9,15 @@
   },
   {
     "path": "AUTH-SETUP.md",
-    "sha256": "216254aa9fae8109b82cb630217966902167504497de731f24ea7ff57011301e"
+    "sha256": "695eb0a50c2f01eaff6d6334f02caed964389caa4bdc4fdccd6bcd747885950b"
+  },
+  {
+    "path": "BUILD-FIX-AR.md",
+    "sha256": "d352e1d5c161a206689221ce269d05033dbc274f588f13325e8f3931937b9f52"
   },
   {
     "path": "GOOGLE-TEST-AR.md",
-    "sha256": "29bb880b8a8b965bce949fbf5d1e69ff92c18e862ec6c2e323f450aaaf22f8e0"
+    "sha256": "88f07754ec9c03b41e783832585176aea0def6bff405f563caad9427b517cb2a"
   },
   {
     "path": "LICENSE",
@@ -21,15 +25,15 @@
   },
   {
     "path": "README.md",
-    "sha256": "d88e20887bc0acd60c39cfab4c1f1c46dc6df7dae1ffc911f050e786d7ef3f7b"
+    "sha256": "870a1c96c04fb7c754a5f96358e38f832ccdd0168bc067345096dea564044014"
   },
   {
     "path": "START_HERE_AR.md",
-    "sha256": "4240fea5ca576b4b21620b86cc280e2ad6aa25ce23ecd1c2c832472c12711845"
+    "sha256": "f579d26d58e60bdbaf0c70198477e49a5dc3d80c51635b01577d66b66d52ecd8"
   },
   {
     "path": "TESTING.md",
-    "sha256": "981ee9371ea12b71faaf8f551e019a5c749e7585aa6ee83c8f44407140a7030f"
+    "sha256": "ea7930217c47eedd040023ed815a46c9c7c8c83cd63a0856ddf2cd9f97e11553"
   },
   {
     "path": "app.config.cjs",
@@ -37,7 +41,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "c2d373db5e902eb3be9c799a76e1b0c47d23a9df361988de862057d5e2e6ac59"
+    "sha256": "b485f4957c8c7240b262ff80ba47d697c20e4ed20e7445bd7a7573cfabd360eb"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -77,11 +81,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "bab744bfed3d6da95218ca153008942a6465c015a2cf2f5f523b5fc685aa4a87"
+    "sha256": "73e0ee070b3afff7d8e10af2692d6cae1ef59e71e541593fd14f4f325819b7ec"
   },
   {
     "path": "package.json",
-    "sha256": "8d1a31036eb0148fa031d38a9132e87d3ef0d7372c9cd3840e00d67ec5983ff8"
+    "sha256": "a295ff97a09e725d71e403557300151e8780ebacb94edb620b3872d2bfe47e65"
   },
   {
     "path": "plugins/google-test-popup.java.txt",
@@ -97,11 +101,15 @@
   },
   {
     "path": "scripts/build-google-test.cjs",
-    "sha256": "9b84f13e1d5b5d428859bef944891b7f069a52adbed51fa09325841c79f1323d"
+    "sha256": "20804e1e613bcb4abeaeb4dfcd1d886198a473046510cdfe3f0cd9cd0875fee0"
+  },
+  {
+    "path": "scripts/build-preflight.cjs",
+    "sha256": "b8f858659c8cae84c0998ab006cefe7e49e0d4a4a1eff3419ef9dfd8fd94f59b"
   },
   {
     "path": "scripts/build-preview.cjs",
-    "sha256": "3290affc365633598d47519852f2162548885ed31e9e5bbacf88a497b692d0cf"
+    "sha256": "3d133b60623e91a7bb6cc2ef0b502af5fe10ed4bb6a7a201ffd136d69ebb19b1"
   },
   {
     "path": "scripts/eas-fonts.cjs",
@@ -229,7 +237,7 @@
   },
   {
     "path": "src/components/chrome.tsx",
-    "sha256": "84b370e6e051dd6764505e7f01be7ff7a3c6fbf740de9628daa6f41ca8a446af"
+    "sha256": "24511e94e0324b68531d13407122342512cb3d69e5ad576f7dc92f7ff608c6b9"
   },
   {
     "path": "src/components/course-evidence.tsx",
@@ -273,7 +281,7 @@
   },
   {
     "path": "src/context/app-context.tsx",
-    "sha256": "e3cac3ec27d5177e189a4a7a42d013dbcbe8dd29d07446a8a1ed1cd0b909dcf0"
+    "sha256": "8520ffa0e1ac41fa1059fe735a54f1ab343cf9e10b9c2c257850d47ebd0d3074"
   },
   {
     "path": "src/data/curriculum-helpers.ts",
@@ -364,6 +372,10 @@
     "sha256": "27d846d32114f9da4f52bbd4040e265a086a2ffdb2e1abc9a7839373c7184ff8"
   },
   {
+    "path": "src/lib/sync-result.ts",
+    "sha256": "382829616f935b4651c3af5edbf1686e598f6ed4624a4d0004e289497a3d9a0d"
+  },
+  {
     "path": "src/lib/theme.ts",
     "sha256": "5b5acc42c06e787e78d8410561caaf4803f72a13f4a001c7b965bb338db57c85"
   },
@@ -382,6 +394,10 @@
   {
     "path": "tests/build-entry.test.ts",
     "sha256": "40837bb2752bbb733c165e709d4222a2df2f6c74d53f6038a3c78b2848dbf812"
+  },
+  {
+    "path": "tests/build-integrity.test.ts",
+    "sha256": "98c92ef6d31be6989ac02a0ea50e5f6268670fd6b2402ded561690867a868ab9"
   },
   {
     "path": "tests/google-trial.test.ts",

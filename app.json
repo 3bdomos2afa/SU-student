@@ -2,7 +2,7 @@
   "expo": {
     "name": "SU Student",
     "slug": "su-student",
-    "version": "1.6.1",
+    "version": "1.6.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "unicodesis",
