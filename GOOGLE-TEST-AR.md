@@ -1,4 +1,4 @@
-# تجربة تسجيل جوجل — SU Student 1.6.1
+# تجربة تسجيل جوجل — SU Student 1.6.2
 
 هذه تجربة أندرويد اختيارية بطلب صاحب المشروع، وليست تسجيل Google رسميًا أو إثباتًا بأن Google سيقبل WebView.
 **لم يتم اختبار تسجيل الدخول بحساب حقيقي، ولا تم إصدار APK من EAS هنا.**
@@ -8,7 +8,7 @@
 بعد فك الملف كاملًا، افتح Terminal داخل `su-student`:
 ```sh
 npm ci
-npm run verify:source
+npm run preflight
 npx eas-cli@latest login
 npm run build:google-test
 ```
