@@ -1,3 +1,4 @@
+import { ReminderController } from '@/components/reminder-controller';
 import { useFonts } from 'expo-font';
 import { fonts } from '@/lib/fonts';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -37,6 +38,7 @@ function Shell() {
         <Stack.Screen name="service/[action]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="course/[code]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       </Stack>
+      <ReminderController />
       <NetworkBanner />
       <LockOverlay />
     </View>

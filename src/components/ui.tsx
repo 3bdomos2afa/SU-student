@@ -313,11 +313,13 @@ export function Screen({
   refreshing,
   onRefresh,
   padBottom = true,
+  scrollEnabled = true,
 }: {
   children: ReactNode;
   refreshing?: boolean;
   onRefresh?: () => void;
   padBottom?: boolean;
+  scrollEnabled?: boolean;
 }) {
   const insets = useSafeAreaInsets();
   const { palette, banner } = useApp();
@@ -325,6 +327,7 @@ export function Screen({
     <View style={{ flex: 1, backgroundColor: palette.bg[0] }}>
       <GlassBackground />
       <ScrollView
+        scrollEnabled={scrollEnabled}
         contentContainerStyle={{
           paddingTop: insets.top + 12 + (banner ? 64 : 0),
           paddingHorizontal: 16,

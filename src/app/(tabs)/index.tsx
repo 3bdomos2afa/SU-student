@@ -1,3 +1,6 @@
+import { FocusCard } from '@/components/focus-card';
+import { Entrance } from '@/components/entrance';
+import { localDate } from '@/lib/academic';
 import { router } from 'expo-router';
 import { View } from 'react-native';
 import { useApp } from '@/context/app-context';
@@ -20,14 +23,19 @@ export default function Home(){
   <View style={{flexDirection:row,justifyContent:'space-between',alignItems:'center'}}>
    <Txt variant="label" color={palette.primary}>SU / CAMPUS</Txt><Chip label={lang==='ar'?'EN':'AR'} onPress={()=>a.updateSettings({lang:lang==='ar'?'en':'ar'})}/>
   </View>
-  <Glass padding={24}><View style={{gap:16}}>
+  <Entrance><Glass padding={24}><View style={{gap:16}}>
    <View style={{flexDirection:row,alignItems:'center',gap:14}}><Avatar name={name} size={56}/><View style={{flex:1}}>
     <Txt variant="caption">{tr('أهلًا بعودتك','WELCOME BACK')}</Txt><Txt variant="h2">{name}</Txt>
     <Txt variant="caption">{session?`ID · ${session.studentId}`:tr('لم يتم ربط حساب','Account not connected')}</Txt>
    </View></View>
    <Txt variant="sub">{data.faculty||tr('كل يوم، أقرب للي نفسك فيه.','Every day, closer to your goals.')}</Txt>
    <Button title={tr('جدول المذاكرة والمهام','Study schedule & tasks')} icon="calendar-outline" onPress={()=>router.push('/study')}/>
-  </View></Glass>
+  </View></Glass></Entrance>
+  <View style={{flexDirection:row,gap:10}}>
+   <PressScale style={{flex:1}} label={tr('مهام اليوم','Today tasks')} onPress={()=>router.push('/study')}><Glass padding={16}><View style={{gap:8}}><IconBadge icon="checkmark-done-outline" color={palette.success}/><Txt variant="h2">{a.tasks.filter(t=>!t.done&&(!t.date||t.date===localDate())).length}</Txt><Txt variant="caption">{tr('خطوات بانتظارك اليوم','Steps waiting today')}</Txt></View></Glass></PressScale>
+   <PressScale style={{flex:1}} label={tr('مواعيد الجامعة','Campus timetable')} onPress={()=>router.push('/timetable')}><Glass padding={16}><View style={{gap:8}}><IconBadge icon="calendar-outline" color={palette.primary}/><Txt variant="h2">{cache.SEC_TIMETABLE?data.slots.filter(s=>s.day===new Date().getDay()).length:'—'}</Txt><Txt variant="caption">{tr('مواعيد في الجدول المحفوظ','Sessions in saved timetable')}</Txt></View></Glass></PressScale>
+  </View>
+  {a.focus.endAt!==null&&<FocusCard compact/>}
   {!session?<Button title={tr('اربط حساب الجامعة','Connect university account')} icon="log-in-outline" onPress={()=>router.push('/login')}/>:null}
   {a.authExpired?<Button title={tr('الجلسة انتهت — سجّل مجددًا','Session expired — sign in again')} onPress={()=>router.push('/settings')}/>:null}
   {(a.syncErrors>0||a.storageError)?<Glass><Txt color={palette.warn}>{a.storageError?tr('تعذر حفظ بعض التغييرات. افحص مساحة الجهاز.','Some changes could not be saved. Check device space.'):tr('بعض الخدمات لم تتحدث؛ آخر بيانات محفوظة ما زالت ظاهرة.','Some services could not refresh; last saved records remain visible.')}</Txt></Glass>:null}

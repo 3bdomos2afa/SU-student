@@ -1,3 +1,4 @@
+import { courseByCode } from '@/data/curriculum-helpers';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -20,7 +21,7 @@ export default function Grades(){
    const code=text(c.CourseCode);
    const marks=rowsDeep(cache[`GRADES:${code}`]?.data).filter(r=>r.StudentDegree!==undefined||r.TemplateDetails!==undefined);
    return <Glass key={`${code}-${i}`}><View style={{gap:12}}>
-    <PressScale onPress={()=>router.push(`/course/${encodeURIComponent(code)}`)}><Txt variant="h3">{text(c.CourseNameEN)||text(c.CourseName)||code}</Txt><Txt variant="caption">{code}</Txt></PressScale>
+    <PressScale onPress={()=>router.push(`/course/${encodeURIComponent(code)}`)}><Txt variant="h3">{text(c.CourseNameEN)||text(c.CourseName)||courseByCode.get(code)?.title||code}</Txt><Txt variant="caption">{code}</Txt></PressScale>
     {final?<><Txt variant="h2" color={palette.primary}>{text(c.GradeName)||'—'}</Txt><Txt variant="caption">{[c.SemesterNameEN,c.SectionName].map(text).filter(Boolean).join(' · ')}</Txt><Txt variant="caption">{tr('تقدير السجل، وليس درجة امتحان الفاينل الرقمية.','Transcript grade, not the numeric final-exam mark.')}</Txt></>:<>
      <Button small variant="glass" title={tr('تحميل توزيع الدرجات','Load mark breakdown')} loading={busy===code} disabled={!!busy||!a.session} onPress={()=>{void load(code);}}/>
      {marks.map((m,j)=><View key={j} style={{flexDirection:row,justifyContent:'space-between',gap:12}}><Txt style={{flex:1}}>{text(m.TemplateDetails)||text(m.Groups)||tr('بند درجات','Assessment')}</Txt><Txt variant="label">{text(m.StudentDegree)||'—'} / {text(m.MaxDegree)||'—'}</Txt></View>)}

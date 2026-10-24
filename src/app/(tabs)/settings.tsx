@@ -1,3 +1,4 @@
+import { ReminderSettings } from '@/components/reminder-settings';
 import { useState } from 'react';
 import { Alert, Switch, View } from 'react-native';
 import { router } from 'expo-router';
@@ -11,7 +12,7 @@ export default function Settings(){
  const [open,setOpen]=useState(false);
  const [msg,setMsg]=useState('');
  return <Screen>
-   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.2.0"/>
+   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.3.0"/>
    <Glass><View style={{gap:12}}>
      <Txt variant="h3">{session?.name??tr('أدوات الدراسة المحلية','Local study tools')}</Txt>
      <Txt variant="caption">{session?`${tr('رقم الطالب','Student ID')}: ${session.studentId}`:tr('لم يتم ربط حساب جامعة','No university account connected')}</Txt>
@@ -33,6 +34,7 @@ export default function Settings(){
      <Button variant="glass" title={tr('مسح البيانات المحفوظة أوفلاين','Clear offline records')} onPress={()=>{void a.clearCache();}}/>
      {session?<Button variant="danger" title={tr('تسجيل خروج ومسح بيانات الحساب','Sign out & erase account data')} onPress={()=>Alert.alert(tr('تأكيد','Confirm'),tr('ستُمسح بيانات الحساب والمهام المحلية الخاصة به.','This account’s records and local tasks will be erased.'),[{text:tr('إلغاء','Cancel'),style:'cancel'},{text:tr('خروج','Sign out'),style:'destructive',onPress:()=>{void a.signOut().then(()=>router.replace('/login')).catch(()=>setMsg(tr('تعذر المسح؛ أعد المحاولة','Could not clear storage; retry')));}}])}/>:null}
    </View></Glass>
+   <ReminderSettings/>
    <Txt variant="caption" center>{tr('الخطة والحاسبة أدوات مساعدة، وليست قرار تسجيل أو كشف درجات رسمي.','Planner and calculator are aids, not official registration or transcripts.')}</Txt>
    <PortalModal visible={open} onClose={()=>setOpen(false)}/>
  </Screen>;

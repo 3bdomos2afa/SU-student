@@ -1,3 +1,4 @@
+import { ssoConfigured, universityGoogleSignIn } from '@/lib/university-sso';
 import { useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { navigationPolicy } from '@/lib/navigation-policy';
@@ -58,7 +59,16 @@ export function PortalModal({visible,onClose,browse=false}:{visible:boolean;onCl
           <Txt variant="h3">{tr('بوابة الجامعة','University portal')}</Txt>
         </View>
         <Txt variant="caption" center>unicodesis.su.edu.eg · HTTP</Txt>
-        <Button small variant="glass" title={tr('فتح في المتصفح / Google','Open in browser / Google')} onPress={()=>{void openExternal(PORTAL_LOGIN);}}/>
+        <Button small variant="glass" title={tr('الموقع في المتصفح فقط','Website in browser only')} onPress={()=>{void openExternal(PORTAL_LOGIN);}}/>
+      </View>
+      <View style={{paddingHorizontal:16,paddingBottom:10,gap:6}}>
+       <Button icon="logo-google" loading={saving} disabled={!ssoConfigured()} title={tr('دخول Google وربط الحساب','Google sign-in & connect')} onPress={()=>{void (async()=>{
+        setSaving(true);setError('');
+        try{const session=await universityGoogleSignIn();if(session){await signIn(session);close();}}
+        catch{setError(tr('تعذر إتمام الربط الرسمي؛ راجع إعدادات SSO مع مسؤول الجامعة.','Official sign-in failed. Check SSO configuration with your university administrator.'));}
+        finally{setSaving(false);}
+       })();}}/>
+       {!ssoConfigured()&&<Txt variant="caption">{tr('ربط Google بالتطبيق ينتظر إعداد خادم SSO الجامعي. فتح الموقع في المتصفح لا يربط الحساب.','Google app sign-in awaits university SSO configuration. Opening the website does not connect the app.')}</Txt>}
       </View>
       {Platform.OS==='web' ? <View style={{padding:24}}><Txt>{tr('تسجيل الدخول متاح في نسخة Android وiOS فقط.','Portal login is available in the Android/iOS app only.')}</Txt></View> :
       <>

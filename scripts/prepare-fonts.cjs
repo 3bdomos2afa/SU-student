@@ -10,7 +10,7 @@ import { Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@expo-google
 export const fonts = {
   Arabic: ${custom?"require('../../assets/fonts/ThmanyahSans-Regular.otf')":'Cairo_400Regular'},
   ArabicBold: ${custom?"require('../../assets/fonts/ThmanyahSans-Bold.otf')":'Cairo_700Bold'},
-  English: Inter_400Regular, EnglishMedium: Inter_600SemiBold, EnglishBold: Inter_700Bold,
+  English: ${froople?"require('../../assets/fonts/Froople.ttf')":'Inter_400Regular'}, EnglishMedium: ${froople?"require('../../assets/fonts/Froople.ttf')":'Inter_600SemiBold'}, EnglishBold: ${froople?"require('../../assets/fonts/Froople.ttf')":'Inter_700Bold'},
   EnglishDisplay: ${froople?"require('../../assets/fonts/Froople.ttf')":'Inter_700Bold'},
 };
 export function fontFamily(ar:boolean,bold=false,display=false){

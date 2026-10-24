@@ -84,7 +84,7 @@ export function GlassTabBar({ state, emitter, navigateToTab }: TabBarProps) {
   const { palette, row, tr } = useApp();
   const insets = useSafeAreaInsets();
   return (
-    <View pointerEvents="box-none" style={{ position: 'absolute', left: 14, right: 14, bottom: Math.max(insets.bottom, 10) + 4 }}>
+    <View pointerEvents="box-none" style={{ position: 'absolute', zIndex:100, elevation:20, left: 14, right: 14, bottom: Math.max(insets.bottom, 10) + 4 }}>
       <Glass padding={6} radius={30} intensity={70}>
         <View style={{ flexDirection: row, alignItems: 'center' }}>
           {state.routes.map((route, i) => {

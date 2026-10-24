@@ -1,3 +1,6 @@
+import { freshFocus, type Focus } from '@/lib/focus';
+import { defaultReminders, type ReminderPrefs } from '@/lib/reminder-plan';
+import { reconcileReminders } from '@/lib/notifications';
 import { emptyStudy, normalizeStudy, normalizeTask, type CourseNote, type Study, type GpaBase, type Task } from '@/lib/study-state';
 export type { GpaBase, Task } from '@/lib/study-state';
 import NetInfo from '@react-native-community/netinfo';
@@ -30,6 +33,7 @@ function useModel() {
   const [cache,setCache] = useState<Record<string,CacheEntry>>({});
   const [study,setStudy] = useState<Study>(emptyStudy);
   const [refreshing,setRefreshing] = useState(false);
+  const [reminderError,setReminderError]=useState(false);
   const [storageError,setStorageError] = useState(false);
   const [authExpired,setAuthExpired] = useState(false);
   const epoch = useRef(0);
@@ -103,6 +107,7 @@ function useModel() {
     void enqueue(()=>savePrivate(key,study));
   },[ready,study,session?.studentId]);
   const signIn = useCallback(async(s:Session)=>{
+    await reconcileReminders([]).catch(()=>{});
     const generation=++epoch.current;setAuthExpired(false);setSyncErrors(0);cacheRef.current={};setCache({});setRefreshing(false);syncBusy.current=false;
     // Load the new account before committing it, so data never crosses accounts.
     await persistence.current;
@@ -117,6 +122,7 @@ function useModel() {
     const old=sessRef.current;
     epoch.current++;syncBusy.current=false;setRefreshing(false);setSyncErrors(0);cacheRef.current={};sessRef.current=null;setSession(null);setCache({});setStudy(emptyStudy());setLocked(false);setAuthExpired(false);
     await persistence.current;
+    await reconcileReminders([]).catch(()=>{});
     await removePrivate(SESSION);
     if(old) {
       await removePrivate(`su:v2:cache:${old.studentId}`);
@@ -201,6 +207,13 @@ function useModel() {
     gpaBase:study.gpaBase,setGpaBase:(gpaBase:GpaBase)=>setStudy(s=>({...s,gpaBase})),
     courseNotes:study.courseNotes??{},
     setCourseNote:(code:string,note:CourseNote)=>setStudy(s=>({...s,courseNotes:{...s.courseNotes,[code]:{...s.courseNotes?.[code],...note}}})),
+    focus:study.focus??freshFocus(),
+    setFocus:(focus:Focus)=>{setStudy(s=>({...s,focus}));},
+    reminders:study.reminders??defaultReminders,
+    setReminders:(patch:Partial<ReminderPrefs>)=>setStudy(s=>({...s,reminders:{...defaultReminders,...s.reminders,...patch}})),
+    reminderError,setReminderError,
+    absenceNotifiedAt:study.absenceNotifiedAt,
+    markAbsenceNotified:(at:string)=>setStudy(s=>({...s,absenceNotifiedAt:at})),
     tasks:study.tasks,
     updateTask:(id:string,patch:Partial<Task>)=>setStudy(s=>({...s,tasks:s.tasks.map(t=>t.id===id?normalizeTask({...t,...patch,id}):t)})),
     addTask:(title:string,details:Partial<Task>={})=>{if(title.trim())setStudy(s=>({...s,tasks:[...s.tasks.slice(-499),normalizeTask({...details,id:`${Date.now()}-${Math.random().toString(36).slice(2)}`,title:title.trim(),done:false})]}));},

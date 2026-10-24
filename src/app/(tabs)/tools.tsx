@@ -1,3 +1,4 @@
+import { academic, canonical } from '@/lib/academic';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -18,10 +19,12 @@ function num(v: string) {
 }
 
 export default function Tools() {
-  const { tr, palette, row, completed, draft, toggleDraft, setDraft, grades, setGrade, gpaBase, setGpaBase, session } = useApp();
+  const { tr, palette, row, completed:manualCompleted, cache, draft, toggleDraft, setDraft, grades, setGrade, gpaBase, setGpaBase, session } = useApp();
   const [tab, setTab] = useState<Tab>('planner');
   const [load, setLoad] = useState<number>(18);
-  const earned = earnedCredits(completed);
+  const official=academic(cache);
+  const completed=new Set([...manualCompleted,...curriculumCourses.filter(c=>official.passed.has(canonical(c.code))).map(c=>c.code)]);
+  const earned=official.earned??earnedCredits(completed);
 
   const draftCourses = draft.map((c) => courseByCode.get(c)).filter((c): c is NonNullable<typeof c> => !!c);
   const draftHours = draftCourses.reduce((s, c) => s + c.credits, 0);
@@ -103,7 +106,7 @@ export default function Tools() {
             {lockedInDraft.length ? (
               <Txt variant="caption" color={palette.warn} style={{ marginTop: 8 }}>
                 {tr('⚠️ فيه مواد متطلباتها لسه مخلصتش: ', '⚠️ Prerequisites missing for: ')}
-                {lockedInDraft.map((c) => c.code).join('، ')}
+                {lockedInDraft.map((c) => c.title).join('، ')}
               </Txt>
             ) : null}
             <Txt variant="caption" style={{ marginTop: 6 }}>
@@ -165,7 +168,7 @@ export default function Tools() {
             {draftCourses.filter((c) => c.credits > 0).map((c) => (
               <View key={c.code} style={{ marginTop: 12, gap: 6 }}>
                 <Txt variant="label">
-                  {c.code} · {c.credits} {tr('س', 'cr')}
+                  {c.title} · {c.credits} {tr('س', 'cr')}
                 </Txt>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }}>
                   {GRADE_SCALE.map((g) => (

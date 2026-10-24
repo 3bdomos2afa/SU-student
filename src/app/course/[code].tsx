@@ -1,3 +1,5 @@
+import { academic, canonical } from '@/lib/academic';
+import { curriculumCourses } from '@/data/curriculum';
 import { CourseEvidence } from '@/components/course-evidence';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -10,7 +12,9 @@ import { courseByCode, courseStatus, creditCondition, earnedCredits, unlocksOf }
 
 export default function CourseScreen() {
   const { code = '' } = useLocalSearchParams<{ code: string }>();
-  const { tr, palette, row, completed, toggleCompleted, draft, toggleDraft } = useApp();
+  const { tr, palette, row, completed:manualCompleted, cache, toggleCompleted, draft, toggleDraft } = useApp();
+  const official=academic(cache);
+  const completed=new Set([...manualCompleted,...curriculumCourses.filter(c=>official.passed.has(canonical(c.code))).map(c=>c.code)]);
   const course = courseByCode.get(code) ?? courseByCode.get(code.replace(/%20/g,' '));
   const close = () => (router.canGoBack() ? router.back() : router.replace('/(tabs)/plan'));
 
@@ -23,12 +27,12 @@ export default function CourseScreen() {
     );
   }
 
-  const earned = earnedCredits(completed);
+  const earned = official.earned??earnedCredits(completed);
   const { status, missing } = courseStatus(course, completed, earned);
   const unlocks = unlocksOf(course.code);
   const inDraft = draft.includes(course.code);
   const statusColor = status === 'completed' ? palette.success : status === 'available' ? palette.accent : palette.warn;
-  const statusLabel = status === 'completed' ? tr('نجاح يدوي', 'Manual pass') : status === 'available' ? tr('متاحة ليك', 'Available') : tr('مقفولة', 'Locked');
+  const statusLabel = status === 'completed' ? (official.passed.has(canonical(course.code))?tr('ناجح بالسجل','Passed in transcript'):tr('نجاح يدوي','Manual pass')) : status === 'available' ? tr('متاحة ليك', 'Available') : tr('مقفولة', 'Locked');
 
   return (
     <Screen padBottom={false}>
@@ -36,8 +40,8 @@ export default function CourseScreen() {
         <Ionicons name="close-circle" size={32} color={palette.sub} />
       </Pressable>
       <View style={{ gap: 6 }}>
-        <Txt variant="h1">{course.code}</Txt>
-        <Txt variant="h3" color={palette.sub}>{course.title}</Txt>
+        <Txt variant="h1">{course.title}</Txt>
+        <Txt variant="sub" color={palette.sub}>{course.code}</Txt>
         <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 8, marginTop: 6 }}>
           <Chip label={statusLabel} color={statusColor} active />
           <Chip label={tr(`المستوى ${course.level}`, `Level ${course.level}`)} icon="layers" />
@@ -87,7 +91,8 @@ export default function CourseScreen() {
 
       <View style={{ flexDirection: row, gap: 10 }}>
         <Button
-          title={status === 'completed' ? tr('إلغاء "خلصت"', 'Unmark') : tr('علّم نجاح يدويًا', 'Mark passed manually')}
+          disabled={official.passed.has(canonical(course.code))}
+          title={official.passed.has(canonical(course.code))?tr('النجاح مثبت بالسجل','Pass confirmed in transcript'):status === 'completed' ? tr('إلغاء "خلصت"', 'Unmark') : tr('علّم نجاح يدويًا', 'Mark passed manually')}
           icon={status === 'completed' ? 'close-circle' : 'checkmark-circle'}
           variant={status === 'completed' ? 'glass' : 'primary'}
           onPress={() => toggleCompleted(course.code)}

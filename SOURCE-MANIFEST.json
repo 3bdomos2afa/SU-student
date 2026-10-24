@@ -8,24 +8,28 @@
     "sha256": "75fdc6e245fee8dec89afdb0b35cc42c8ea9adf8039e0c11e485a1ef5b30ba29"
   },
   {
+    "path": "AUTH-SETUP.md",
+    "sha256": "7a4a95053f2aefaf25c612b534ee314f7fef25a0337fd6b8b2e5e4e0e4166013"
+  },
+  {
     "path": "LICENSE",
     "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
   },
   {
     "path": "README.md",
-    "sha256": "d19d6ba1e2b067a72086476362bf92a3c43b724d5f5460604bdcf0c01ae28cd8"
+    "sha256": "c471c05f731f774e001a5fad621c80e47b370bfa5a15f5d141eddc7eec0fcb33"
   },
   {
     "path": "START_HERE_AR.md",
-    "sha256": "08355856b660890cf06ac5e2c9a9d024265f0566059015ab4f7fbaeac7868d85"
+    "sha256": "91fa644f733423564c16f2121b57df812b9fede5a6a71cb8fcc29c9b4edb4f9e"
   },
   {
     "path": "TESTING.md",
-    "sha256": "be78b926a64faca69529a2f29f6ca5f8ba6a09823f38719052d28ffbc039ad0d"
+    "sha256": "6c9976b562ef418594869fc0804f38cfda671f0279ef7abf19de4ae7169519a6"
   },
   {
     "path": "app.json",
-    "sha256": "53e96bc59a49949ceacc58d347073e3f402d6cbf0adf498a56932fa09d8e6535"
+    "sha256": "7efd06990a609b7fe06f17bf17573c0df74c45f6a6f762d2b4fe1582acf47579"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -65,11 +69,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "de05f0b004b2ff82eac5243466d948a8f1753a8a03bd805ba9980fca2fd78c31"
+    "sha256": "4c0e1a0478e730c28d2984e79358ebb94c6b5ee65d05eabaa18156cc3b8b0ece"
   },
   {
     "path": "package.json",
-    "sha256": "591612d6f4a599b64bbc69d4ac66cd1fb5b72297334ab5c3e4fa1e85edf18fad"
+    "sha256": "1016d66fc84bfc26a88983be052ba2fc2e4531cfaabbf6b0d3c9190487efe94c"
   },
   {
     "path": "plugins/with-portal-network.cjs",
@@ -85,7 +89,7 @@
   },
   {
     "path": "scripts/prepare-fonts.cjs",
-    "sha256": "7a2f6f665647de099f94b365264029234df5775a0dc5a603a4bedb58cbb46336"
+    "sha256": "88ba20a85da4b56be649c451f642f9ca1ea05a98c05c51074592aee373fa4305"
   },
   {
     "path": "scripts/verify-source.cjs",
@@ -97,11 +101,11 @@
   },
   {
     "path": "src/app/(tabs)/index.tsx",
-    "sha256": "398f9e9b77a931efe2ebcff3d11c1550645bbc9d9802bb43d205a176d181a1ff"
+    "sha256": "27dbcd7b0ea3b44bd06f0e24c5cfbb07bd08dfd461bd16ef084a86572fe38f2c"
   },
   {
     "path": "src/app/(tabs)/plan.tsx",
-    "sha256": "00ffa077144424264bf563e6dbc13202e0084c1fdae66ddf904403d415b18858"
+    "sha256": "5fb233d253288d4d4d96106415ff7c34d078861aba480d8f75cc8ca0705365ac"
   },
   {
     "path": "src/app/(tabs)/services.tsx",
@@ -109,23 +113,23 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "36d3d2154886afd77d4bdb58813ad2f3b37595cd8c8b348887834a8802fac4e2"
+    "sha256": "0ab63c1f1081578786a1835c671237a96147318a49e1049c501497134d82a461"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
-    "sha256": "8f5e8a9b3882694cf6aaceb8df113faec3dd25d565974d46234d265e4f0c8d87"
+    "sha256": "24f59484a726965dbdc4f5f27e135a013324549c5ce6cef5543998fe2b6185ea"
   },
   {
     "path": "src/app/_layout.tsx",
-    "sha256": "b28b4d63f7ca863fdf9669df3a74df302f3daa9937b0d469c40d1bf382b06b96"
+    "sha256": "c1f15d70053e081712b14e48841deff34909d0eabe23ed0a34142290e1fe3e85"
   },
   {
     "path": "src/app/course/[code].tsx",
-    "sha256": "e5346f2c933ad39bebd8ee435d95e8d9fbe85a4a8877c0aaf04be39ff4990574"
+    "sha256": "2cd9588b67e5730c64a1788cb204cc9369de3ae79262c8568f6464ffd8fc7f94"
   },
   {
     "path": "src/app/grades.tsx",
-    "sha256": "bba356406871286cd9c8db8d06d54a22aa5d373e66a21968f950b2d01529e0cd"
+    "sha256": "9e78e1245c6fd47a7fc0ceef5f325235344e7d89bc3965627ecd878b03b30386"
   },
   {
     "path": "src/app/index.tsx",
@@ -136,12 +140,16 @@
     "sha256": "c460b4f5648126aeb302d72af492702471fa0e08a9e0ab2e1e7f7d2649efbff7"
   },
   {
+    "path": "src/app/oauth/callback.tsx",
+    "sha256": "4e778e98aae42808bc7c0fb17255973b8bc4166d77bf6b843486fea631fe4d67"
+  },
+  {
     "path": "src/app/service/[action].tsx",
     "sha256": "abf2e59553bff37a9e3177c740b0e9b3c2503652ba7dc5b0cffdf2ed8206ddbd"
   },
   {
     "path": "src/app/study.tsx",
-    "sha256": "d17953c1ad17f794c544fbbc623dac7ce48a2e0671b4c02a437143b87e96922a"
+    "sha256": "e760527892cf507dbb171bff5530e0b1680e7284a14cac3b49ab8787c4c252f6"
   },
   {
     "path": "src/app/timetable.tsx",
@@ -149,11 +157,11 @@
   },
   {
     "path": "src/components/academic-cards.tsx",
-    "sha256": "f1dc4ecf8ceeebc49f671f553a5226771bda8a67562685428f80b61887da9725"
+    "sha256": "f05b2148a6e96b2b07e66a1d8e71211b70cac7b2fa6f1a0ae971a1c2048da4f1"
   },
   {
     "path": "src/components/chrome.tsx",
-    "sha256": "89a810e51724549673184a20b2c418fa41d283d2d81d8a54a223a714487e2942"
+    "sha256": "edb101785d94c4e215d7f7b4aa85d892544acf10bbd123a7dd4bcb3b5023e72d"
   },
   {
     "path": "src/components/course-evidence.tsx",
@@ -161,23 +169,43 @@
   },
   {
     "path": "src/components/course-row.tsx",
-    "sha256": "99751738ae4f141a1e44ac59c0910a216c1d2da6c704c563d5fe2d2cad0916c7"
+    "sha256": "59ece1ad565a4a24e97753f091b32b631b4e969f420c34182b0476c2cc4944d1"
+  },
+  {
+    "path": "src/components/entrance.tsx",
+    "sha256": "e7c1540d06974e3c19dd56c0cba1649d35449c8d80bb6716fd1cd25c39e290a9"
   },
   {
     "path": "src/components/error-boundary.tsx",
     "sha256": "6e89e43f04f5e657a47dc5dce4358467ce1a705e7304fb1ce8d88f0f451a1eef"
   },
   {
+    "path": "src/components/focus-card.tsx",
+    "sha256": "8ed1b84145797b622379e466f587f9e9b092036b9232ba973e7ac68303fd062c"
+  },
+  {
+    "path": "src/components/map-canvas.tsx",
+    "sha256": "6be1c7b19c5480a322deab4343d570cef6ce1ec2ffba0f79d7f47172473d661d"
+  },
+  {
     "path": "src/components/portal-modal.tsx",
-    "sha256": "e8ca15fe9330b359904070e0ddd9a8a7305cb2c311cc510b95651cf38cf502d7"
+    "sha256": "075d83c1327485aa0e434474fa6166c0c5cdb3e9a9564a4da9751e7a04878ec3"
+  },
+  {
+    "path": "src/components/reminder-controller.tsx",
+    "sha256": "4cc77ba4d832f9a7adf06071f179d9eb2a93158ede029e0da6833d719cf6b38c"
+  },
+  {
+    "path": "src/components/reminder-settings.tsx",
+    "sha256": "756dfebfc1ccb513baeddf1123c9d0124194dc4b854e0990bf2a176fa1d9d277"
   },
   {
     "path": "src/components/ui.tsx",
-    "sha256": "b8e26cb7f321b3b97bb7049e00912f58aa7a9e67e728f4ffaa945971ad23b452"
+    "sha256": "402228d57348286791544d2d87b76094c968d4caba9a4522af089864a76c86af"
   },
   {
     "path": "src/context/app-context.tsx",
-    "sha256": "b9539490a75d4d5c9ecd756a806ec9a8a586b2c9432f977b739e3720e7e7ac40"
+    "sha256": "2751b6dd4350d45a6cc410a1642a3c35e3feaafc45cf5465d9f4f6f5f7abd887"
   },
   {
     "path": "src/data/curriculum-helpers.ts",
@@ -193,7 +221,11 @@
   },
   {
     "path": "src/lib/academic.ts",
-    "sha256": "5b83893f1e9f0212794a926490a5aa79d3ae7d7132a8ab9ab3e84ee64e5368f8"
+    "sha256": "3cf5a80ad9f908db8266ad2fe1c83ad9971be9315527e2bbf0e3329bc08f8c03"
+  },
+  {
+    "path": "src/lib/focus.ts",
+    "sha256": "28e44c71c909f8565e5fa2df7b69714d18eb66f35cc8b63d31e1b9eabb16160a"
   },
   {
     "path": "src/lib/format.ts",
@@ -208,12 +240,32 @@
     "sha256": "6728e455f01f9e2813ff0cec2c5f84cd47899fd754e9a8a92dd70d0f384b23aa"
   },
   {
+    "path": "src/lib/map-geometry.ts",
+    "sha256": "09a6312914cc1ae14a05fe2a9a71b3a72e8f971b3abe4f3fd97a053088ab3b06"
+  },
+  {
     "path": "src/lib/navigation-policy.ts",
     "sha256": "a5452275be68d75aa4968ff5f583d7aa5a0e9d83aface73685cc186cf111d3e5"
   },
   {
+    "path": "src/lib/notifications.ts",
+    "sha256": "87a4b06ec2ac276a315f1c52436ddee02d93322d52d5b0cde77e705c7babf212"
+  },
+  {
     "path": "src/lib/portal.ts",
     "sha256": "cdfe2a6c2106931f8ffbf329b43d1da9a8b966fa5e44fe03a90524c8939c04bf"
+  },
+  {
+    "path": "src/lib/reminder-plan.ts",
+    "sha256": "615076c8c46aeba2a1dec7c16b67f3071fb9a170d5c82c51dc91b1be2a4fe7a0"
+  },
+  {
+    "path": "src/lib/sso-config.json",
+    "sha256": "36df51e129eb6b25e5328a3054764ea61ff51f3b037c7730c861b4a3a9fc5b0e"
+  },
+  {
+    "path": "src/lib/sso-policy.ts",
+    "sha256": "d17bcfaeed3c93551943756027ab04dbc8188909f032469a6acb5fb63259e31f"
   },
   {
     "path": "src/lib/storage.ts",
@@ -221,11 +273,15 @@
   },
   {
     "path": "src/lib/study-state.ts",
-    "sha256": "aa0bdcf5695f574607c565a2b5280e34d37f03f9fc3011a4cc7da0e090b1ba00"
+    "sha256": "27d846d32114f9da4f52bbd4040e265a086a2ffdb2e1abc9a7839373c7184ff8"
   },
   {
     "path": "src/lib/theme.ts",
     "sha256": "fdc6676401bc1503c82f56d1fd0b7023516a3e53229f020f1087b4cb0184311a"
+  },
+  {
+    "path": "src/lib/university-sso.ts",
+    "sha256": "43552049544126fd09d7fec27dfb65cd65399b5ed5c5a386ced3cbd2686ffdd5"
   },
   {
     "path": "src/lib/vault.ts",
@@ -246,6 +302,10 @@
   {
     "path": "tests/study.test.ts",
     "sha256": "6b9a4af99cc5a89cf5a5379aaa60898e30b14d5a4b0f1ffeb11a04fa4f124d8d"
+  },
+  {
+    "path": "tests/v13.test.ts",
+    "sha256": "6a5f979e2e7b67f3617492cdf0831d48add912676e398eba579243b9bcbf7d98"
   },
   {
     "path": "tsconfig.json",
