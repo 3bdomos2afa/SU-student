@@ -1,103 +1,45 @@
-import { Ionicons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, Share, View } from 'react-native';
-
-import { Button, Chip, Glass, IconBadge, Screen, Txt } from '@/components/ui';
-import { useApp, type CacheEntry } from '@/context/app-context';
+import { View, ActivityIndicator } from 'react-native';
+import { Button, Chip, Glass, Header, Screen, Txt } from '@/components/ui';
+import { PortalModal } from '@/components/portal-modal';
+import { useApp } from '@/context/app-context';
 import { serviceByAction } from '@/data/services';
+import { recordsOf, endpoints } from '@/lib/portal';
 import { timeAgo } from '@/lib/format';
-import { success, warning } from '@/lib/haptics';
 
-export default function ServiceScreen() {
-  const { action = '' } = useLocalSearchParams<{ action: string }>();
-  const { tr, lang, palette, row, fetchService, cache, online } = useApp();
-  const service = serviceByAction(action);
-  const [entry, setEntry] = useState<CacheEntry | undefined>(cache[action]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const load = useCallback(
-    async (force: boolean) => {
-      setLoading(true);
-      setError(null);
-      const r = await fetchService(action, force);
-      setLoading(false);
-      if (r.entry) setEntry(r.entry);
-      if (r.error) {
-        setError(r.error);
-        warning();
-      } else if (force) success();
-    },
-    [action, fetchService],
-  );
-
-  useEffect(() => {
-    load(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [action]);
-
-  const color = service ? palette[service.color] : palette.primary;
-  const title = service?.title[lang] ?? action;
-
-  return (
-    <Screen padBottom={false}>
-      <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'center' }}>
-        <Pressable onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))} hitSlop={12} accessibilityLabel={tr('رجوع', 'Close')}>
-          <Ionicons name="close-circle" size={32} color={palette.sub} />
-        </Pressable>
-        <Chip label={online ? tr('متصل', 'Online') : tr('أوفلاين', 'Offline')} icon={online ? 'wifi' : 'cloud-offline'} color={online ? palette.success : palette.warn} active />
-      </View>
-
-      <View style={{ alignItems: 'center', gap: 8, marginVertical: 6 }}>
-        <IconBadge icon={service?.icon ?? 'apps'} color={color} size={68} />
-        <Txt variant="h2" center>{title}</Txt>
-        {service ? <Txt variant="sub" center>{service.desc[lang]}</Txt> : null}
-      </View>
-
-      <Glass padding={18}>
-        {loading && !entry ? (
-          <View style={{ alignItems: 'center', gap: 10, paddingVertical: 24 }}>
-            <ActivityIndicator color={palette.primary} />
-            <Txt variant="sub" center>{tr('بنجيب بياناتك من UnicodeSIS…', 'Fetching from UnicodeSIS…')}</Txt>
-          </View>
-        ) : entry ? (
-          <View style={{ gap: 10 }}>
-            <View style={{ flexDirection: row, gap: 8, flexWrap: 'wrap' }}>
-              <Chip label={entry.mode === 'live' ? 'Live' : tr('تجريبي', 'Demo')} icon={entry.mode === 'live' ? 'cloud-done' : 'flask'} color={entry.mode === 'live' ? palette.accent : palette.warn} active />
-              <Chip label={timeAgo(entry.at, lang)} icon="time" />
-              {loading ? <ActivityIndicator color={palette.primary} /> : null}
-            </View>
-            <Txt variant="body" selectable>
-              {entry.reply}
-            </Txt>
-          </View>
-        ) : (
-          <Txt variant="sub" center style={{ paddingVertical: 20 }}>
-            {tr('مفيش بيانات لسه', 'No data yet')}
-          </Txt>
-        )}
-        {error ? (
-          <Txt variant="caption" color={palette.warn} style={{ marginTop: 10 }}>
-            {error}
-          </Txt>
-        ) : null}
-      </Glass>
-
-      <View style={{ flexDirection: row, gap: 10 }}>
-        <Button title={tr('تحديث', 'Refresh')} icon="refresh" loading={loading} disabled={!online} onPress={() => load(true)} style={{ flex: 1 }} />
-        <Button
-          title={tr('مشاركة', 'Share')}
-          icon="share-social"
-          variant="glass"
-          disabled={!entry}
-          onPress={() => entry && Share.share({ message: `${title}\n\n${entry.reply}` }).catch(() => {})}
-          style={{ flex: 1 }}
-        />
-      </View>
-      <Txt variant="caption" center>
-        {tr('النتيجة بتتحفظ على جهازك وتفتح من غير نت.', 'Results are saved on your device and open without internet.')}
-      </Txt>
-    </Screen>
-  );
+function printable(value:unknown):string {
+ if(value===null||value===undefined||value==='')return '—';
+ if(typeof value==='object')return JSON.stringify(value).slice(0,2000);
+ return String(value).slice(0,2000);
+}
+export default function Service(){
+ const params=useLocalSearchParams<{action:string}>();const action=String(params.action??'');
+ const {tr,lang,row,palette,cache,fetchService,online}=useApp();
+ const [loading,setLoading]=useState(false),[error,setError]=useState(''),[page,setPage]=useState(0),[open,setOpen]=useState(false);
+ const service=serviceByAction(action);
+ const entry=cache[action];
+ const records=recordsOf(entry?.data);
+ const load=async(force=false)=>{setLoading(true);setError('');try{const r=await fetchService(action,force);setError(r.error??'');}catch{setError(tr('تعذر تحميل البيانات','Could not load records'));}finally{setLoading(false);}};
+ useEffect(()=>{setPage(0);void load();},[action]);
+ return <Screen padBottom={false}>
+   <Button small variant="glass" title={tr('رجوع','Back')} onPress={()=>router.canGoBack()?router.back():router.replace('/(tabs)')}/>
+   <Header title={service?.title[lang]??tr('بيانات الجامعة','University records')} subtitle={service?.desc[lang]}/>
+   {entry?<View style={{flexDirection:row,gap:8,flexWrap:'wrap'}}><Chip label={tr('من بوابة الجامعة','University records')} icon="school-outline"/><Chip label={timeAgo(entry.at,lang)} icon="time-outline"/></View>:null}
+   {loading?<ActivityIndicator color={palette.primary}/>:null}
+   {error?<Glass><Txt color={palette.warn}>{error}</Txt></Glass>:null}
+   {records.length===0&&!loading?<Glass><Txt>{entry?tr('الجامعة لم تُرجع سجلات لهذه الخدمة.','The university returned no records for this service.'):tr('مفيش بيانات محفوظة لسه.','No records saved yet.')}</Txt></Glass>:null}
+   {records.slice(page*15,page*15+15).map((record,index)=><Glass key={page*15+index}><View style={{gap:9}}>
+     <Txt variant="caption">{tr('سجل','Record')} {page*15+index+1}</Txt>
+     {Object.entries(record).slice(0,80).map(([k,v])=><View key={k} style={{gap:2,borderBottomWidth:0.5,borderColor:palette.glassBorder,paddingBottom:8}}>
+       <Txt variant="caption">{k.replace(/([a-z])([A-Z])/g,'$1 $2').replaceAll('_',' ')}</Txt>
+       <Txt selectable>{printable(v)}</Txt>
+     </View>)}
+   </View></Glass>)}
+   {records.length>15?<View style={{flexDirection:row,gap:8}}><Button small disabled={page===0} title={tr('السابق','Previous')} onPress={()=>setPage(p=>p-1)}/><Txt>{page+1}/{Math.ceil(records.length/15)}</Txt><Button small disabled={(page+1)*15>=records.length} title={tr('التالي','Next')} onPress={()=>setPage(p=>p+1)}/></View>:null}
+   {endpoints[action]?<Button icon="refresh" disabled={!online} loading={loading} title={tr('تحديث من الجامعة','Refresh from university')} onPress={()=>void load(true)}/>:null}
+   <Button variant="glass" title={tr('فتح الموقع الرسمي','Open official website')} onPress={()=>setOpen(true)}/>
+   <Txt variant="caption">{tr('أسماء الحقول كما وردت من الجامعة. كل خدمة لها وقت تحديث مستقل؛ القديم لا يُعتبر بيانات حية.','Field names are preserved from the university. Each service has its own update time; cached records are not live data.')}</Txt>
+   <PortalModal visible={open} browse onClose={()=>setOpen(false)}/>
+ </Screen>;
 }

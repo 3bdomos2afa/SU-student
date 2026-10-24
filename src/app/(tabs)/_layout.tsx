@@ -1,18 +1,10 @@
-import { Redirect, Tabs } from 'expo-router';
-
-import { GlassTabBar, type TabBarProps } from '@/components/chrome';
-import { useApp } from '@/context/app-context';
-
+import { Tabs } from 'expo-router';
+import { GlassTabBar } from '@/components/chrome';
 export default function TabsLayout() {
-  const { session } = useApp();
-  if (!session) return <Redirect href="/login" />;
   return (
-    <Tabs screenOptions={{ headerShown: false }} tabBar={(props) => <GlassTabBar {...(props as unknown as TabBarProps)} />}>
-      <Tabs.Screen name="index" />
-      <Tabs.Screen name="services" />
-      <Tabs.Screen name="plan" />
-      <Tabs.Screen name="tools" />
-      <Tabs.Screen name="settings" />
+    <Tabs screenOptions={{ headerShown:false }} tabBar={(props)=><GlassTabBar {...props}/>}>
+      <Tabs.Screen name="index"/><Tabs.Screen name="services"/><Tabs.Screen name="plan"/>
+      <Tabs.Screen name="tools"/><Tabs.Screen name="settings"/>
     </Tabs>
   );
 }
