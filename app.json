@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "UnicodeSIS",
-    "slug": "unicodesis-mobile",
+    "slug": "su-student",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,6 @@
     },
     "android": {
       "package": "com.unicodesis.student",
-      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "backgroundColor": "#0B1030",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -51,6 +50,12 @@
     ],
     "experiments": {
       "typedRoutes": false
+    },
+    "owner": "su_student",
+    "extra": {
+      "eas": {
+        "projectId": "09b1d4d4-98bc-45bb-90c6-341574f34c05"
+      }
     }
   }
 }
