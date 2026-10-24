@@ -1,3 +1,4 @@
+import { academic, canonical } from '@/lib/academic';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -18,10 +19,12 @@ function num(v: string) {
 }
 
 export default function Tools() {
-  const { tr, palette, row, completed, draft, toggleDraft, setDraft, grades, setGrade, gpaBase, setGpaBase, session } = useApp();
+  const { tr, palette, row, completed:manualCompleted, cache, draft, toggleDraft, setDraft, grades, setGrade, gpaBase, setGpaBase, session } = useApp();
   const [tab, setTab] = useState<Tab>('planner');
   const [load, setLoad] = useState<number>(18);
-  const earned = earnedCredits(completed);
+  const official=academic(cache);
+  const completed=new Set([...manualCompleted,...curriculumCourses.filter(c=>official.passed.has(canonical(c.code))).map(c=>c.code)]);
+  const earned=official.earned??earnedCredits(completed);
 
   const draftCourses = draft.map((c) => courseByCode.get(c)).filter((c): c is NonNullable<typeof c> => !!c);
   const draftHours = draftCourses.reduce((s, c) => s + c.credits, 0);
@@ -103,11 +106,11 @@ export default function Tools() {
             {lockedInDraft.length ? (
               <Txt variant="caption" color={palette.warn} style={{ marginTop: 8 }}>
                 {tr('⚠️ فيه مواد متطلباتها لسه مخلصتش: ', '⚠️ Prerequisites missing for: ')}
-                {lockedInDraft.map((c) => c.code).join('، ')}
+                {lockedInDraft.map((c) => c.title).join('، ')}
               </Txt>
             ) : null}
             <Txt variant="caption" style={{ marginTop: 6 }}>
-              {tr('المسودة تخطيط بس — التسجيل الفعلي بيتم من نظام الجامعة.', 'Planning only — actual registration happens in the university system.')}
+              {tr('المسودة للتخطيط بس — التسجيل الفعلي بيتم من نظام الجامعة.', 'Planning only — actual registration happens in the university system.')}
             </Txt>
           </Glass>
 
@@ -131,7 +134,7 @@ export default function Tools() {
             </Glass>
           ) : (
             <Glass>
-              <EmptyState icon="clipboard-outline" title={tr('المسودة فاضية', 'Draft is empty')} text={tr('اضغط "اقترحلي مسودة" أو ضيف مواد من الخطة', 'Tap "Suggest a draft" or add courses from the plan')} />
+              <EmptyState icon="clipboard-outline" title={tr('المسودة فاضية', 'Draft is empty')} text={tr('دوس "اقترحلي مسودة" أو ضيف مواد من الخطة', 'Tap "Suggest a draft" or add courses from the plan')} />
             </Glass>
           )}
           {draftCourses.length ? (
@@ -146,7 +149,7 @@ export default function Tools() {
           <Glass padding={16}>
             <Txt variant="h3">{tr('وضعك الحالي', 'Current standing')}</Txt>
             <View style={{ gap: 10, marginTop: 12 }}>
-              <Field icon="stats-chart" placeholder={tr('المعدل التراكمي الحالي (مثال 3.12)', 'Current CGPA (e.g. 3.12)')} keyboardType="decimal-pad" value={gpaBase.cgpa} onChangeText={(v) => setGpaBase({ ...gpaBase, cgpa: v })} />
+              <Field icon="stats-chart" placeholder={tr('معدلك التراكمي دلوقتي (مثلًا 3.12)', 'Current CGPA (e.g. 3.12)')} keyboardType="decimal-pad" value={gpaBase.cgpa} onChangeText={(v) => setGpaBase({ ...gpaBase, cgpa: v })} />
               <Field icon="time" placeholder={tr('الساعات اللي اتحسبت في المعدل', 'Credits counted in CGPA')} keyboardType="number-pad" value={gpaBase.hours} onChangeText={(v) => setGpaBase({ ...gpaBase, hours: v })} />
               <Field icon="flag" placeholder={tr('المعدل اللي عاوز توصله (اختياري)', 'Target CGPA (optional)')} keyboardType="decimal-pad" value={gpaBase.target} onChangeText={(v) => setGpaBase({ ...gpaBase, target: v })} />
             </View>
@@ -165,7 +168,7 @@ export default function Tools() {
             {draftCourses.filter((c) => c.credits > 0).map((c) => (
               <View key={c.code} style={{ marginTop: 12, gap: 6 }}>
                 <Txt variant="label">
-                  {c.code} · {c.credits} {tr('س', 'cr')}
+                  {c.title} · {c.credits} {tr('س', 'cr')}
                 </Txt>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }}>
                   {GRADE_SCALE.map((g) => (
@@ -196,7 +199,7 @@ export default function Tools() {
               </Txt>
             ) : null}
             <Txt variant="caption" center style={{ marginTop: 8 }}>
-              {tr('تقدير على مقياس 4.0 — المعدل الرسمي من نظام الجامعة.', 'Estimate on a 4.0 scale — the official GPA comes from the university system.')}
+              {tr('تقدير من 4.0 — المعدل الرسمي من نظام الجامعة.', 'Estimate on a 4.0 scale — the official GPA comes from the university system.')}
             </Txt>
           </Glass>
         </>
