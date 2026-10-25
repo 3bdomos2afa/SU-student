@@ -1,44 +1,53 @@
-# SU Student 1.6.2 — verification record
+# SU Student 1.6.3 — verification record
 
-Date: 25 October 2026. Complete source-code release; no device-certified binary.
+Date: 25 October 2026. Full source-code release, not a signed APK or device-certified fix.
 
-## Reproduced uploaded-source defect
-- Inspected the public files at commit `254ebe9706ed275829a8b24d8bedbff1928a7628`.
-- Its package.json matches 1.6.1, but package-lock.json contains old 1.0.0 root metadata and incompatible/missing dependencies.
-- `npm ci --dry-run --ignore-scripts --no-audit --no-fund` against those two uploaded files failed with `EUSAGE`, reporting that package/lock are out of sync.
-- `.gitignore` and `.easignore` from the delivered source were absent from the commit.
-- Attempted the requested EAS `build:view` command; Expo authentication was unavailable. The actual cloud logs for build `64ea45d4-3ca5-4c4d-a636-95342da18edc` were NOT read. The reproduced defect is a confirmed blocker, not a claim about every possible cloud error.
+## Report and limitation
 
-## Completed for 1.6.2
-- Correct package-lock retained; root version metadata aligned to 1.6.2. Dependency versions were not force-upgraded.
-- `npm ci --dry-run --ignore-scripts --no-audit --no-fund` with corrected files passed. This is install-plan validation, not a fresh dependency installation.
+The user reports that the installed app closes within about one second. No APK, crash log, device model, installed version or confirmed closing stage was supplied. The cause has NOT been reproduced or identified on Android. This release hardens specific JavaScript startup paths; it is not proof that this particular crash was fixed.
+
+## Changes checked
+
+- Custom `index.js` entry preserves Metro web-runtime-first ordering and loads Expo Router. A synchronous JavaScript import exception attempts a plain native recovery screen with fixed diagnostic code, no raw message/stack/student information, no deletion.
+- Background module loading and synchronous task definition are guarded. Definition remains at bundle scope for headless startup. Registration still requests a minimum 30-minute interval; OS scheduling rules remain.
+- Closed portal does not evaluate the WebView/SSO implementation. Opening the portal loads it inside its own render error boundary.
+- Main render boundary hides splash defensively and shows a sanitized code.
+- Text/TextInput use platform font defaults unless bundled custom fonts have actually loaded.
+- Settings show version 1.6.3 and a note when background modules could not be initialized.
+- Package/lock build-integrity guard and partial-grade-sync fixes from 1.6.2 retained. Google experiment/native helper unchanged.
+
+## Completed checks
+
+- **61 app tests passed**, including 7 new startup tests.
+- **6 server fixture tests passed**.
 - TypeScript passed.
-- **54 app tests passed**, including 5 new build-integrity/sync-result checks. Existing Google-origin gating, popup patch/restore, course ownership and encrypted-state checks also passed.
-- **6 server tests passed** against fixtures.
-- Expo Doctor **20/20** passed.
-- `expo export --platform all` passed: Android/iOS Hermes bundles and web export.
-- Both local Android build commands passed dry-runs: normal `preview` and isolated `google-test`.
-- Preflight validates local release hashes and package/lock root metadata; cloud pre-install validates package/lock and build files without depending on intentionally excluded server files.
-- Per-course grade failures now contribute to partial-sync errors. UI no longer says that all university data is up to date solely because some requests succeeded.
+- Expo Doctor **20/20**.
+- `expo export --platform all` passed: new custom entry compiled to Android/iOS Hermes bundles and web assets.
+- Headless Chromium mobile-viewport smoke: login page rendered, guest tools opened, reload worked in light/dark contexts; no captured page JavaScript errors. This is a WEB check, not Android/iOS startup testing.
+- Dynamic config: normal profile = standard package/test flag false; Google profile = separate test package/flag true.
+- Mock tests exercise missing background module, definition/registration failure, synchronous bootstrap import failure/recovery, no eager portal load while hidden, and fixed diagnostic codes. These do not simulate native crashes.
 
-## Earlier source verification retained
-The unchanged Google experiment was Android-prebuilt in an isolated folder for 1.6.1; generated package/name and native patch were inspected. Patched Java parsed with a syntax parser. Neither check was a Gradle compile or Google sign-in test. The native helper and plugin were not modified for 1.6.2.
+## Not verified
 
-## Not verified / not delivered
-- No EAS cloud build, signed APK/IPA, full Gradle/Xcode compilation, physical-device test or store submission.
-- No real student/Google account login. The experiment may be rejected by Google; it does not turn WebView into Chrome.
-- No guarantee of university API field completeness, live data correctness, native popup callback/MFA behavior or notification delivery.
-- Google experiment remains opt-in, Android-only, and requires the `google-test` native build. Normal `preview`, iOS, Expo Go and OTA do not enable it.
-- Official broker/SIS integration remains unconfigured; server fixtures are not a working university server.
-- Data cached offline may be old. University sessions can expire even with local biometric protection.
-- Background polling interval is OS-controlled; no immediate remote-push service exists.
-- The university portal/API are configured with HTTP. Local encryption does not secure this network traffic.
+- No full Gradle/Xcode/native build, EAS cloud run, physical Android/iPhone run, signed APK/IPA or production submission.
+- No real university/Google login or Google popup/MFA callback test. User-agent experiment may be rejected and is not official SSO.
+- No live data correctness/completeness, university field mapping, notification delivery or background schedule guarantee.
+- No recovery from native abort, segmentation fault, native-module load failure outside JavaScript, OS process kill, or all asynchronous errors. JavaScript guards cannot reliably catch those.
 
-## Acceptance before sharing with students
-Follow `BUILD-FIX-AR.md` and `GOOGLE-TEST-AR.md`. Use a fresh folder, authorized Expo account and a new build, not Rebuild on the old commit.
-On a real device, validate Google sign-in/cancel/MFA/blocked-useragent, only the signed-in student's data, official grades and absence, timestamps/partial failures, expiry/account-switch/sign-out, offline/reconnect behavior and notification permissions/restrictions.
-Never send passwords, OTPs, tokens or session storage in diagnostics.
+## Acceptance on the user's device
 
-## Unresolved audit carried forward
-Previous audit reported 5 high-severity transitive tooling entries (`expo`, `@expo/cli`, `@expo/code-signing-certificates`, `node-forge`, `zod`). No force-fix or unsupported SDK downgrade was applied. Review supported updates and advisory exposure before production.
-Font distribution rights also require review before public redistribution.
+See `STARTUP-REPAIR-AR.md`. Build from a new folder; do not Rebuild the old commit or use OTA.
+Cold-start on/offline several times; open/close the portal; background/foreground; test existing saved state and account switching without deleting data.
+If a recovery screen appears, share only its code/version and device model. If the process still closes, capture `adb logcat -b crash -d` immediately after reproducing and redact personal data/tokens.
+Only after startup is stable, test authorized university Google sign-in and compare the signed-in student's profile, courses, grades and absence with the official portal.
+
+## Previous build finding
+
+For build `64ea45d4-3ca5-4c4d-a636-95342da18edc`, inspected public commit `254ebe9706ed275829a8b24d8bedbff1928a7628`.
+Its package.json was 1.6.1 but lock root was old 1.0.0 with dependency mismatches. `npm ci --dry-run` on those uploaded files failed with EUSAGE. Corrected lock passed install-plan validation in 1.6.2. The EAS build:view request required unavailable Expo login, so actual cloud build logs were NOT read.
+The unchanged Google native helper was prebuilt and Java-syntax parsed in 1.6.1, not compiled by Gradle or validated by real sign-in.
+
+## Carried-forward risks
+
+University portal/API are configured with HTTP; encrypted storage does not secure network traffic. Sessions can expire; biometric unlock does not renew SIS authorization. Offline cache may be stale; successful requests alone do not prove all university data is correct.
+Previous audit reported 5 high-severity transitive tooling entries; no force-fix or incompatible SDK downgrade was applied. Review supported updates/advisories and font redistribution rights before production.

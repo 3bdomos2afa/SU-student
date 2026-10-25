@@ -9,7 +9,7 @@
   },
   {
     "path": "AUTH-SETUP.md",
-    "sha256": "695eb0a50c2f01eaff6d6334f02caed964389caa4bdc4fdccd6bcd747885950b"
+    "sha256": "f52f53fad8c60f12af4eec8020b703489df49acee1a78d1f592103d5af27fa06"
   },
   {
     "path": "BUILD-FIX-AR.md",
@@ -17,7 +17,7 @@
   },
   {
     "path": "GOOGLE-TEST-AR.md",
-    "sha256": "88f07754ec9c03b41e783832585176aea0def6bff405f563caad9427b517cb2a"
+    "sha256": "c7e894ca0f6ca6cc059618fee01703450747a02b16c17801bf487c77e3f08a23"
   },
   {
     "path": "LICENSE",
@@ -25,15 +25,19 @@
   },
   {
     "path": "README.md",
-    "sha256": "870a1c96c04fb7c754a5f96358e38f832ccdd0168bc067345096dea564044014"
+    "sha256": "e92a29a226bfe926843da5d647862c264a25c0eb446be10ae881da2efaef4935"
+  },
+  {
+    "path": "STARTUP-REPAIR-AR.md",
+    "sha256": "c6a07dd7944c81824facf12287f9062823023330d9c4bc845ab79d09e4afcbfa"
   },
   {
     "path": "START_HERE_AR.md",
-    "sha256": "f579d26d58e60bdbaf0c70198477e49a5dc3d80c51635b01577d66b66d52ecd8"
+    "sha256": "84cdee71ff4d16413705477b0195567ede1a5184dbe6c687af377f04e531973b"
   },
   {
     "path": "TESTING.md",
-    "sha256": "ea7930217c47eedd040023ed815a46c9c7c8c83cd63a0856ddf2cd9f97e11553"
+    "sha256": "e66fc303f3e4b2d0665ff1e222830a23b500b29cd43affac67729985ac9159d1"
   },
   {
     "path": "app.config.cjs",
@@ -41,7 +45,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "b485f4957c8c7240b262ff80ba47d697c20e4ed20e7445bd7a7573cfabd360eb"
+    "sha256": "d9bb75fa71e2809abd231dd117c7025fb1664e3e43cb9692df6cac69e282e54b"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -80,12 +84,16 @@
     "sha256": "df6942c9dbbbb170868497d6bdee5e12b36c760a10bc1ac6700dc2fc04e9ee5a"
   },
   {
+    "path": "index.js",
+    "sha256": "5bafd467c453cac95e015adc75402b87eb323d9a6e5b5ec2b3b2d25746bda30f"
+  },
+  {
     "path": "package-lock.json",
-    "sha256": "73e0ee070b3afff7d8e10af2692d6cae1ef59e71e541593fd14f4f325819b7ec"
+    "sha256": "ee384edb7ad5475336a3da689bf44db40bf2ac20327d2b4d825d0bd585811fbf"
   },
   {
     "path": "package.json",
-    "sha256": "a295ff97a09e725d71e403557300151e8780ebacb94edb620b3872d2bfe47e65"
+    "sha256": "fad0ea59346cc505bc43f145d127c0f3b3d7a495c9bb9ecfbabdfc1d20a7bdbb"
   },
   {
     "path": "plugins/google-test-popup.java.txt",
@@ -105,7 +113,7 @@
   },
   {
     "path": "scripts/build-preflight.cjs",
-    "sha256": "b8f858659c8cae84c0998ab006cefe7e49e0d4a4a1eff3419ef9dfd8fd94f59b"
+    "sha256": "8dd3aadaab9eba3ad2e6f33edca0c3b0a964732e642ea6b441133a6289ad6226"
   },
   {
     "path": "scripts/build-preview.cjs",
@@ -185,7 +193,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "8bbbc6e05c03847a9e766e222267b138a80137940d63d23b7ae6a0f0505af34e"
+    "sha256": "d4f375b8fd164a0f10a03cb171dc71d04c497277caf4292797febc1304fa1527"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -193,7 +201,7 @@
   },
   {
     "path": "src/app/_layout.tsx",
-    "sha256": "3b3bcd7a10e68eecc36b0234c6c4d31dd188766307de1f4e679959064a6da0b7"
+    "sha256": "07884821e995f0c471e09c2117b6f878aa4187d32d0e5635ae8350f4a2d61400"
   },
   {
     "path": "src/app/course/[code].tsx",
@@ -209,7 +217,7 @@
   },
   {
     "path": "src/app/login.tsx",
-    "sha256": "6a8522a48b0156fe82d7ee3a11dde665bd96da8e425fd5c58c705f771d6aaf8d"
+    "sha256": "a5187f4f0ed3ade5ed12aefa9f694b6a47dca80a69bdbc6808d974db02d7f960"
   },
   {
     "path": "src/app/oauth/callback.tsx",
@@ -217,7 +225,7 @@
   },
   {
     "path": "src/app/service/[action].tsx",
-    "sha256": "a8441c8f5d3899c860d92df8ae987fe0135d2d156ae3b81ae79a4bd0862f38c9"
+    "sha256": "5f3ba443861b7d2dc2720cafba25cf68ab39900a83936ae01692583805095647"
   },
   {
     "path": "src/app/study.tsx",
@@ -253,7 +261,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "6e89e43f04f5e657a47dc5dce4358467ce1a705e7304fb1ce8d88f0f451a1eef"
+    "sha256": "ff7d19e02b1a3d954746d4a42d99e24ed429edbb7dcc48fde2c108a81ddf32a6"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -262,6 +270,10 @@
   {
     "path": "src/components/map-canvas.tsx",
     "sha256": "6be1c7b19c5480a322deab4343d570cef6ce1ec2ffba0f79d7f47172473d661d"
+  },
+  {
+    "path": "src/components/portal-entry.tsx",
+    "sha256": "003ab44deb0a03eaeac45365f004237310926aafb9accf08735ce8bc3d710bb3"
   },
   {
     "path": "src/components/portal-modal.tsx",
@@ -277,7 +289,7 @@
   },
   {
     "path": "src/components/ui.tsx",
-    "sha256": "ca73e5762df7cf5b004081cf807cda9c58b16bd88db57f72be4094ed0abcdf2a"
+    "sha256": "9a058cffedfe17b426ba6d3c20b6f408edc07d6f6eb9c0efc5cc6ec1ff9d61c6"
   },
   {
     "path": "src/context/app-context.tsx",
@@ -304,8 +316,12 @@
     "sha256": "d59e27bc4f80a72facb404099edd4c16ee56ca24d556a58096c29031d4c7f315"
   },
   {
+    "path": "src/lib/background-guard.ts",
+    "sha256": "6e86b9fbb5e37fea7a0f28c27243ecc9e91f9658d30dc5fa9ce50573110e9b2a"
+  },
+  {
     "path": "src/lib/background-sync.ts",
-    "sha256": "67d2be2a4800c733e683f8fb3abf4854a1f711cbbe5080c3a29cd87f9af6a16a"
+    "sha256": "65a295351a5b254cece0317ebd799a9081216b70b932994c7b1160f39bf748e5"
   },
   {
     "path": "src/lib/change-alerts.ts",
@@ -314,6 +330,10 @@
   {
     "path": "src/lib/focus.ts",
     "sha256": "28e44c71c909f8565e5fa2df7b69714d18eb66f35cc8b63d31e1b9eabb16160a"
+  },
+  {
+    "path": "src/lib/font-ready.tsx",
+    "sha256": "ac6d69777f382802f27a42a70036a0d2f70d1e0d714aae86d8fa1c920d74ec68"
   },
   {
     "path": "src/lib/format.ts",
@@ -364,6 +384,10 @@
     "sha256": "d17bcfaeed3c93551943756027ab04dbc8188909f032469a6acb5fb63259e31f"
   },
   {
+    "path": "src/lib/startup-diagnostics.cjs",
+    "sha256": "944fa8b2685a6ca301ff871a388ab1dd67a03670d85fb588a5374c95bcfac5a3"
+  },
+  {
     "path": "src/lib/storage.ts",
     "sha256": "bc137d0d0674ec0517f3b4e7d115c0e4ca8fe26fb6e4f5cbaca24984b5c6ae50"
   },
@@ -406,6 +430,10 @@
   {
     "path": "tests/portal.test.ts",
     "sha256": "eef3c731a1dd9c2b7e7f4dd87d97ca4fe5b1113a8ba538a33791e384530ae4fd"
+  },
+  {
+    "path": "tests/startup.test.ts",
+    "sha256": "4c2cf8001ed7ea57d852db55810f9dacf59f595e02cd65f8deaa087836db980c"
   },
   {
     "path": "tests/study.test.ts",

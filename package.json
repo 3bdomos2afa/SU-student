@@ -1,7 +1,7 @@
 {
   "name": "unicodesis-mobile",
-  "version": "1.6.2",
-  "main": "expo-router/entry",
+  "version": "1.6.3",
+  "main": "index.js",
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.4.2",
     "@expo-google-fonts/inter": "^0.4.2",
