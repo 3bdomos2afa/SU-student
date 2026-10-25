@@ -1,0 +1,93 @@
+package __PACKAGE__
+
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.os.Process
+import java.io.File
+import java.io.PrintWriter
+import java.io.StringWriter
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+// Pure Android. No React Native, no Expo, no network, no credentials.
+object CrashReporter {
+  const val REPORT_FILE = "su-last-crash.txt"
+  private const val COUNT_FILE = "su-start-count"
+  private const val MAX_CHARS = 60000
+  @Volatile private var installed = false
+
+  fun isCrashProcess(ctx: Context): Boolean {
+    val name = try {
+      if (Build.VERSION.SDK_INT >= 28) Application.getProcessName()
+      else File("/proc/self/cmdline").readText().trim { it <= ' ' || it == '\u0000' }
+    } catch (_: Throwable) { "" }
+    return name.endsWith(":crash")
+  }
+
+  fun install(app: Application) {
+    if (installed || isCrashProcess(app)) return
+    installed = true
+    val previous = Thread.getDefaultUncaughtExceptionHandler()
+    Thread.setDefaultUncaughtExceptionHandler { thread, error ->
+      try {
+        val report = header(app) + "Thread: " + thread.name + "\n\n" + stack(error)
+        show(app, report)
+      } catch (_: Throwable) {
+        previous?.uncaughtException(thread, error)
+      }
+      Process.killProcess(Process.myPid())
+      System.exit(10)
+    }
+    try {
+      val countFile = File(app.filesDir, COUNT_FILE)
+      val count = (if (countFile.exists()) countFile.readText().trim().toIntOrNull() ?: 0 else 0) + 1
+      countFile.writeText(count.toString())
+      app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+        override fun onActivityResumed(activity: Activity) { if (activity !is CrashActivity) countFile.delete() }
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+        override fun onActivityStarted(activity: Activity) {}
+        override fun onActivityPaused(activity: Activity) {}
+        override fun onActivityStopped(activity: Activity) {}
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+        override fun onActivityDestroyed(activity: Activity) {}
+      })
+      if (count >= 2) {
+        val last = File(app.filesDir, REPORT_FILE)
+        val previousReport = if (last.exists()) "\n\nLast saved report:\n" + last.readText() else "\n\nNo Java report was saved: the previous start most likely died in native code (C++/.so) before any screen appeared."
+        show(app, header(app) + "Consecutive failed starts: " + count + previousReport, false)
+      }
+    } catch (_: Throwable) {}
+  }
+
+  private fun show(ctx: Context, report: String, save: Boolean = true) {
+    val text = if (report.length > MAX_CHARS) report.substring(0, MAX_CHARS) else report
+    if (save) try { File(ctx.filesDir, REPORT_FILE).writeText(text) } catch (_: Throwable) {}
+    val intent = Intent(ctx, CrashActivity::class.java)
+    intent.putExtra(CrashActivity.EXTRA_REPORT, text)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    ctx.startActivity(intent)
+  }
+
+  private fun header(ctx: Context): String {
+    val version = try {
+      val p = ctx.packageManager.getPackageInfo(ctx.packageName, 0)
+      @Suppress("DEPRECATION") (p.versionName + " (" + p.versionCode + ")")
+    } catch (_: Throwable) { "?" }
+    return "SU Student " + version + "\n" +
+      "Device: " + Build.MANUFACTURER + " " + Build.MODEL + " (" + Build.DEVICE + ")\n" +
+      "Android: " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")\n" +
+      "ABIs: " + Build.SUPPORTED_ABIS.joinToString(",") + "\n" +
+      "Time: " + SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Date()) + "\n"
+  }
+
+  private fun stack(error: Throwable): String {
+    val writer = StringWriter()
+    error.printStackTrace(PrintWriter(writer))
+    return writer.toString()
+  }
+}

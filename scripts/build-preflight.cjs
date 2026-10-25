@@ -28,7 +28,7 @@ function checkRelease(root, fullManifest = true) {
   }
   // EAS intentionally excludes server/, native folders and generated font mappings.
   const required = ['index.js', 'src/lib/background-guard.ts', 'src/components/portal-entry.tsx', 'src/lib/startup-diagnostics.cjs', 'src/lib/font-ready.tsx', 'app.json', 'app.config.cjs', 'eas.json',
-    'scripts/prepare-fonts.cjs', 'plugins/with-portal-network.cjs',
+    'scripts/prepare-fonts.cjs', 'plugins/with-portal-network.cjs', 'plugins/with-crash-reporter.cjs', 'plugins/with-android-no-minify.cjs', 'plugins/crash-reporter.kt.txt', 'plugins/crash-activity.kt.txt',
     'plugins/with-google-webview-test.cjs', 'plugins/google-test-popup.java.txt',
     'src/lib/google-webview-policy.json', 'src/lib/background-sync.ts',
     'assets/fonts/Froople.ttf', 'assets/fonts/ThmanyahSans-Regular.otf', 'assets/fonts/ThmanyahSans-Bold.otf'];
