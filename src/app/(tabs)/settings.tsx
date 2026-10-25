@@ -1,3 +1,4 @@
+import { backgroundSyncAvailable } from '@/lib/background-sync';
 import { requestReminders } from '@/lib/notifications';
 import { ReminderSettings } from '@/components/reminder-settings';
 import { useState } from 'react';
@@ -6,14 +7,15 @@ import { router } from 'expo-router';
 import { Button, Glass, Header, Screen, Segmented, Txt } from '@/components/ui';
 import { useApp, type ThemePref } from '@/context/app-context';
 import { timeAgo } from '@/lib/format';
-import { PortalModal } from '@/components/portal-modal';
+import { PortalModal } from '@/components/portal-entry';
 
 export default function Settings(){
  const a=useApp();const {tr,settings,updateSettings,session,palette,row,lang}=a;
  const [open,setOpen]=useState(false);
  const [msg,setMsg]=useState('');
  return <Screen>
-   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.3.0"/>
+   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.6.3"/>
+   {!backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('مزامنة الخلفية مش متاحة في النسخة دي. التحديث عند فتح التطبيق والريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
    <Glass><View style={{gap:12}}>
      <Txt variant="h3">{session?.name??tr('أدوات المذاكرة على جهازك','Local study tools')}</Txt>
      <Txt variant="caption">{session?`${tr('رقم الطالب','Student ID')}: ${session.studentId}`:tr('مفيش حساب جامعة مربوط','No university account connected')}</Txt>

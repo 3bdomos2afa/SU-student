@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { View, ActivityIndicator } from 'react-native';
 import { Button, Chip, Glass, Header, Screen, Txt } from '@/components/ui';
-import { PortalModal } from '@/components/portal-modal';
+import { PortalModal } from '@/components/portal-entry';
 import { useApp } from '@/context/app-context';
 import { serviceByAction } from '@/data/services';
 import { recordsOf, endpoints } from '@/lib/portal';

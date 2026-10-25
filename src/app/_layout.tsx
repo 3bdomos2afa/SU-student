@@ -2,6 +2,7 @@ import '@/lib/background-sync';
 import { ReminderController } from '@/components/reminder-controller';
 import { useFonts } from 'expo-font';
 import { fonts } from '@/lib/fonts';
+import { FontReadyContext } from '@/lib/font-ready';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -27,7 +28,7 @@ function Shell() {
   }, [ready, fontReady]);
   if (!ready || !fontReady) return null;
   return (
-    <View style={{ flex: 1, backgroundColor: palette.bg[0] }}>
+    <FontReadyContext.Provider value={loaded}><View style={{ flex: 1, backgroundColor: palette.bg[0] }}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false, animation: 'none', contentStyle: { backgroundColor: palette.bg[0] } }}>
         <Stack.Screen name="index" />
@@ -42,7 +43,7 @@ function Shell() {
       <ReminderController />
       <NetworkBanner />
       <LockOverlay />
-    </View>
+    </View></FontReadyContext.Provider>
   );
 }
 

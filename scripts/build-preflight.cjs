@@ -27,7 +27,7 @@ function checkRelease(root, fullManifest = true) {
     }
   }
   // EAS intentionally excludes server/, native folders and generated font mappings.
-  const required = ['app.json', 'app.config.cjs', 'eas.json',
+  const required = ['index.js', 'src/lib/background-guard.ts', 'src/components/portal-entry.tsx', 'src/lib/startup-diagnostics.cjs', 'src/lib/font-ready.tsx', 'app.json', 'app.config.cjs', 'eas.json',
     'scripts/prepare-fonts.cjs', 'plugins/with-portal-network.cjs',
     'plugins/with-google-webview-test.cjs', 'plugins/google-test-popup.java.txt',
     'src/lib/google-webview-policy.json', 'src/lib/background-sync.ts',

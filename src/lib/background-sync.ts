@@ -1,8 +1,7 @@
 // Best-effort background sync. Android (WorkManager) and iOS (BGTaskScheduler) decide the exact
 // timing; the minimum interval is a request, not a guarantee. Nothing runs after sign-out.
 import { Platform } from 'react-native';
-import * as TaskManager from 'expo-task-manager';
-import * as BackgroundTask from 'expo-background-task';
+import { setupBackground } from './background-guard';
 import { loadPrivate, savePrivate } from './vault';
 import { getJSON } from './storage';
 import { requestPortal, SYNC_ORDER, PortalError, type Session } from './portal';
@@ -47,18 +46,13 @@ export async function runBackgroundSync() {
     body: isAr ? 'جلسة الجامعة خلصت، فالتحديث التلقائي واقف لحد ما تدخل تاني.' : 'Your university session expired, so automatic updates are paused.' }], isAr);
 }
 
-if (Platform.OS !== 'web') {
-  TaskManager.defineTask(SYNC_TASK, async () => {
-    try { await runBackgroundSync(); return BackgroundTask.BackgroundTaskResult.Success; }
-    catch { return BackgroundTask.BackgroundTaskResult.Failed; }
-  });
-}
-
+// Synchronous task definition remains at module scope for headless startup.
+// require() stays inside the guarded loader so optional native JS errors do not abort startup.
+const backgroundRuntime = setupBackground(Platform.OS, SYNC_TASK, () => ({
+  manager: require('expo-task-manager') as typeof import('expo-task-manager'),
+  background: require('expo-background-task') as typeof import('expo-background-task'),
+}), runBackgroundSync);
+export const backgroundSyncAvailable = backgroundRuntime.available;
 export async function setBackgroundSync(on: boolean) {
-  if (Platform.OS === 'web') return;
-  try {
-    const registered = await TaskManager.isTaskRegisteredAsync(SYNC_TASK);
-    if (on && !registered) await BackgroundTask.registerTaskAsync(SYNC_TASK, { minimumInterval: 30 });
-    if (!on && registered) await BackgroundTask.unregisterTaskAsync(SYNC_TASK);
-  } catch { /* background work is optional; foreground sync still runs */ }
+  return backgroundRuntime.setEnabled(on);
 }

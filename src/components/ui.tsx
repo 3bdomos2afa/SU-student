@@ -1,6 +1,7 @@
 import { Backdrop } from './backdrop';
 import { Ionicons } from '@expo/vector-icons';
 import { fontFamily } from '@/lib/fonts';
+import { useCustomFontsReady } from '@/lib/font-ready';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -140,6 +141,7 @@ type TxtProps = TextProps & { variant?: Variant; color?: string; center?: boolea
 
 export function Txt({ variant = 'body', color, center, weight, style, ...rest }: TxtProps) {
   const { palette, align, isAr } = useApp();
+  const fontsReady = useCustomFontsReady();
   const muted = variant === 'sub' || variant === 'caption';
   const flat = StyleSheet.flatten(style) as TextStyle | undefined;
   const bold = !!weight || ['display', 'h1', 'h2', 'h3', 'label'].includes(variant) || ['600', '700', '800', '900', 'bold'].includes(String(flat?.fontWeight ?? ''));
@@ -150,7 +152,7 @@ export function Txt({ variant = 'body', color, center, weight, style, ...rest }:
         variants[variant],
         { color: color ?? (muted ? palette.sub : palette.text), textAlign: center ? 'center' : align, writingDirection: isAr ? 'rtl' : 'ltr' },
         style,
-        { fontFamily: fontFamily(isAr, bold, variant === 'h1' || variant === 'display'), fontWeight: 'normal' },
+        { fontFamily: fontsReady ? fontFamily(isAr, bold, variant === 'h1' || variant === 'display') : undefined, fontWeight: fontsReady ? 'normal' : (bold ? '700' : '400') },
       ]}
     />
   );
@@ -426,6 +428,7 @@ export function ProgressBar({ value, color, height = 8, track }: { value: number
 
 export function Field({ icon, style, ...props }: TextInputProps & { icon?: IconName }) {
   const { palette, row, align, isAr } = useApp();
+  const fontsReady = useCustomFontsReady();
   const [focused, setFocused] = useState(false);
   return (
     <View
@@ -452,7 +455,7 @@ export function Field({ icon, style, ...props }: TextInputProps & { icon?: IconN
           setFocused(false);
           props.onBlur?.(e);
         }}
-        style={[{ flex: 1, color: palette.text, fontSize: 16, fontFamily: fontFamily(isAr), textAlign: align, paddingVertical: 12 }, style]}
+        style={[{ flex: 1, color: palette.text, fontSize: 16, fontFamily: fontsReady ? fontFamily(isAr) : undefined, textAlign: align, paddingVertical: 12 }, style]}
       />
     </View>
   );

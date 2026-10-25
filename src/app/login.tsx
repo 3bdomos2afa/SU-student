@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Chip, Glass, Screen, Txt } from '@/components/ui';
-import { PortalModal } from '@/components/portal-modal';
+import { PortalModal } from '@/components/portal-entry';
 import { useApp } from '@/context/app-context';
 
 export default function Login(){
