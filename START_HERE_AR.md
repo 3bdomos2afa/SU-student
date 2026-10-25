@@ -1,4 +1,6 @@
-# SU Student 1.6.3 — فولدر واحد لـAndroid وiPhone
+> **1.7.0:** دخول Google أصبح جزءًا من البناء العادي على أندرويد (لا يوجد `build:google-test` أو تطبيق "SU Student Test" بعد الآن). راجع `GOOGLE-TEST-AR.md`.
+
+# SU Student 1.7.0 — فولدر واحد لـAndroid وiPhone
 
 **فك ZIP داخل مجلد جديد. لا تدمجه مع مشروع قديم ولا ترفع الملفات واحدًا واحدًا.**
 

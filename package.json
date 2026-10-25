@@ -1,6 +1,6 @@
 {
   "name": "unicodesis-mobile",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "main": "index.js",
   "dependencies": {
     "@expo-google-fonts/cairo": "^0.4.2",
@@ -63,7 +63,6 @@
     "build:ios": "node scripts/build-preview.cjs ios",
     "build:all": "node scripts/build-preview.cjs all",
     "test:server": "node --test server/test/broker.test.mjs",
-    "build:google-test": "node scripts/build-google-test.cjs",
     "preflight": "node scripts/build-preflight.cjs",
     "eas-build-pre-install": "node scripts/build-preflight.cjs --eas"
   },

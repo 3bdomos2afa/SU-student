@@ -1,14 +1,9 @@
-// Capability exists ONLY in the isolated Android test profile.
+// Google button inside the university page (Android): on by default.
+// Set SU_GOOGLE_WEBVIEW=0 to build without it. Google may still refuse an in-app browser.
 module.exports = ({ config }) => {
-  const enabled = process.env.SU_GOOGLE_WEBVIEW_TEST === '1'
-    && process.env.EAS_BUILD_PROFILE === 'google-test';
+  const enabled = process.env.SU_GOOGLE_WEBVIEW !== '0';
   return {
     ...config,
-    ...(enabled ? {
-      name: 'SU Student Test',
-      scheme: 'unicodesis-trial',
-      android: { ...config.android, package: 'com.unicodesis.student.googletrial' },
-    } : {}),
     extra: { ...config.extra, googleWebViewTest: enabled },
     plugins: [
       ...(config.plugins || []),

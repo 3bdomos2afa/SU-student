@@ -13,11 +13,11 @@
   },
   {
     "path": "BUILD-FIX-AR.md",
-    "sha256": "d352e1d5c161a206689221ce269d05033dbc274f588f13325e8f3931937b9f52"
+    "sha256": "9e68ec9257bdd5ce818cbf981ef791c7b8cbeb485eee2b39181150c9b7eeaa87"
   },
   {
     "path": "GOOGLE-TEST-AR.md",
-    "sha256": "c7e894ca0f6ca6cc059618fee01703450747a02b16c17801bf487c77e3f08a23"
+    "sha256": "464cf1cf048d34e7f7cc97573a6083daca1c171c686f1c061f443133febf8cf9"
   },
   {
     "path": "LICENSE",
@@ -25,15 +25,15 @@
   },
   {
     "path": "README.md",
-    "sha256": "e92a29a226bfe926843da5d647862c264a25c0eb446be10ae881da2efaef4935"
+    "sha256": "61f30bd9441a7aa0ffc23eecbc13fdd26691ffab196f75036e4dad41f6493839"
   },
   {
     "path": "STARTUP-REPAIR-AR.md",
-    "sha256": "c6a07dd7944c81824facf12287f9062823023330d9c4bc845ab79d09e4afcbfa"
+    "sha256": "9180f31ebc81b0e3403c15f9887d430c341301f1698a68fbe44e081360fa247b"
   },
   {
     "path": "START_HERE_AR.md",
-    "sha256": "84cdee71ff4d16413705477b0195567ede1a5184dbe6c687af377f04e531973b"
+    "sha256": "594c37e2f43135f9ccf6327785debc3fc736c9aab2b712b65249742e26d12378"
   },
   {
     "path": "TESTING.md",
@@ -41,11 +41,11 @@
   },
   {
     "path": "app.config.cjs",
-    "sha256": "97a1021d1a879dac50610adafda5d9072d0437df73b7020c85e5438cbb5d8380"
+    "sha256": "b869dd2fe6f93ced52e8a2ced743a7e1fee2e9baddeb51ee9074ac1e674efbf0"
   },
   {
     "path": "app.json",
-    "sha256": "d9bb75fa71e2809abd231dd117c7025fb1664e3e43cb9692df6cac69e282e54b"
+    "sha256": "f04660290a832984533352df0b933e8283c2a859a5680d6e6093962e38da8bbb"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -81,7 +81,7 @@
   },
   {
     "path": "eas.json",
-    "sha256": "df6942c9dbbbb170868497d6bdee5e12b36c760a10bc1ac6700dc2fc04e9ee5a"
+    "sha256": "99beba26569ea31719d0afdd5ab88543a8e08189e3daf78c8085c66c90653ca9"
   },
   {
     "path": "index.js",
@@ -89,11 +89,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "ee384edb7ad5475336a3da689bf44db40bf2ac20327d2b4d825d0bd585811fbf"
+    "sha256": "386350e4ecab80b3b2cbfd4f536991f9d677b73ed8265b2d34626778671e0078"
   },
   {
     "path": "package.json",
-    "sha256": "fad0ea59346cc505bc43f145d127c0f3b3d7a495c9bb9ecfbabdfc1d20a7bdbb"
+    "sha256": "6aced1437c98ccdfe6664a069619d15980b765ce86ab693765e681d56f90c3b8"
   },
   {
     "path": "plugins/google-test-popup.java.txt",
@@ -106,10 +106,6 @@
   {
     "path": "plugins/with-portal-network.cjs",
     "sha256": "719427406aec45878e125c14dd78f681e2e57cb6772f2b899fc41a824cbbcfbe"
-  },
-  {
-    "path": "scripts/build-google-test.cjs",
-    "sha256": "20804e1e613bcb4abeaeb4dfcd1d886198a473046510cdfe3f0cd9cd0875fee0"
   },
   {
     "path": "scripts/build-preflight.cjs",
@@ -193,7 +189,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "d4f375b8fd164a0f10a03cb171dc71d04c497277caf4292797febc1304fa1527"
+    "sha256": "5457478275f9bd38247a8b1df412a1f61eb83cc9974ba398ba400fd386a6752a"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -261,7 +257,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "ff7d19e02b1a3d954746d4a42d99e24ed429edbb7dcc48fde2c108a81ddf32a6"
+    "sha256": "6991941606d3210a9f24ccb097b67650e22851ba164a6e89cf5efd7e1207e730"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -273,11 +269,11 @@
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "003ab44deb0a03eaeac45365f004237310926aafb9accf08735ce8bc3d710bb3"
+    "sha256": "fe6f9f133f4dca35a6313bf709492cc356c1da855062a097c1f339584ca299a7"
   },
   {
     "path": "src/components/portal-modal.tsx",
-    "sha256": "ea0c41595dc953bddfd5ef59ae44a96c26ebf839f00f41820d6aaaa7c54d2cc6"
+    "sha256": "6c03f53a0d5ca153ca1a8b7ff2d4c8b825706b863b197133a3053e5d19bf93a4"
   },
   {
     "path": "src/components/reminder-controller.tsx",
@@ -293,7 +289,7 @@
   },
   {
     "path": "src/context/app-context.tsx",
-    "sha256": "8520ffa0e1ac41fa1059fe735a54f1ab343cf9e10b9c2c257850d47ebd0d3074"
+    "sha256": "c52ba9a8300757037d24896c5ed917357c85dbedaf47ab63bef127b552626374"
   },
   {
     "path": "src/data/curriculum-helpers.ts",
@@ -321,7 +317,7 @@
   },
   {
     "path": "src/lib/background-sync.ts",
-    "sha256": "65a295351a5b254cece0317ebd799a9081216b70b932994c7b1160f39bf748e5"
+    "sha256": "501d0de85b2b85812b793328ec31eaf811a7ddc62c4a6b57b8e3a52b059ad3a0"
   },
   {
     "path": "src/lib/change-alerts.ts",
@@ -425,7 +421,7 @@
   },
   {
     "path": "tests/google-trial.test.ts",
-    "sha256": "530dd07fb1f3fb388b03cba4786b202ac2ea7cdf0d4abfc7977c2abdb7c1e745"
+    "sha256": "42a516a3d699216089966d2730dfe46fffea041ab3028986b59fa2eb75e81ece"
   },
   {
     "path": "tests/portal.test.ts",
