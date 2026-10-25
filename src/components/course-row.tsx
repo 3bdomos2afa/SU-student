@@ -41,11 +41,11 @@ export function CourseRow({ course, status, onPress, onToggle, right }: Props) {
         <Ionicons name={icon} size={24} color={color} />
       </Pressable>
       <View style={{ flex: 1 }}>
-        <Txt variant="label" numberOfLines={1}>
-          {course.code}
+        <Txt variant="label" numberOfLines={2}>
+          {course.title}
         </Txt>
         <Txt variant="caption" numberOfLines={1}>
-          {course.title}
+          {course.code}
         </Txt>
       </View>
       {right ?? (

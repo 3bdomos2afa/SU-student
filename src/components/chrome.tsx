@@ -1,9 +1,11 @@
+import type { BottomTabBarProps } from 'expo-router/tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useRef } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, Text, View, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Avatar, Button, Glass, GlassBackground, Txt } from '@/components/ui';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Avatar, BRAND_GRADIENT, Button, Glass, GlassBackground, Txt } from '@/components/ui';
 import { useApp } from '@/context/app-context';
 import type { IconName } from '@/data/services';
 import { tap } from '@/lib/haptics';
@@ -11,30 +13,33 @@ import { alpha } from '@/lib/theme';
 
 /** Offline / back-online banner shown above every screen. */
 export function NetworkBanner() {
-  const { banner, tr, palette, row, refreshAll, refreshing, dismissBanner, session } = useApp();
+  const { banner, tr, palette, row, refreshAll, refreshing, dismissBanner, session, syncErrors } = useApp();
   const insets = useSafeAreaInsets();
   const y = useRef(new Animated.Value(-160)).current;
   useEffect(() => {
     Animated.spring(y, { toValue: banner ? 0 : -160, useNativeDriver: true, bounciness: 8 }).start();
   }, [banner, y]);
   const offline = banner === 'offline';
-  const color = offline ? palette.warn : palette.success;
+  const synced = banner === 'synced';
+  const color = offline || (synced && syncErrors > 0) ? palette.warn : palette.success;
   return (
     <Animated.View
       pointerEvents={banner ? 'box-none' : 'none'}
       style={{ position: 'absolute', top: insets.top + 6, left: 12, right: 12, transform: [{ translateY: y }] }}>
       <Glass padding={12} radius={20} intensity={70} tint={alpha(color, 0.2)}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 10 }}>
-          <Ionicons name={offline ? 'cloud-offline' : 'wifi'} size={22} color={color} />
+          <Ionicons name={offline ? 'cloud-offline' : synced ? (syncErrors ? 'warning' : 'checkmark-circle') : 'wifi'} size={22} color={color} />
           <View style={{ flex: 1 }}>
-            <Txt variant="label">{offline ? tr('أنت أوفلاين', 'You are offline') : tr('النت رجع ✅', 'Back online ✅')}</Txt>
+            <Txt variant="label">{offline ? tr('إنت أوفلاين', 'You are offline') : synced ? (syncErrors ? tr('التحديث لسه ناقص', 'Update incomplete') : tr('خلص التحديث ✅', 'Update finished ✅')) : tr('النت رجع ✅', 'Back online ✅')}</Txt>
             <Txt variant="caption">
               {offline
                 ? tr('بتشوف آخر بيانات محفوظة على جهازك', 'Showing the last data saved on this device')
+                : synced
+                ? (syncErrors ? tr(`بياناتك اتحدثت، و${syncErrors} خدمة محتاجة إعادة محاولة`, `Data updated; ${syncErrors} service(s) need another attempt`) : tr('الخدمات المتصلة اتحدثت', 'Connected services refreshed'))
                 : tr('حدّث دلوقتي عشان بياناتك تتحدث', 'Refresh now to update your data')}
             </Txt>
           </View>
-          {!offline && session ? <Button small icon="refresh" title={tr('تحديث', 'Refresh')} loading={refreshing} onPress={refreshAll} /> : null}
+          {banner === 'back' && session ? <Button small icon="refresh" title={tr('تحديث', 'Refresh')} loading={refreshing} onPress={refreshAll} /> : null}
           <Pressable onPress={dismissBanner} hitSlop={12} accessibilityLabel={tr('إغلاق', 'Dismiss')}>
             <Ionicons name="close" size={18} color={palette.sub} />
           </Pressable>
@@ -46,24 +51,25 @@ export function NetworkBanner() {
 
 /** Face ID / fingerprint lock shown on launch when enabled. */
 export function LockOverlay() {
-  const { locked, unlock, tr, session } = useApp();
+  const { locked, unlock, tr, session, signOut } = useApp();
   useEffect(() => {
     if (locked) unlock();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locked]);
   if (!locked) return null;
   return (
-    <View style={[StyleSheet.absoluteFill, { alignItems: 'center', justifyContent: 'center', padding: 24 }]}>
+    <Modal visible animationType="none" presentationStyle="fullScreen" onRequestClose={()=>{}}><View style={[StyleSheet.absoluteFill, { backgroundColor:"#0F1530", alignItems: 'center', justifyContent: 'center', padding: 24 }]}>
       <GlassBackground />
       <Glass padding={24} style={{ width: '100%', maxWidth: 380 }}>
         <View style={{ alignItems: 'center', gap: 12 }}>
-          <Avatar name={session?.name ?? 'U'} size={72} />
-          <Txt variant="h2" center>{tr('أهلًا تاني', 'Welcome back')}</Txt>
+          <Avatar name="SU" size={72} />
+          <Txt variant="h2" center>{tr('أهلًا بيك تاني', 'Welcome back')}</Txt>
           <Txt variant="sub" center>{tr('افتح التطبيق بالبصمة أو Face ID', 'Unlock with Face ID or fingerprint')}</Txt>
-          <Button title={tr('فتح', 'Unlock')} icon="finger-print" onPress={unlock} style={{ alignSelf: 'stretch', marginTop: 6 }} />
+          <Button variant="glass" title={tr('تسجيل الخروج', 'Sign out')} onPress={()=>{void signOut().catch(()=>{});}} />
+          <Button title={tr('افتح', 'Unlock')} icon="finger-print" onPress={unlock} style={{ alignSelf: 'stretch', marginTop: 6 }} />
         </View>
       </Glass>
-    </View>
+    </View></Modal>
   );
 }
 
@@ -75,18 +81,15 @@ const TABS: Record<string, { on: IconName; off: IconName; ar: string; en: string
   settings: { on: 'settings', off: 'settings-outline', ar: 'الإعدادات', en: 'Settings' },
 };
 
-export type TabBarProps = {
-  state: { index: number; routes: { key: string; name: string }[] };
-  navigation: { navigate: (name: string) => void };
-};
+export type TabBarProps = BottomTabBarProps;
 
-/** Floating glass tab bar. */
-export function GlassTabBar({ state, navigation }: TabBarProps) {
+/** Floating tab bar with a gradient pill on the active tab. */
+export function GlassTabBar({ state, emitter, navigateToTab }: TabBarProps) {
   const { palette, row, tr } = useApp();
   const insets = useSafeAreaInsets();
   return (
-    <View pointerEvents="box-none" style={{ position: 'absolute', left: 14, right: 14, bottom: Math.max(insets.bottom, 10) + 4 }}>
-      <Glass padding={6} radius={30} intensity={70}>
+    <View pointerEvents="box-none" style={{ position: 'absolute', zIndex: 100, elevation: 20, left: 12, right: 12, bottom: Math.max(insets.bottom, 10) + 4 }}>
+      <Glass padding={6} radius={30}>
         <View style={{ flexDirection: row, alignItems: 'center' }}>
           {state.routes.map((route, i) => {
             const meta = TABS[route.name];
@@ -96,23 +99,26 @@ export function GlassTabBar({ state, navigation }: TabBarProps) {
               <Pressable
                 key={route.key}
                 accessibilityRole="tab"
+                accessibilityLabel={tr(meta.ar, meta.en)}
                 accessibilityState={{ selected: active }}
                 onPress={() => {
                   tap();
-                  if (!active) navigation.navigate(route.name);
+                  const event = emitter.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
+                  if (!active && !event.defaultPrevented) navigateToTab(route.key);
                 }}
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 54,
-                  borderRadius: 24,
-                  backgroundColor: active ? alpha(palette.primary, 0.22) : 'transparent',
-                }}>
-                <Ionicons name={active ? meta.on : meta.off} size={22} color={active ? palette.primary : palette.sub} />
-                <Text numberOfLines={1} style={{ fontSize: 10.5, marginTop: 2, fontWeight: active ? '700' : '500', color: active ? palette.text : palette.sub }}>
+                style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: 56 }}>
+                {active ? (
+                  <LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ width: 48, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 14px rgba(79,70,229,0.35)' }}>
+                    <Ionicons name={meta.on} size={19} color="#FFFFFF" />
+                  </LinearGradient>
+                ) : (
+                  <View style={{ width: 48, height: 32, alignItems: 'center', justifyContent: 'center' }}>
+                    <Ionicons name={meta.off} size={21} color={palette.sub} />
+                  </View>
+                )}
+                <Txt numberOfLines={1} variant={active ? 'label' : 'body'} style={{ fontSize: 10.5, lineHeight: 15, marginTop: 3, color: active ? palette.primary : palette.sub }}>
                   {tr(meta.ar, meta.en)}
-                </Text>
+                </Txt>
               </Pressable>
             );
           })}
