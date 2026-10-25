@@ -11,7 +11,7 @@ import { deliverAlerts } from './alert-delivery';
 
 export const SYNC_TASK = 'su-student-university-sync';
 
-async function pool(actions: string[], session: Session, next: Cache, state: { expired: boolean }, size = 3) {
+async function pool(actions: string[], session: Session, next: Cache, state: { expired: boolean }, size = 5) {
   const queue = [...actions];
   const worker = async () => {
     while (queue.length && !state.expired) {

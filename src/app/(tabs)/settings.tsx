@@ -14,7 +14,7 @@ export default function Settings(){
  const [open,setOpen]=useState(false);
  const [msg,setMsg]=useState('');
  return <Screen>
-   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.6.3"/>
+   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.7.0"/>
    {!backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('مزامنة الخلفية مش متاحة في النسخة دي. التحديث عند فتح التطبيق والريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
    <Glass><View style={{gap:12}}>
      <Txt variant="h3">{session?.name??tr('أدوات المذاكرة على جهازك','Local study tools')}</Txt>

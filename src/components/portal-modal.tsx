@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Constants from 'expo-constants';
 import { GOOGLE_TEST_USER_AGENT, googleTestAvailable, googleTestURL } from '@/lib/google-webview-test';
 import * as WebBrowser from 'expo-web-browser';
-import { ActivityIndicator, Alert, Modal, Platform, Pressable, View } from 'react-native';
+import { ActivityIndicator, Modal, Platform, Pressable, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -46,23 +46,14 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
   const externalBusy = useRef(false);
   const sso = ssoConfigured();
   const testAvailable = !browse && googleTestAvailable(Platform.OS, Constants.expoConfig?.extra);
-  const [testEnabled, setTestEnabled] = useState(false);
-  function toggleTest() {
-    if (testEnabled) { setTestEnabled(false); setKey(k => k + 1); setError(''); return; }
-    Alert.alert(
-      tr('تجربة جوجل — مش تسجيل رسمي', 'Google experiment — not official sign-in'),
-      tr('التجربة بتغيّر تعريف المتصفح وممكن جوجل يرفضها. صفحة جوجل هتفتح جوه التطبيق؛ التطبيق موثوق عندك فقط. مابنقراش الباسورد. الأفضل حساب اختبار، وماتشاركش أي كود أو جلسة دخول. تكمّل؟',
-        'This changes the browser user agent and Google may reject it. Google opens inside this app: only proceed if you trust it. We do not read passwords. Prefer a test account; never share sign-in codes or sessions. Continue?'),
-      [{ text: tr('إلغاء', 'Cancel'), style: 'cancel' },
-       { text: tr('أجرّب', 'Try'), onPress: () => { setTestEnabled(true); setError(''); setKey(k => k + 1); } }]
-    );
-  }
-  const close = () => { setTestEnabled(false); setError(''); handled.current = false; onClose(); };
-  useEffect(() => { if (visible) { setTestEnabled(false); handled.current = false; setError(''); setBusy(''); setKey(k => k + 1); } }, [visible]);
+  // Android: the page runs with a Chrome user agent so its own Google button opens a real popup. Google may still refuse.
+  const [googleMode, setGoogleMode] = useState(testAvailable);
+  const close = () => { setError(''); handled.current = false; onClose(); };
+  useEffect(() => { if (visible) { setGoogleMode(testAvailable); handled.current = false; setError(''); setBusy(''); setKey(k => k + 1); } }, [visible]);
 
   async function google() {
     if (busy) return;
-    if (!sso) { setError(tr('الدخول الرسمي بجوجل مش متوصل في النسخة دي. في النسخة التجريبية استخدم زر التجربة.', 'Official Google sign-in is not connected in this build. In the trial build, use the experiment button.')); return; }
+    if (!sso) { setError(tr('الدخول الرسمي بجوجل مش متوصل في النسخة دي.', 'Official Google sign-in is not connected in this build.')); return; }
     setBusy('google'); setError('');
     try { const s = await universityGoogleSignIn(); if (s) { await signIn(s); close(); } }
     catch { setError(tr('الدخول بجوجل مكملش. اتأكد إنك داخل بإيميل الجامعة وجرّب تاني.', 'Google sign-in did not finish. Use your university email and try again.')); }
@@ -100,19 +91,19 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
 
         {!browse && (
           <View style={{ paddingHorizontal: 18, paddingBottom: 10, gap: 8 }}>
-            {testAvailable ? (
-              <Button icon="flask-outline" variant="glass"
-                title={testEnabled ? tr('اقفل تجربة جوجل', 'Disable Google experiment') : tr('جرّب دخول جوجل — تجريبي', 'Try Google sign-in — experimental')}
-                onPress={toggleTest} />
-            ) : null}
-            {!testEnabled ? <Button icon="logo-google" variant={sso ? 'primary' : 'glass'} loading={busy === 'google'} title={tr('الدخول بحساب جوجل', 'Continue with Google')} onPress={() => { void google(); }} /> : null}
-            <Txt variant="caption" center>
-              {testEnabled
-                ? tr('تجربة أندرويد: اضغط زر جوجل الأصلي جوه صفحة الجامعة تحت. ممكن تظهر رسالة رفض من جوجل؛ لو ظهرت، اقفل التجربة.', 'Android experiment: tap the original Google button on the university page below. Google may reject it; disable the experiment if it does.')
-                : sso
-                ? tr('أو سجّل باسم المستخدم وكلمة السر في الصفحة تحت', 'Or sign in with your username and password below')
-                : tr('سجّل في صفحة الجامعة تحت. دخول جوجل الرسمي مش متوصل؛ التجربة المنفصلة مش مضمونة.', 'Sign in on the university page below. Official Google sign-in is not connected; the separate experiment is not guaranteed.')}
-            </Txt>
+            {googleMode ? (
+              <View style={{ padding: 12, borderRadius: 14, backgroundColor: palette.card, gap: 6 }}>
+                <View style={{ flexDirection: row, alignItems: 'center', gap: 8 }}>
+                  <Ionicons name="logo-google" size={18} color={palette.text} />
+                  <Txt variant="h3">{tr('سجّل بحساب جوجل', 'Sign in with Google')}</Txt>
+                </View>
+                <Txt variant="caption">{tr('اضغط زر Google الأصلي جوه صفحة الجامعة تحت. لو جوجل رفض، سجّل باسم المستخدم وكلمة السر في نفس الصفحة.', 'Tap the original Google button on the university page below. If Google refuses, use your username and password on the same page.')}</Txt>
+              </View>
+            ) : sso ? (
+              <Button icon="logo-google" variant="primary" loading={busy === 'google'} title={tr('الدخول بحساب جوجل', 'Continue with Google')} onPress={() => { void google(); }} />
+            ) : (
+              <Txt variant="caption" center>{tr('سجّل في صفحة الجامعة تحت.', 'Sign in on the university page below.')}</Txt>
+            )}
           </View>
         )}
 
@@ -130,20 +121,20 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
           <View style={{ flex: 1, borderTopLeftRadius: 22, borderTopRightRadius: 22, overflow: 'hidden', backgroundColor: '#fff' }}>
             <WebView<{}> key={key} source={{ uri: PORTAL_LOGIN }} style={{ flex: 1 }}
               originWhitelist={['*']}
-              userAgent={testEnabled ? GOOGLE_TEST_USER_AGENT : undefined}
+              userAgent={googleMode ? GOOGLE_TEST_USER_AGENT : undefined}
               setSupportMultipleWindows
               webviewDebuggingEnabled={false}
               onLoadProgress={e => setProgress(e.nativeEvent.progress)}
               onShouldStartLoadWithRequest={r => {
                 if (r.isTopFrame === false) return true;
-                if (testEnabled && googleTestURL(r.url)) return true;
+                if (googleMode && googleTestURL(r.url)) return true;
                 const policy = navigationPolicy(r.url);
                 if (policy === 'portal') return true;
                 if (policy === 'external') void openExternal(r.url);
                 else setError(tr('الرابط ده مش آمن نفتحه.', 'This link cannot be opened safely.'));
                 return false;
               }}
-              onOpenWindow={testEnabled ? undefined : e => { void openExternal(e.nativeEvent.targetUrl); }}
+              onOpenWindow={googleMode ? undefined : e => { void openExternal(e.nativeEvent.targetUrl); }}
               injectedJavaScript={browse ? 'true;' : bridge}
               injectedJavaScriptForMainFrameOnly
               onMessage={async e => {
@@ -158,7 +149,7 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
                 } catch { handled.current = false; setError(tr('مقدرناش نحفظ الدخول. جرّب تاني.', 'Could not save the sign-in. Please try again.')); }
                 finally { setBusy(''); }
               }}
-              incognito sharedCookiesEnabled={false} thirdPartyCookiesEnabled={testEnabled}
+              incognito sharedCookiesEnabled={false} thirdPartyCookiesEnabled={googleMode}
               allowFileAccess={false} allowUniversalAccessFromFileURLs={false}
               saveFormDataDisabled
               javaScriptCanOpenWindowsAutomatically mixedContentMode="never"

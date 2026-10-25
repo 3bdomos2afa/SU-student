@@ -192,7 +192,7 @@ function useModel() {
     lastAuto.current=Date.now();const before=cacheRef.current;
     let failures=0,successes=0,requested=SYNC_ORDER.length;
     try {
-      // Parallel pool (4 at a time); most important services first, so the home fills in quickly.
+      // Parallel pool (6 at a time); most important services first, so the home fills in quickly.
       const queue=[...SYNC_ORDER];let stop=false;
       const worker=async()=>{
         while(queue.length&&!stop){
@@ -201,9 +201,9 @@ function useModel() {
           const r=await fetchService(action,true,false);if(r.error){failures++;}else successes++;if(r.expired)stop=true;
         }
       };
-      await Promise.all(Array.from({length:4},worker));
+      await Promise.all(Array.from({length:6},worker));
       // Then marks for the student's own courses (midterm, coursework, final).
-      if(!stop&&generation===epoch.current){const grades=gradeActions(cacheRef.current);requested+=grades.length;queue.push(...grades);await Promise.all(Array.from({length:3},worker));}
+      if(!stop&&generation===epoch.current){const grades=gradeActions(cacheRef.current);requested+=grades.length;queue.push(...grades);await Promise.all(Array.from({length:5},worker));}
       const owner=sessRef.current;
       if(owner&&generation===epoch.current)await enqueue(()=>generation===epoch.current?savePrivate(`su:v2:cache:${owner.studentId}`,cacheRef.current):Promise.resolve());
       if(owner&&generation===epoch.current&&settingsRef.current.alerts!==false){const ar=settingsRef.current.lang!=='en';void deliverAlerts(owner.studentId,diffAlerts(before,cacheRef.current,ar),ar).catch(()=>0);}
