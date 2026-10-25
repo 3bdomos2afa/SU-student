@@ -2,7 +2,7 @@
   "expo": {
     "name": "SU Student",
     "slug": "su-student",
-    "version": "1.7.0",
+    "version": "1.7.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "unicodesis",
@@ -56,6 +56,8 @@
       ],
       "expo-localization",
       "./plugins/with-portal-network.cjs",
+      "./plugins/with-crash-reporter.cjs",
+      "./plugins/with-android-no-minify.cjs",
       "expo-font",
       "expo-image",
       "expo-notifications",

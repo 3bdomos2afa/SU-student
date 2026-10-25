@@ -13,11 +13,15 @@
   },
   {
     "path": "BUILD-FIX-AR.md",
-    "sha256": "9e68ec9257bdd5ce818cbf981ef791c7b8cbeb485eee2b39181150c9b7eeaa87"
+    "sha256": "ec49672afde5ee33a2a316f4aaf2dd61543af21ab94d66abf26a4906d432a062"
+  },
+  {
+    "path": "CRASH-REPORT-AR.md",
+    "sha256": "ab067a921558115221870774a3ab72489ccb10838eea088533eadc1d4605f458"
   },
   {
     "path": "GOOGLE-TEST-AR.md",
-    "sha256": "464cf1cf048d34e7f7cc97573a6083daca1c171c686f1c061f443133febf8cf9"
+    "sha256": "309ddfac589186dfc2aa5523d6cdf2a713bf103d7bb9c9cbdb28cf8e30cfe200"
   },
   {
     "path": "LICENSE",
@@ -25,15 +29,19 @@
   },
   {
     "path": "README.md",
-    "sha256": "61f30bd9441a7aa0ffc23eecbc13fdd26691ffab196f75036e4dad41f6493839"
+    "sha256": "6bef8b7566c9d5b562ac33cfb4771a4ee39310fbe887b6d768d1426d866013aa"
+  },
+  {
+    "path": "STARTUP-FIX-1.7.2-AR.md",
+    "sha256": "f523d93b65dabd6f8433d7433c477b79e77daf05159e4e30071afa466a8ee359"
   },
   {
     "path": "STARTUP-REPAIR-AR.md",
-    "sha256": "9180f31ebc81b0e3403c15f9887d430c341301f1698a68fbe44e081360fa247b"
+    "sha256": "186b534b197f863d081ecda870057b4c7ab425ab13e5461b76c0a9ab3b2d78b5"
   },
   {
     "path": "START_HERE_AR.md",
-    "sha256": "594c37e2f43135f9ccf6327785debc3fc736c9aab2b712b65249742e26d12378"
+    "sha256": "1dcc137f0154cd66e2dab216a5caae0c89e8ae429c99db41bc89db9d39f7996b"
   },
   {
     "path": "TESTING.md",
@@ -45,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "f04660290a832984533352df0b933e8283c2a859a5680d6e6093962e38da8bbb"
+    "sha256": "2ae21798665b7703ef59a55f57c2200026a6ce8d9ff02fbd6ff05054da2c8f45"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -89,15 +97,31 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "386350e4ecab80b3b2cbfd4f536991f9d677b73ed8265b2d34626778671e0078"
+    "sha256": "01118ee4df1c0b25ed88aebd16347dea50c4853fe8a651d944d9cf39379ca1af"
   },
   {
     "path": "package.json",
-    "sha256": "6aced1437c98ccdfe6664a069619d15980b765ce86ab693765e681d56f90c3b8"
+    "sha256": "f1c0d5154f5337fe32a1dda53863d5cfebceeee10ac21a744289b5b8e937bbb3"
+  },
+  {
+    "path": "plugins/crash-activity.kt.txt",
+    "sha256": "c288eb481167865b38371553ce9997ddd2dc71b5ea9569640cc0461eeb444deb"
+  },
+  {
+    "path": "plugins/crash-reporter.kt.txt",
+    "sha256": "b60ad75de889044dff73acc60d861b4875d4502bfe0653d91a57e20b3f3b2a64"
   },
   {
     "path": "plugins/google-test-popup.java.txt",
     "sha256": "5a97644398de7db90927efdabf7eb87445a6b3fb8a591621b564340a9c2f2511"
+  },
+  {
+    "path": "plugins/with-android-no-minify.cjs",
+    "sha256": "63f8fbc9207b356e8ad66793fcc58ca6e838d0d7ffcf6fdb45516fcccebff316"
+  },
+  {
+    "path": "plugins/with-crash-reporter.cjs",
+    "sha256": "f03ace50a5bc8cd91d8ab678c8b9d527e09c5341b2c816133957b8bb3cf22fdc"
   },
   {
     "path": "plugins/with-google-webview-test.cjs",
@@ -109,7 +133,7 @@
   },
   {
     "path": "scripts/build-preflight.cjs",
-    "sha256": "8dd3aadaab9eba3ad2e6f33edca0c3b0a964732e642ea6b441133a6289ad6226"
+    "sha256": "c6178fea01dce510da775658a30358bce460ce867388bfc0c4fef224eb8e97be"
   },
   {
     "path": "scripts/build-preview.cjs",
@@ -189,7 +213,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "5457478275f9bd38247a8b1df412a1f61eb83cc9974ba398ba400fd386a6752a"
+    "sha256": "9a1f4eaa13d401b5969a85a39aaed1d0096a1dd99e45580b2013f87af2fbdb9d"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -257,7 +281,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "6991941606d3210a9f24ccb097b67650e22851ba164a6e89cf5efd7e1207e730"
+    "sha256": "39e4eca5ec708b5e2038beb33126807517ddd05589e77d6c2a3461572f29d12b"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -269,7 +293,7 @@
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "fe6f9f133f4dca35a6313bf709492cc356c1da855062a097c1f339584ca299a7"
+    "sha256": "c59fcdd0e99af6003976ce93768dd7a2f812ffe630957738300d90d66f0ec136"
   },
   {
     "path": "src/components/portal-modal.tsx",
@@ -420,8 +444,16 @@
     "sha256": "98c92ef6d31be6989ac02a0ea50e5f6268670fd6b2402ded561690867a868ab9"
   },
   {
+    "path": "tests/crash-reporter.test.ts",
+    "sha256": "c29d477c6b8f01be470bf83081c0d1129baa81d2e4261e728429248a43890ccb"
+  },
+  {
     "path": "tests/google-trial.test.ts",
     "sha256": "42a516a3d699216089966d2730dfe46fffea041ab3028986b59fa2eb75e81ece"
+  },
+  {
+    "path": "tests/no-minify.test.ts",
+    "sha256": "528aac5140046bc15b53b203214b711e1d9c159342d6df062b04713295c317b3"
   },
   {
     "path": "tests/portal.test.ts",

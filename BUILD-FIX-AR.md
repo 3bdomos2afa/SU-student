@@ -1,4 +1,7 @@
-> **1.7.0:** دخول Google أصبح جزءًا من البناء العادي على أندرويد (لا يوجد `build:google-test` أو تطبيق "SU Student Test" بعد الآن). راجع `GOOGLE-TEST-AR.md`.
+> **1.7.2:** إصلاح القفلة عند الفتح (إيقاف R8)؛ راجع `STARTUP-FIX-1.7.2-AR.md`.
+> **1.7.1:** شاشة تقرير القفلة native على أندرويد؛ راجع `CRASH-REPORT-AR.md`.
+
+> **1.7.1:** دخول Google أصبح جزءًا من البناء العادي على أندرويد (لا يوجد `build:google-test` أو تطبيق "SU Student Test" بعد الآن). راجع `GOOGLE-TEST-AR.md`.
 
 # إصلاح SU Student 1.6.2
 
