@@ -17,44 +17,53 @@ export type Palette = {
   blobs: readonly [string, string, string];
   inputBg: string;
   card: string;
+  surface: string;
+  shadow: string;
+  hero: readonly [string, string, string];
 };
 
 export const palettes: Record<Scheme, Palette> = {
   dark: {
-    bg: ['#050816', '#0B1030', '#121A44'],
-    text: '#F5F7FF',
-    sub: 'rgba(226,232,255,0.72)',
-    faint: 'rgba(226,232,255,0.45)',
-    glassTint: 'rgba(255,255,255,0.075)',
-    glassBorder: 'rgba(255,255,255,0.15)',
+    bg: ['#060918', '#0E1233', '#1B1142'],
+    text: '#F1F3FF',
+    sub: 'rgba(222,226,255,0.72)',
+    faint: 'rgba(222,226,255,0.42)',
+    glassTint: 'rgba(255,255,255,0.07)',
+    glassBorder: 'rgba(255,255,255,0.11)',
     glassHighlight: 'rgba(255,255,255,0.16)',
-    primary: '#8B9DFF',
-    accent: '#5EEAD4',
-    pink: '#F472B6',
+    primary: '#A5B4FC',
+    accent: '#67E8F9',
+    pink: '#D8B4FE',
     warn: '#FBBF24',
     danger: '#FB7185',
     success: '#34D399',
-    blobs: ['#6366F1', '#06B6D4', '#DB2777'],
+    blobs: ['#6366F1', '#06B6D4', '#A855F7'],
     inputBg: 'rgba(255,255,255,0.07)',
-    card: '#0E1538',
+    card: 'rgba(30,38,74,0.82)',
+    surface: "rgba(255,255,255,0.12)",
+    shadow: 'rgba(0,0,0,0.28)',
+    hero: ['#312E81', '#4C1D95', '#1E3A8A'],
   },
   light: {
-    bg: ['#EEF2FF', '#F5F3FF', '#ECFEFF'],
-    text: '#0F172A',
-    sub: 'rgba(15,23,42,0.68)',
-    faint: 'rgba(15,23,42,0.42)',
-    glassTint: 'rgba(255,255,255,0.55)',
-    glassBorder: 'rgba(255,255,255,0.9)',
-    glassHighlight: 'rgba(255,255,255,0.75)',
+    bg: ['#F8F8FF', '#EEF0FF', '#F6EEFF'],
+    text: '#151A3B',
+    sub: '#5A6283',
+    faint: '#8A90AB',
+    glassTint: 'rgba(255,255,255,0.6)',
+    glassBorder: 'rgba(99,102,241,0.10)',
+    glassHighlight: 'rgba(255,255,255,0.8)',
     primary: '#4F46E5',
-    accent: '#0D9488',
-    pink: '#DB2777',
+    accent: '#0891B2',
+    pink: '#9333EA',
     warn: '#D97706',
     danger: '#E11D48',
     success: '#059669',
-    blobs: ['#818CF8', '#22D3EE', '#F9A8D4'],
-    inputBg: 'rgba(255,255,255,0.65)',
-    card: '#FFFFFF',
+    blobs: ['#818CF8', '#22D3EE', '#C084FC'],
+    inputBg: 'rgba(99,102,241,0.07)',
+    card: 'rgba(255,255,255,0.88)',
+    surface: '#FFFFFF',
+    shadow: 'rgba(55,48,163,0.09)',
+    hero: ['#4F46E5', '#7C3AED', '#2563EB'],
   },
 };
 
@@ -65,5 +74,5 @@ export function alpha(hex: string, a: number) {
   const v = Math.round(Math.max(0, Math.min(1, a)) * 255)
     .toString(16)
     .padStart(2, '0');
-  return `${hex}${v}`;
+  return `${hex.slice(0, 7)}${v}`;
 }

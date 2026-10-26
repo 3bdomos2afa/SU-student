@@ -40,29 +40,9 @@ export async function removeKeys(keys: string[]) {
   }
 }
 
-const secureAvailable = Platform.OS !== 'web';
-
-/** Encrypted storage (Keychain / Keystore). Falls back to AsyncStorage on web. */
-export async function getSecure<T>(key: string): Promise<T | null> {
+export async function deleteSecure(key:string) {
   try {
-    const raw = secureAvailable ? await SecureStore.getItemAsync(key) : await AsyncStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : null;
-  } catch {
-    return null;
-  }
-}
-
-export async function setSecure(key: string, value: unknown) {
-  const raw = JSON.stringify(value);
-  if (secureAvailable) await SecureStore.setItemAsync(key, raw);
-  else await AsyncStorage.setItem(key, raw);
-}
-
-export async function deleteSecure(key: string) {
-  try {
-    if (secureAvailable) await SecureStore.deleteItemAsync(key);
+    if(Platform.OS!=='web') await SecureStore.deleteItemAsync(key);
     else await AsyncStorage.removeItem(key);
-  } catch {
-    // ignore
-  }
+  } catch {}
 }

@@ -1,153 +1,50 @@
-import Constants from 'expo-constants';
+import { Share } from 'react-native';
+import { buildDataSample } from '@/lib/data-sample';
+import { backgroundSyncAvailable } from '@/lib/background-sync';
+import { requestReminders } from '@/lib/notifications';
+import { ReminderSettings } from '@/components/reminder-settings';
 import { useState } from 'react';
-import { Switch, View } from 'react-native';
-
-import { Avatar, Button, Divider, Field, Glass, Header, Screen, Segmented, Txt } from '@/components/ui';
+import { Alert, Switch, View } from 'react-native';
+import { router } from 'expo-router';
+import { Button, Glass, Header, Screen, Segmented, Txt } from '@/components/ui';
 import { useApp, type ThemePref } from '@/context/app-context';
-import { confirmAction, timeAgo } from '@/lib/format';
-import type { Lang } from '@/lib/i18n';
-import { resolveWorkflowUrl } from '@/lib/workflow';
+import { timeAgo } from '@/lib/format';
+import { PortalModal } from '@/components/portal-entry';
 
-function RowSwitch({ title, sub, value, onChange }: { title: string; sub?: string; value: boolean; onChange: (v: boolean) => void }) {
-  const { row, palette } = useApp();
-  return (
-    <View style={{ flexDirection: row, alignItems: 'center', gap: 12, paddingVertical: 10 }}>
-      <View style={{ flex: 1 }}>
-        <Txt variant="label">{title}</Txt>
-        {sub ? <Txt variant="caption">{sub}</Txt> : null}
-      </View>
-      <Switch value={value} onValueChange={onChange} trackColor={{ true: palette.primary, false: palette.inputBg }} thumbColor="#fff" />
-    </View>
-  );
-}
-
-export default function SettingsScreen() {
-  const app = useApp();
-  const { tr, settings, updateSettings, session, palette, row, lang, setBiometric, signOut, refreshAll, refreshing, online, lastSync, cache, clearCache, setDraft } = app;
-  const [url, setUrl] = useState(settings.workflowUrl);
-  const [msg, setMsg] = useState<string | null>(null);
-  const urlValid = !url.trim() || !!resolveWorkflowUrl(url);
-
-  return (
-    <Screen>
-      <Header title={tr('الإعدادات', 'Settings')} />
-
-      <Glass padding={16}>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 14 }}>
-          <Avatar name={session?.name ?? 'U'} size={58} />
-          <View style={{ flex: 1 }}>
-            <Txt variant="h3">{session?.name}</Txt>
-            <Txt variant="caption">{session?.email}</Txt>
-            <Txt variant="caption">
-              {tr('داخل من', 'Signed in')} {timeAgo(session?.signedInAt, lang)}
-            </Txt>
-          </View>
-        </View>
-      </Glass>
-
-      <Glass padding={16}>
-        <View style={{ gap: 12 }}>
-          <Txt variant="label">{tr('اللغة', 'Language')}</Txt>
-          <Segmented<Lang> value={settings.lang} onChange={(v) => updateSettings({ lang: v })} options={[{ value: 'ar', label: 'العربية' }, { value: 'en', label: 'English' }]} />
-          <Txt variant="label">{tr('المظهر', 'Appearance')}</Txt>
-          <Segmented<ThemePref>
-            value={settings.theme}
-            onChange={(v) => updateSettings({ theme: v })}
-            options={[
-              { value: 'system', label: tr('تلقائي', 'Auto'), icon: 'phone-portrait' },
-              { value: 'light', label: tr('فاتح', 'Light'), icon: 'sunny' },
-              { value: 'dark', label: tr('داكن', 'Dark'), icon: 'moon' },
-            ]}
-          />
-        </View>
-      </Glass>
-
-      <Glass padding={12}>
-        <RowSwitch
-          title={tr('قفل بالبصمة / Face ID', 'Face ID / fingerprint lock')}
-          sub={tr('يطلب البصمة كل ما تفتح التطبيق', 'Ask for biometrics each time the app opens')}
-          value={settings.biometric}
-          onChange={async (v) => setMsg(await setBiometric(v))}
-        />
-        <Divider />
-        <RowSwitch title={tr('اهتزاز خفيف', 'Haptic feedback')} value={settings.haptics} onChange={(v) => updateSettings({ haptics: v })} />
-        {msg ? (
-          <Txt variant="caption" color={palette.warn}>
-            {msg}
-          </Txt>
-        ) : null}
-      </Glass>
-
-      <Glass padding={16}>
-        <View style={{ gap: 10 }}>
-          <Txt variant="label">{tr('ربط n8n Workflow', 'n8n workflow link')}</Txt>
-          <Txt variant="caption">
-            {tr('رابط الـ Webhook اللي بيرد بـ reply_text. لو فاضي التطبيق يشتغل تجريبي.', 'Webhook URL that returns reply_text. Empty = demo mode.')}
-          </Txt>
-          <Field icon="link" value={url} onChangeText={setUrl} placeholder="https://…/webhook/unicodesis" autoCapitalize="none" autoCorrect={false} keyboardType="url" />
-          {!urlValid ? (
-            <Txt variant="caption" color={palette.danger}>
-              {tr('الرابط لازم يبدأ بـ https://', 'URL must start with https://')}
-            </Txt>
-          ) : null}
-          <Button
-            small
-            title={tr('حفظ الرابط', 'Save link')}
-            icon="save"
-            disabled={!urlValid || url.trim() === settings.workflowUrl}
-            onPress={() => updateSettings({ workflowUrl: url.trim() })}
-          />
-        </View>
-      </Glass>
-
-      <Glass padding={16}>
-        <View style={{ gap: 10 }}>
-          <Txt variant="label">{tr('البيانات الأوفلاين', 'Offline data')}</Txt>
-          <Txt variant="caption">
-            {Object.keys(cache).length} {tr('خدمة محفوظة', 'services saved')} · {tr('آخر تحديث', 'last sync')} {timeAgo(lastSync, lang)}
-          </Txt>
-          <Button small title={tr('حدّث كل حاجة', 'Refresh everything')} icon="refresh" loading={refreshing} disabled={!online} onPress={refreshAll} />
-          <View style={{ flexDirection: row, gap: 10 }}>
-            <Button
-              small
-              variant="glass"
-              title={tr('مسح الكاش', 'Clear cache')}
-              icon="trash-bin"
-              style={{ flex: 1 }}
-              onPress={() => confirmAction(tr('مسح الكاش؟', 'Clear cache?'), tr('هتحتاج نت عشان البيانات ترجع.', 'You will need internet to reload data.'), tr('مسح', 'Clear'), tr('إلغاء', 'Cancel'), clearCache, true)}
-            />
-            <Button
-              small
-              variant="glass"
-              title={tr('مسح المسودة', 'Clear draft')}
-              icon="clipboard"
-              style={{ flex: 1 }}
-              onPress={() => setDraft([])}
-            />
-          </View>
-        </View>
-      </Glass>
-
-      <Button
-        variant="danger"
-        icon="log-out"
-        title={tr('تسجيل الخروج', 'Sign out')}
-        onPress={() =>
-          confirmAction(
-            tr('تسجيل الخروج؟', 'Sign out?'),
-            tr('هيتمسح تسجيل الدخول والبيانات المحفوظة من الجهاز. خطتك ومسودتك هيفضلوا.', 'Your session and cached data will be removed. Your plan and draft stay.'),
-            tr('خروج', 'Sign out'),
-            tr('إلغاء', 'Cancel'),
-            () => {
-              signOut();
-            },
-            true,
-          )
-        }
-      />
-      <Txt variant="caption" center>
-        UnicodeSIS · v{Constants.expoConfig?.version ?? '1.0.0'}
-      </Txt>
-    </Screen>
-  );
+export default function Settings(){
+ const a=useApp();const {tr,settings,updateSettings,session,palette,row,lang}=a;
+ const [open,setOpen]=useState(false);
+ const [msg,setMsg]=useState('');
+ return <Screen>
+   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.9.0"/>
+   {!backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('المزامنة في الخلفية مش متاحة في النسخة دي. بس التحديث لما تفتح الأبلكيشن أو تعمل ريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
+   <Glass><View style={{gap:12}}>
+     <Txt variant="h3">{session?.name??tr('أدوات المذاكرة على جهازك','Local study tools')}</Txt>
+     <Txt variant="caption">{session?`${tr('رقم الطالب','Student ID')}: ${session.studentId}`:tr('مفيش حساب جامعة مربوط','No university account connected')}</Txt>
+     <Button title={tr('دخول بوابة الجامعة','Sign in to university portal')} onPress={()=>setOpen(true)}/>
+   </View></Glass>
+   <Glass><View style={{gap:16}}>
+    <Txt variant="h3">{tr('اللغة والمظهر','Language & appearance')}</Txt>
+    <Segmented options={[{value:'ar',label:'العربية'},{value:'en',label:'English'}]} value={lang} onChange={lang=>updateSettings({lang})}/>
+    <Segmented<ThemePref> options={[{value:'light',label:tr('فاتح','Light')},{value:'dark',label:tr('داكن','Dark')},{value:'system',label:tr('الجهاز','System')}]} value={settings.theme} onChange={theme=>updateSettings({theme})}/>
+    {[{title:tr('اهتزاز خفيف','Haptic feedback'),value:settings.haptics,onChange:(haptics:boolean)=>updateSettings({haptics})},
+      {title:tr('إشعارات الغياب والإنذارات والدرجات','Absence, warning & grade alerts'),value:settings.alerts,onChange:(alerts:boolean)=>{updateSettings({alerts});if(alerts)void requestReminders();}},
+      {title:tr('قفل بالبصمة','Biometric lock'),value:settings.biometric,onChange:async(v:boolean)=>{setMsg(await a.setBiometric(v)??'');}}].map(s=><View key={s.title} style={{flexDirection:row,alignItems:'center',justifyContent:'space-between'}}><Txt>{s.title}</Txt><Switch value={s.value} onValueChange={s.onChange} trackColor={{true:palette.primary}}/></View>)}
+    {msg?<Txt color={palette.warn}>{msg}</Txt>:null}
+    <Txt variant="caption">{tr('بنشيّك على الجامعة أول ما تفتح الأبلكيشن أو النت يرجع، وكل 10 دقايق والأبلكيشن مفتوح، وفي الخلفية كل حوالي ربع ساعة لما الموبايل يسمح (أندرويد بيأخر ده لما البطارية موفّرة).','We check when you open the app or come back online, every 10 minutes while open, and in the background about every 15 minutes when the phone allows it.')}</Txt>
+   </View></Glass>
+   <Glass><View style={{gap:12}}>
+     <Txt variant="h3">{tr('البيانات والخصوصية','Data & privacy')}</Txt>
+     <Txt variant="caption">{tr('آخر خدمة اتحدثت','Most recent service update')}: {timeAgo(a.lastSync,lang)}</Txt>
+     <Txt variant="sub">{tr('الجلسة والبيانات المحفوظة متشفّرة على جهازك، ومش بنحفظ كلمة السر. موقع الجامعة نفسه HTTP ومش مشفّر. تسجيل الخروج بيمسح بيانات الحساب وأدواته المحفوظة.','Session and saved data are encrypted on-device. Passwords are never stored. The website itself uses unencrypted HTTP. Signing out deletes this account’s cached records and study data.')}</Txt>
+     <Button title={tr('تحديث الخدمات المدعومة','Refresh supported services')} loading={a.refreshing} disabled={!session||!a.online} onPress={a.refreshAll}/>
+     <Button variant="glass" icon="share-outline" title={tr('شارك عيّنة البيانات مع المطوّر','Share data sample with developer')} disabled={!Object.keys(a.cache??{}).length} onPress={()=>{void Share.share({message:buildDataSample(a.cache??{},'1.9.0')}).catch(()=>{});}}/>
+     <Txt variant="caption">{tr('العيّنة بتخفي الباسورد والتوكن والرقم القومي والتليفون والاسم. بتتبعت بس لما تختار تشاركها.','The sample hides passwords, tokens, national ID, phone and name. It is only sent if you share it.')}</Txt>
+     <Button variant="glass" title={tr('مسح البيانات المحفوظة أوفلاين','Clear offline records')} onPress={()=>{void a.clearCache();}}/>
+     {session?<Button variant="danger" title={tr('اخرج وامسح بيانات الحساب','Sign out & erase account data')} onPress={()=>Alert.alert(tr('تأكيد','Confirm'),tr('بيانات حسابك ومهامك اللي على الجهاز هتتمسح.','This account’s records and local tasks will be erased.'),[{text:tr('إلغاء','Cancel'),style:'cancel'},{text:tr('خروج','Sign out'),style:'destructive',onPress:()=>{void a.signOut().then(()=>router.replace('/login')).catch(()=>setMsg(tr('المسح منجحش، جرّب تاني','Could not clear storage; retry')));}}])}/>:null}
+   </View></Glass>
+   <ReminderSettings/>
+   <Txt variant="caption" center>{tr('الخطة والحاسبة أدوات مساعدة بس، مش قرار تسجيل ولا كشف درجات رسمي.','Planner and calculator are aids, not official registration or transcripts.')}</Txt>
+   <PortalModal visible={open} onClose={()=>setOpen(false)}/>
+ </Screen>;
 }
