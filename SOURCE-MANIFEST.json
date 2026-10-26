@@ -53,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "cccabb5441cbe605661717567c4595046f8bb73bf77a41a38961cedca3402bae"
+    "sha256": "731943559f538311ae9dc0ea3d72bd0d941a6d87e574654028e6ef2e464a8274"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -113,11 +113,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "a88550e18a4c688c1466bb8ffc36d0428c64137f7ee3ffca221d2b489e0feedc"
+    "sha256": "0c37b04cf34cb425a73d00d9704b8535bf314fb2b117864e8701d6572028650c"
   },
   {
     "path": "package.json",
-    "sha256": "ce23793ada3c73bd43c8be8ffbd3ab20e859be1939ac0e2781b4ef34c62147d4"
+    "sha256": "61bb1ba521d4df29831a7153fb63f75f5d7c000927cb334a2c5542d04b1257a6"
   },
   {
     "path": "plugins/crash-activity.kt.txt",
@@ -149,7 +149,7 @@
   },
   {
     "path": "scripts/build-preflight.cjs",
-    "sha256": "c6178fea01dce510da775658a30358bce460ce867388bfc0c4fef224eb8e97be"
+    "sha256": "5228c54875a5d8671a43f332bff28e332d474386fcbe4e7ec17da1b3c499875f"
   },
   {
     "path": "scripts/build-preview.cjs",
@@ -229,7 +229,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "1b27265484825b978934a850d016c4229c6e0b4f490a91e9d90a635388b29888"
+    "sha256": "39bace18d5a5c179c3f332cce365fac4b8ff4166d8ae38dbefe955cd0ea446bc"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -349,7 +349,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "8d75808f74e86689313c4253ad058073c6fe6eacafd705e437df2c37d43e2f0d"
+    "sha256": "2d213f4638d13ade0d2e4e6fceca1057d9395c1508493786d982095ef42401b9"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -369,7 +369,7 @@
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "c9f71ac68f754f7a1d5f76d4ea2a0d501947bcb93a5a65a58fc0c4cfda67cc42"
+    "sha256": "e330857ee9db7e98f79b4bf396038f31ce9ea0585afbdb85d23031af731af72c"
   },
   {
     "path": "src/components/portal-modal.tsx",
@@ -613,7 +613,7 @@
   },
   {
     "path": "tests/v190.test.ts",
-    "sha256": "b3721ca465dbf24512f277649bd32fbc28def447b1123dbb7775e72a4b1ccaaa"
+    "sha256": "ea7ecd6e6a8b02ad4ffff546f0331d3ddf90770e2c0acc4be235365d7f143e01"
   },
   {
     "path": "tsconfig.json",

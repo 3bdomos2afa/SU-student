@@ -33,3 +33,8 @@ test('notification channel ids stay stable', () => {
   assert.ok(n.includes("TASK_CHANNEL='su-tasks-v2'"));
   assert.ok(n.includes("setNotificationChannelAsync('study'"));
 });
+test('a Git/EAS build without raw fonts falls back instead of failing', () => {
+  const pre = read('scripts/build-preflight.cjs');
+  assert.ok(pre.includes('if (fullManifest) required.push(...fontFiles'));
+  assert.ok(read('scripts/prepare-fonts.cjs').includes('Cairo_400Regular'));
+});

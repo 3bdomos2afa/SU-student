@@ -16,7 +16,7 @@ export default function Settings(){
  const [open,setOpen]=useState(false);
  const [msg,setMsg]=useState('');
  return <Screen>
-   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.9.0"/>
+   <Header title={tr('على راحتك','Make it yours')} subtitle="SU Student / 1.9.1"/>
    {!backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('المزامنة في الخلفية مش متاحة في النسخة دي. بس التحديث لما تفتح الأبلكيشن أو تعمل ريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
    <Glass><View style={{gap:12}}>
      <Txt variant="h3">{session?.name??tr('أدوات المذاكرة على جهازك','Local study tools')}</Txt>
@@ -38,7 +38,7 @@ export default function Settings(){
      <Txt variant="caption">{tr('آخر خدمة اتحدثت','Most recent service update')}: {timeAgo(a.lastSync,lang)}</Txt>
      <Txt variant="sub">{tr('الجلسة والبيانات المحفوظة متشفّرة على جهازك، ومش بنحفظ كلمة السر. موقع الجامعة نفسه HTTP ومش مشفّر. تسجيل الخروج بيمسح بيانات الحساب وأدواته المحفوظة.','Session and saved data are encrypted on-device. Passwords are never stored. The website itself uses unencrypted HTTP. Signing out deletes this account’s cached records and study data.')}</Txt>
      <Button title={tr('تحديث الخدمات المدعومة','Refresh supported services')} loading={a.refreshing} disabled={!session||!a.online} onPress={a.refreshAll}/>
-     <Button variant="glass" icon="share-outline" title={tr('شارك عيّنة البيانات مع المطوّر','Share data sample with developer')} disabled={!Object.keys(a.cache??{}).length} onPress={()=>{void Share.share({message:buildDataSample(a.cache??{},'1.9.0')}).catch(()=>{});}}/>
+     <Button variant="glass" icon="share-outline" title={tr('شارك عيّنة البيانات مع المطوّر','Share data sample with developer')} disabled={!Object.keys(a.cache??{}).length} onPress={()=>{void Share.share({message:buildDataSample(a.cache??{},'1.9.1')}).catch(()=>{});}}/>
      <Txt variant="caption">{tr('العيّنة بتخفي الباسورد والتوكن والرقم القومي والتليفون والاسم. بتتبعت بس لما تختار تشاركها.','The sample hides passwords, tokens, national ID, phone and name. It is only sent if you share it.')}</Txt>
      <Button variant="glass" title={tr('مسح البيانات المحفوظة أوفلاين','Clear offline records')} onPress={()=>{void a.clearCache();}}/>
      {session?<Button variant="danger" title={tr('اخرج وامسح بيانات الحساب','Sign out & erase account data')} onPress={()=>Alert.alert(tr('تأكيد','Confirm'),tr('بيانات حسابك ومهامك اللي على الجهاز هتتمسح.','This account’s records and local tasks will be erased.'),[{text:tr('إلغاء','Cancel'),style:'cancel'},{text:tr('خروج','Sign out'),style:'destructive',onPress:()=>{void a.signOut().then(()=>router.replace('/login')).catch(()=>setMsg(tr('المسح منجحش، جرّب تاني','Could not clear storage; retry')));}}])}/>:null}

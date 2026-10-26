@@ -12,7 +12,7 @@ class PortalBoundary extends Component<{ onClose: () => void; children: ReactNod
       <View style={{ flex: 1, backgroundColor: '#F5F4EE', padding: 28, justifyContent: 'center', gap: 18 }}>
         <Text style={{ fontSize: 22, textAlign: 'center', color: '#163B39' }}>صفحة الدخول مقدرتش تفتح</Text>
         <Text selectable style={{ fontSize: 16, textAlign: 'center', color: '#163B39' }}>
-          {`SU Student 1.9.0\n${this.state.code}\nبياناتك المحفوظة زي ما هي. ابعت الكود للمطور، من غير أي بيانات دخول.`}
+          {`SU Student 1.9.1\n${this.state.code}\nبياناتك المحفوظة زي ما هي. ابعت الكود للمطور، من غير أي بيانات دخول.`}
         </Text>
         <Pressable onPress={this.props.onClose} accessibilityRole="button" style={{ padding: 18, backgroundColor: '#216B61', borderRadius: 18 }}>
           <Text style={{ color: 'white', textAlign: 'center' }}>رجوع للتطبيق</Text>

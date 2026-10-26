@@ -30,9 +30,15 @@ function checkRelease(root, fullManifest = true) {
   const required = ['index.js', 'src/lib/background-guard.ts', 'src/components/portal-entry.tsx', 'src/lib/startup-diagnostics.cjs', 'src/lib/font-ready.tsx', 'app.json', 'app.config.cjs', 'eas.json',
     'scripts/prepare-fonts.cjs', 'plugins/with-portal-network.cjs', 'plugins/with-crash-reporter.cjs', 'plugins/with-android-no-minify.cjs', 'plugins/crash-reporter.kt.txt', 'plugins/crash-activity.kt.txt',
     'plugins/with-google-webview-test.cjs', 'plugins/google-test-popup.java.txt',
-    'src/lib/google-webview-policy.json', 'src/lib/background-sync.ts',
-    'assets/fonts/Froople.ttf', 'assets/fonts/ThmanyahSans-Regular.otf', 'assets/fonts/ThmanyahSans-Bold.otf'];
-  if (fullManifest) required.push('.easignore');
+    'src/lib/google-webview-policy.json', 'src/lib/background-sync.ts'];
+  // Raw fonts are excluded from Git, so a GitHub/EAS build may not have them.
+  // The full ZIP must contain them; an EAS build falls back to Cairo/Inter instead of failing.
+  const fontFiles = ['assets/fonts/Froople.ttf', 'assets/fonts/ThmanyahSans-Regular.otf', 'assets/fonts/ThmanyahSans-Bold.otf'];
+  if (fullManifest) required.push(...fontFiles, '.easignore');
+  else {
+    const missingFonts = fontFiles.filter(file => !fs.existsSync(path.join(root, file)));
+    if (missingFonts.length) console.warn(`Font files not in this build (${missingFonts.join(', ')}). Using Cairo/Inter fallback fonts.`);
+  }
   for (const file of required)
     if (!fs.existsSync(path.join(root, file))) problems.push(`Missing required build file: ${file}`);
   if (fullManifest) {
