@@ -4,7 +4,15 @@ import { curriculumCourses, type CurriculumCourse } from './curriculum';
 export const PROGRAM_TOTAL_CREDITS = 144;
 export const LISTED_CREDITS = curriculumCourses.reduce((s, c) => s + c.credits, 0);
 
-export const courseByCode = new Map(curriculumCourses.map((c) => [c.code, c]));
+/** "INT 349W", "int-349w", "INT349W" → "INT349W" */
+export const codeKey = (v: unknown) => String(v ?? '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+const byKey = new Map(curriculumCourses.map((c) => [codeKey(c.code), c] as const));
+export const courseByCode = {
+  get: (code: string) => byKey.get(codeKey(code)),
+  has: (code: string) => byKey.has(codeKey(code)),
+  values: () => byKey.values(),
+  get size() { return byKey.size; },
+};
 
 /** "Passing 95 credit hours" → 95 */
 export function creditCondition(prerequisite: string): number | null {
@@ -31,20 +39,18 @@ export function courseStatus(course: CurriculumCourse, completed: Set<string>, e
   return { status: (missing.length ? 'locked' : 'available') as CourseStatus, missing };
 }
 
-/** Common 4.0 scale used for the planning calculator (estimate only). */
-export const GRADE_SCALE: { grade: string; points: number }[] = [
-  { grade: 'A+', points: 4.0 },
-  { grade: 'A', points: 4.0 },
-  { grade: 'A-', points: 3.7 },
-  { grade: 'B+', points: 3.3 },
-  { grade: 'B', points: 3.0 },
-  { grade: 'B-', points: 2.7 },
-  { grade: 'C+', points: 2.3 },
-  { grade: 'C', points: 2.0 },
-  { grade: 'C-', points: 1.7 },
-  { grade: 'D+', points: 1.3 },
-  { grade: 'D', points: 1.0 },
-  { grade: 'F', points: 0 },
+/** Official Sinai University scale (effective Fall 2018). min = lowest percentage for the grade. */
+export const GRADE_SCALE: { grade: string; points: number; min: number }[] = [
+  { grade: 'A+', points: 4.0, min: 95 },
+  { grade: 'A', points: 3.8, min: 90 },
+  { grade: 'A-', points: 3.6, min: 85 },
+  { grade: 'B+', points: 3.3, min: 80 },
+  { grade: 'B', points: 3.0, min: 75 },
+  { grade: 'C+', points: 2.7, min: 70 },
+  { grade: 'C', points: 2.4, min: 65 },
+  { grade: 'D', points: 2.0, min: 60 },
+  { grade: 'F', points: 0, min: 0 },
 ];
+export const gradeForPercent = (p: number) => GRADE_SCALE.find((g) => p >= g.min)?.grade ?? 'F';
 
 export const LOAD_REFERENCES = [12, 18, 21] as const;
