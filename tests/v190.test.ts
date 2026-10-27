@@ -21,7 +21,7 @@ test('every prerequisite of every course resolves or is a credit rule', () => {
 
 test('brand assets and identity stay consistent', () => {
   const app = JSON.parse(read('app.json')).expo;
-  assert.equal(app.slug, 'su-student');
+  assert.equal(app.slug, 'abdelrahman');
   assert.equal(app.android.package, 'com.unicodesis.student');
   assert.equal(app.android.adaptiveIcon.backgroundColor, '#1D2331');
   for (const f of ['icon.png', 'android-icon-foreground.png', 'splash-icon.png', 'favicon.png']) assert.ok(fs.statSync(`assets/images/${f}`).size > 1000, f);

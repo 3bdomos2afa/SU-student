@@ -53,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "0bc06b58362857189d2f820848a211f70ad16dd884667840945deeb3689f7f6d"
+    "sha256": "55b8f17b639a1d927ba7803dafd902882ad13884b8e6f9f4c70fdcd35d296e10"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -685,7 +685,7 @@
   },
   {
     "path": "tests/v190.test.ts",
-    "sha256": "2a43057f8884677bc6a492763771ac3dd9191cab303e63222fc4ca1486d0cad6"
+    "sha256": "1c7cd559250dcd4ae91f382092db0d6bbc02cbf0b4c4e3a756086b4f0a650759"
   },
   {
     "path": "tsconfig.json",

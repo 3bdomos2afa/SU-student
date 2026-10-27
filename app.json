@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SU Student",
-    "slug": "su-student",
+    "slug": "abdelrahman",
     "version": "1.11.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -74,10 +74,10 @@
     "experiments": {
       "typedRoutes": false
     },
-    "owner": "su_student",
+    "owner": "x3bdoxs-team",
     "extra": {
       "eas": {
-        "projectId": "09b1d4d4-98bc-45bb-90c6-341574f34c05"
+        "projectId": "c4c85aa4-b3c8-43ca-a0dc-3baa0a99ab7a"
       }
     }
   }
