@@ -1,97 +1,303 @@
-> **1.7.3:** إصلاح قفلة صفحة الماب (صورة الخطوط كانت أكبر من حد أندرويد) + زر "شارك عيّنة البيانات مع المطوّر" في الإعدادات.
-> **1.7.2:** إصلاح القفلة عند الفتح (إيقاف R8)؛ راجع `STARTUP-FIX-1.7.2-AR.md`.
-> **1.7.1:** شاشة تقرير القفلة native على أندرويد؛ راجع `CRASH-REPORT-AR.md`.
+<div align="center">
 
-> **1.7.1:** دخول Google أصبح جزءًا من البناء العادي على أندرويد (لا يوجد `build:google-test` أو تطبيق "SU Student Test" بعد الآن). راجع `GOOGLE-TEST-AR.md`.
+<img src="docs/images/banner.png" alt="SU+ — كل جامعتك في مكان واحد" width="100%" />
 
-# SU Student · 1.7.1
+<br/>
 
-تطبيق Expo مستقل وغير رسمي لطلاب الجامعة. نسخة المصدر الكاملة تشمل الخطوط المرفوعة من المستخدم والأيقونات والسكريبتات. لا تحتاج رفع ملف ملف أو ربط GitHub للبناء.
+<img src="docs/images/app-icon.png" width="96" alt="SU+ app icon" />
 
-## ابدأ
-فك الأرشيف في **مجلد جديد** وافتح الطرفية داخل `su-student`.
-استخدم Node.js 24 وnpm، وحساب Expo لديه صلاحية المشروع `@su_student/su-student`.
+# SU+ · SU Plus
 
-```sh
-npm ci
-npm run verify:source
-npx eas-cli@latest login
-npm run build:android
-# أو iPhone:
-npm run build:ios
+### كل جامعتك في مكان واحد — *Your whole university, in one place.*
+
+A student companion app for **Sinai University**, built with Expo and React Native for **Android** and **iPhone**. Timetable, grades, transcript, absence, KMoodle files, study streak, planner and smart notifications all live in one app.
+
+<br/>
+
+![Version](https://img.shields.io/badge/version-1.14.1-6A4BEF?style=for-the-badge)
+![Expo SDK](https://img.shields.io/badge/Expo_SDK-58-17161D?style=for-the-badge&logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-0.88-61DAFB?style=for-the-badge&logo=react&logoColor=17161D)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+<br/>
+![Platforms](https://img.shields.io/badge/platforms-Android_·_iOS-D6F77E?style=for-the-badge&labelColor=17161D)
+![Tests](https://img.shields.io/badge/tests-137_passing-2ea44f?style=for-the-badge)
+![expo-doctor](https://img.shields.io/badge/expo--doctor-20%2F20-2ea44f?style=for-the-badge)
+![Arabic first](https://img.shields.io/badge/UI-عربي_·_English-C9BBFA?style=for-the-badge&labelColor=17161D)
+
+[**Features**](#-features) · [**Screens**](#-screens) · [**Notifications**](#-smart-notifications) · [**Architecture**](#-architecture) · [**Getting started**](#-getting-started) · [**Docs**](#-documentation) · [**Presentation**](docs/presentation/SU-Plus-Presentation.pdf)
+
+</div>
+
+---
+
+## 📌 Overview
+
+The university already has its systems: **UnicodeSIS** (the student portal) and **KMoodle** (course files). But they are separate websites that aren't built for a phone, and neither of them tells a student when something changes.
+
+**SU+** pulls everything into one fast, Arabic-first mobile app:
+
+| | |
+|---|---|
+| 🎓 **One sign-in** | The student signs in once on the university's own page, with the university Google account. The app never sees or stores the password. |
+| 🔄 **Always fresh** | Light auto-sync while the app is open, a background sync about every 15 minutes, and a silent re-login when the session drops. |
+| 🔔 **Tells you first** | 12 notification types: grades the moment they appear, absence and warnings, new lecture files, class and task reminders, and a study streak. Each type has its own switch. |
+| 🔐 **Private by design** | Data is encrypted on the device (AES-GCM, with the key kept in the Keychain or Keystore). There is no backend that holds student data. |
+
+> [!NOTE]
+> SU+ is an independent student project. It is **not an official Sinai University app**, and it is not affiliated with or endorsed by the university.
+
+<details>
+<summary><b>🇪🇬 نبذة بالعربي</b></summary>
+
+<br/>
+
+**SU+** أبلكيشن لطلاب جامعة سيناء. بيجمع بوابة الجامعة (UnicodeSIS) وKMoodle في مكان واحد على الموبايل:
+
+- الجدول
+- الدرجات والسجل الأكاديمي والتراكمي
+- الغياب والإنذارات
+- ملفات المواد
+- الستريك والمهام والكشكول
+
+بتدخل مرة واحدة بإيميل الجامعة، والأبلكيشن مش بيشوف الباسورد ولا بيحفظه. كمان بيبعتلك 12 نوع إشعار، وكل نوع تقدر تقفله لوحده من الإعدادات:
+
+- الدرجات أول ما تنزل
+- الغياب والإنذارات
+- الملفات الجديدة
+- تذكير قبل المحاضرة
+- ملخص المذاكرة
+
+</details>
+
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 📚 Academics
+- **Home dashboard:** today's progress ring, the next class with a countdown, quick tools and tasks.
+- **Timetable:** each day by lecture or section, with room and instructor, and live "now" and "remaining" indicators.
+- **Grades:** coursework, quiz, midterm and final per course, plus the CGPA trend.
+- **Transcript:** **CGPA-first** term-by-term chart and earned hours.
+- **Absence and warnings:** percentage per course against the 25% exclusion limit.
+- **Registration, courses and the degree map:** done, available and locked courses on the way to graduation.
+
+</td>
+<td width="50%" valign="top">
+
+### 🗂️ KMoodle
+- Course **folders matched automatically** to your registered courses and doctors.
+- Latest files, assignments, and old terms of the same course.
+- In-app download and open, with progress.
+- **New file and assignment alerts.**
+- Silent token renewal with the remembered Google account.
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### 🔥 Study system
+- **Streak** with a daily goal (1–6 h), rest days and your longest streak.
+- **Planner** of tasks with lead-time reminders.
+- **Focus timer** and free-study sessions.
+- **Weekly study chart** and an end-of-day summary.
+- **Notebook** of course-tagged notes with search.
+
+</td>
+<td valign="top">
+
+### 🧰 Tools and settings
+- **GPA calculator** on the official university scale.
+- **Term planner** with expected CGPA.
+- Arabic / English, dark mode and a **fingerprint / Face ID lock**.
+- A switch for each notification type, plus **masculine or feminine wording**.
+- A **background-health card** for battery optimisation and maker auto-start.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 📱 Screens
+
+> High-fidelity design screens of the SU+ 1.12 redesign, shown with **sample data**.
+
+<table>
+<tr>
+<td align="center"><img src="docs/images/screens/s1-1.png" width="190"/><br/><sub><b>Welcome</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-2.png" width="190"/><br/><sub><b>Link account</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-3.png" width="190"/><br/><sub><b>Home</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-4.png" width="190"/><br/><sub><b>Timetable</b></sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/images/screens/s2-1.png" width="190"/><br/><sub><b>KMoodle files</b></sub></td>
+<td align="center"><img src="docs/images/screens/s2-2.png" width="190"/><br/><sub><b>Course folder</b></sub></td>
+<td align="center"><img src="docs/images/screens/s2-3.png" width="190"/><br/><sub><b>Grades</b></sub></td>
+<td align="center"><img src="docs/images/screens/s2-4.png" width="190"/><br/><sub><b>Streak</b></sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/images/screens/s3-1.png" width="190"/><br/><sub><b>Degree map</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-2.png" width="190"/><br/><sub><b>Tools · GPA</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-3.png" width="190"/><br/><sub><b>Notebook</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-4.png" width="190"/><br/><sub><b>More · Services</b></sub></td>
+</tr>
+</table>
+
+The full design system (colors, icons, type and motion) is in [docs/DESIGN.md](docs/DESIGN.md).
+
+---
+
+## 🔔 Smart notifications
+
+| # | When | Example (Arabic UI) |
+|:-:|---|---|
+| N1 | Every day at 07:00 | عليك النهاردة محاضرة X الساعة 9:00 وسكشن Y الساعة 12:45 |
+| N2 | 10 minutes before a class | عليك سكشن كمان 10 دقايق في روم B204 ودكتور Y |
+| N3 | Coursework grade posted | درجة الكورس ورك نزلت مادة X |
+| N4 | Midterm grade posted | استر يا ستااار درجات الميد ظهرت |
+| N5 | Final grade posted | استر يا ستااار درجات الفاينل ظهرت |
+| N6 | Each new absence | انت غبت محاضرة X ونسبة الغياب وصلت 15% |
+| N7 | Attendance warning | جالك انذار اول 10% في مادة X |
+| N8 | Before a planned task | جاهز ل… بعد 15 دقيقة |
+| N9 | Streak at risk (21:00 / 22:00 / 23:30) | الاستريك هيضيع روح ذاكر |
+| N10 | Task still undone 2 h later | متراكمش المذاكرة عشان هتندم |
+| N11 | End-of-day summary | عاش ذاكرت النهاردة 3س 20د |
+| N12 | New KMoodle file or assignment | الدكتور X رفع المحاضرة … مادة … |
+
+- Every type has its own switch in **Settings → Notifications**.
+- The wording follows the student's gender (taken from the university profile, or set by hand).
+- There are **no noisy "synced" pings**.
+
+How delivery, background sync, and Android and iOS limits work is in [docs/NOTIFICATIONS.md](docs/NOTIFICATIONS.md).
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+  subgraph Phone["Student's phone · SU+"]
+    UI["Expo Router screens"] --> Ctx["AppContext<br/>state and sync"]
+    Ctx --> Plan["sync-plan<br/>light / full order"]
+    Plan --> Portal["portal.ts<br/>UnicodeSIS client"]
+    Ctx --> Vault[("Encrypted vault<br/>AES-GCM")]
+    BG["Background task<br/>~15 min"] --> Plan
+    BG --> Diff["change-alerts<br/>diff old vs new"]
+    Diff --> Deliver["alert-delivery<br/>dedupe · per-type gate"]
+    MoodleC["moodle.ts"] --> MA["moodle-alerts"] --> Deliver
+    Rem["reminder-plan<br/>N1 N2 N8–N11"] --> Notif["expo-notifications"]
+    Deliver --> Notif
+  end
+  Portal -- "HTTP JSON" --> SIS[("UnicodeSIS API")]
+  MoodleC -- "Web-service token" --> KM[("KMoodle")]
 ```
 
-البناء يرفع **هذا المجلد** مباشرة عبر EAS_NO_VCS، وليس الـcommit القديم. Android preview ينتج APK؛ iPhone يحتاج توقيع Apple Developer وتسجيل أجهزة الاختبار. تكاليف وحصص EAS والتوقيع تخضع للحساب. لا توجد مفاتيح أو كلمات سر في المصدر.
+The layers, modules, data flow and storage are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-## تجربة Google الجديدة — Android فقط
+### Tech stack
+
+| Area | Technology |
+|---|---|
+| App | **Expo SDK 58**, React Native (New Architecture), **TypeScript**, Expo Router |
+| UI | react-native-svg charts, Reanimated, Lucide-style icons, a custom RTL design system |
+| Data | UnicodeSIS REST client, KMoodle web services, `react-native-webview` for portal sign-in |
+| Background | `expo-background-task`, `expo-task-manager`, `expo-notifications` (exact alarms on Android) |
+| Security | `expo-secure-store` + `@noble/ciphers` AES-GCM vault, `expo-local-authentication` |
+| Native | Kotlin Expo module **SuFocus** (focus and battery health) and a Java WebView popup through a config plugin |
+| Quality | Node test runner + `tsx` (**137 tests, 27 suites**), build preflight, `expo-doctor` |
+| Delivery | **EAS Build** (`preview`: Android APK and iOS internal) |
+
+---
+
+## 🚀 Getting started
+
+**Prerequisites:**
+- Node.js 24 and npm.
+- An Expo account with access to `@x3bdoxs-team/abdelrahman`.
+- For an iPhone build: an Apple Developer account.
+
 ```sh
-npm run build:google-test
+npm ci                       # install exact, locked dependencies
+npm run typecheck            # tsc --noEmit
+npm test                     # 137 unit tests
+npm run preflight            # release integrity checks
+npx expo start               # run in development
+
+# cloud builds (EAS)
+npx eas-cli@latest build --profile preview --platform android
+npx eas-cli@latest build --profile preview --platform ios
 ```
-ينتج ملف EAS التجريبي تطبيق **SU Student Test** منفصلًا. داخل شاشة الدخول فعّل «جرّب دخول جوجل — تجريبي»، ثم اضغط زر Google الأصلي في صفحة الجامعة. هذه تجربة User-Agent ونافذة فرعية؛ ليست إثباتًا أن Google سيقبلها. لا يوجد APK جاهز أو اختبار حساب حقيقي هنا. اقرأ `GOOGLE-TEST-AR.md` قبل التجربة. البناء العادي لا يفعّلها.
 
-## حماية بداية التشغيل 1.7.1
-نقطة بدء باسترداد أخطاء JS المتزامنة، حراسة مكتبات الخلفية، تحميل نافذة البوابة عند فتحها فقط، وخطوط نظام عند فشل الخطوط. ليست إثباتًا لإصلاح بلاغ الإغلاق على الجهاز، ولا تعالج native crashes. راجع `STARTUP-REPAIR-AR.md`.
+> [!IMPORTANT]
+> - Builds from 1.12.0 onward use a **new signing key**, so uninstall the old app before installing.
+> - Notification permissions and native plugins changed in 1.13–1.14, so you need a **new native build**. An OTA update is not enough.
 
-## إصلاح البيلد السابق 1.6.2
-تطابق package/lock وحماية قبل البناء، وحساب إخفاق درجات المواد ضمن المزامنة الجزئية. راجع `BUILD-FIX-AR.md`. نجاح Google والبيانات يحتاج اختبارًا فعليًا، وليس مضمونًا باختبارات الكود.
+Profiles, fonts, checks and troubleshooting are in [docs/BUILD.md](docs/BUILD.md).
 
-## المزايا
-- الدخول مباشرة من نافذة موقع الجامعة دون شاشة موافقة HTTP منفصلة.
-- في الوضع العادي، الروابط الخارجية HTTP(S) ونوافذ الموقع المنبثقة تُفتح في المتصفح، مع رفض روابط تحمل رموز جلسة ورفض المخططات التنفيذية/الملفات.
-- عربي/إنجليزي، ألوان زجاجية خفيفة بالـgradients والشفافية، الوضعان الفاتح والداكن، شريط تقدّم متحرك يحترم Reduce Motion. هذا **تصميم مستوحى من Liquid Glass**، وليس واجهة Apple الأصلية.
-- الرئيسية: اسم الطالب ومعرّفه، المواد الناجحة في السجل المحمّل، الساعات المكتسبة وCGPA عند توافرهما، جدول اليوم مع القاعة والوقت ونوع المحاضرة أو السيكشن بألوان مختلفة، الغياب وروابط الدرجات والجدول الأسبوعي.
-- خريطة IT: 49 مادة، مستطيلات وروابط المتطلبات المباشرة، تكبير بإصبعين وسحب وبحث، حالة النجاح/التسجيل والرسوب المرصود، وتفاصيل كل مادة.
-- جدول مذاكرة: عنوان، تاريخ، وقت، مدة، مادة وملاحظات، تعديل/حذف/نقل لليوم، تحديد المنجز ومؤشر تقدم، ومؤقت تركيز.
-- الرئيسية تعرض إجراءات اليوم والمؤقت الجاري؛ شاشة المهام تضيف اختيار المادة بالاسم واختصارات التاريخ وتحذير تعارض المواعيد.
-- مشروع INT 471 يتطلب 95 ساعة ناجحة. الساعات الرسمية لها الأولوية إذا توفرت؛ الحساب اليدوي موسوم، والساعات المسجلة ليست ناجحة.
-- كل القيم غير المنشورة تُعرض `—`، لا يتم اختلاق الدرجات أو ملء سجل تجريبي.
+---
 
-## الخطوط
-بناءً على تأكيد المستخدم بتاريخ 24 أكتوبر 2026 أنه يملك التراخيص اللازمة، يحتوي هذا التسليم على:
-- `assets/fonts/ThmanyahSans-Regular.otf`
-- `assets/fonts/ThmanyahSans-Bold.otf`
-- `assets/fonts/Froople.ttf`
+## 📂 Project structure
 
-ثمانية للنص العربي، Froople لكل النصوص الإنجليزية بما فيها الجسم والعناوين. إذا حذفت الخطوط اختياريًا يعمل fallback؛ الأرشيف الأصلي يشملها كاملة.
-يقوم `postinstall` بتوليد `src/lib/fonts.ts` تلقائيًا. `.easignore` يُبقي الخطوط داخل رفع EAS؛ لا تحذفه. `.gitignore` يستبعد الملفات الخام من Git لتجنب نشرها عرضًا.
-احتفظ بالأرشيف في نطاق المشاركين المرخّص لهم. تأكيد المستخدم ليس ترخيصًا جديدًا للغير؛ لا تنشر ملفات الخطوط الخام للعامة. الترخيص الأصلي لثمانية موجود في `assets/fonts/Thmanyah-LICENSE.pdf`.
-
-## الدخول وGoogle
-- الدخول العادي من صفحة الجامعة الأصلية؛ لا تُقرأ كلمات السر.
-- session bridge محدود بأصل بوابة الجامعة، والطلبات تستخدم StudentID المصادق عليه.
-- Google الرسمي: تم تجهيز عميل SSO بمتصفح النظام وPKCE/state؛ **إعداداته وتوصيل جامعة حقيقي غير متوفرين**. مسار Google التجريبي منفصل عنه ومشروح أعلاه.
-- فولدر `server/` يحتوي وسيط SSO واختبارات نموذجية؛ مواءمة SIS في `server/adapter.mjs` تحتاج تنفيذًا واتصالًا رسميًا، وليست خدمة إنتاج جاهزة.
-- فتح الموقع في متصفح النظام لا ينقل الجلسة تلقائيًا للتطبيق. التجربة تستخدم نافذة داخل التطبيق مع موقع الجامعة نفسه. لا تصنع جلسة من الإيميل فقط ولا تستدعي طريق الدخول الخارجي مباشرة.
-- اختيار حساب Google وحده لا يضمن جلسة SIS؛ الموقع يجب أن يُكمل الدخول. الجلسات قد تنتهي وتحتاج دخولًا جديدًا.
-
-## مؤقت التركيز والتذكيرات
-- Focus يحتفظ بموعد نهاية في حالة مشفرة منفصلة لكل حساب. مغادرة الصفحة أو الذهاب للخلفية لا يعيد ضبطه. لا يعتمد على تشغيل JavaScript المستمر.
-- تذكيرات محلية opt-in للمهام، انتهاء التركيز، قبل المحاضرة بـ10 دقائق، وجدول اليوم 7 صباحًا.
-- التنبيهات تعتمد على بيانات آخر مزامنة؛ تُخطط لأسبوع محاضرات وأسبوعين مهام بحد 48، مع مساحة لتنبيه غياب. يُعاد التوفيق عند تعديل المهام أو العودة للتطبيق، ويُلغى الجدول عند تسجيل الخروج/تبديل الحساب.
-- إشعارات تغيّر الغياب/الإنذارات/الدرجات تقارن نتائج المزامنة؛ أول مزامنة صامتة. تتضمن اسم المادة واليوم والبيانات المتاحة؛ إن غاب تاريخ الجامعة يظهر تاريخ اكتشاف التحديث.
-- فعّلها فقط لو وافقت على ظهور هذه التفاصيل في إشعارات الجهاز، واضبط إخفاء المعاينات من إعدادات الهاتف عند الحاجة.
-- مزامنة الخلفية تطلب حدًا أدنى 30 دقيقة؛ النظام يقرر الموعد وقد يمنعها. ليست فورية ولا remote push. توقيت الجهاز مرجع المواعيد.
-- معاينة الويب لا تدعم إشعارات Native ولا استمرار البيانات بعد إعادة التحميل. اختبار الجهاز مطلوب.
-
-## الدقة والحدود
-- الجداول والدرجات تعتمد على مخطط الـAPI كما يظهر في واجهة الجامعة العامة؛ لا يوجد حساب طالب حقيقي للاختبار هنا.
-- لا نفترض ترجمة أيام الأسبوع الرقمية. الصفوف غير المعروفة تظهر في الجدول الكامل بدل إسنادها ليوم خاطئ.
-- محاولات الرسوب والنجاح مبنية على السجل الذي أعادته الخدمة، وقد لا يتضمن كل السنوات. غياب سجل ليس نجاحًا ولا رسوبًا.
-- CGPA يظهر كما أعادته الجامعة؛ شريطه على مقياس عرض 4.0. الساعات تستخدم هدف IT البالغ 144 ساعة. الخريطة المرفقة 49 مادة ومجموع ساعات بياناتها 143؛ لذلك ليست بديلًا عن اللائحة الرسمية.
-- التقدير النهائي في السجل ليس درجة امتحان الفاينل الرقمية. الميد/الكورس ورك/الفاينل الرقمي يظهر حسب البنود المنشورة من الجامعة فقط.
-- العلامات اليدوية للخريطة منفصلة وموسومة بوضوح، ولا تعدّل تسجيل الجامعة. أهلية المتطلبات محلية وليست موافقة تسجيل رسمية.
-- العربية/الإنجليزية للواجهة؛ أسماء المواد والحقول القادمة من الجامعة تبقى بلغتها المصدرية.
-
-## الأمان والخصوصية
-بوابة الجامعة تستخدم HTTP غير مشفّر. أزلنا شاشة التحذير الحاجزة بناءً على الطلب، لكن **خطر النقل لم يتغيّر** وملاحظة الخصوصية موجودة بالإعدادات. AES-GCM على الجهاز لا يحمي بيانات الشبكة.
-الجلسة وبيانات الطالب والمذاكرة مشفرة محليًا؛ المفتاح في Keychain/Keystore. السجل منفصل لكل طالب. تسجيل الخروج يمسح بيانات الحساب المحفوظة ومهامه. معاينة الويب تحفظ الحالة في الذاكرة فقط، لا تبقى بعد إعادة تحميل الصفحة. لا توجد analytics أو خدمة خلفية تجمع بيانات الطلاب في هذا المشروع.
-التطبيق لا يغيّر التسجيل ولا يدفع مصروفات ولا يطلب بيانات طلاب آخرين.
-
-## التحقق
-```sh
-npm run typecheck
-npm test
-npx expo-doctor
-npx expo export --platform all
+```text
+su-student/
+├─ src/
+│  ├─ app/              # Expo Router screens: (tabs), transcript, grades, moodle, streak, …
+│  ├─ components/       # UI kit, charts, portal sign-in, reminders, background-health
+│  ├─ context/          # AppContext: session, cache, sync orchestration
+│  ├─ lib/              # 47 modules: portal, academic, moodle, notifications, vault, …
+│  └─ data/             # static data (scales, maps, samples)
+├─ modules/su-focus/    # native Kotlin Expo module (Android)
+├─ plugins/             # Expo config plugins (Google popup, network, no-minify)
+├─ server/              # optional Google SSO broker (Node) and its tests
+├─ scripts/             # preflight, source verification, fonts, build helpers
+├─ tests/               # 27 test suites
+└─ docs/                # this documentation and the presentation
 ```
-انظر `TESTING.md`. فحوص المصدر وMetro وprebuild ليست تأكيد نجاح Gradle/Xcode أو تشغيل الهاتف. إذا فشل EAS، أرسل آخر 50 سطرًا من أول خطوة فاشلة، لا تضغط Rebuild للـcommit القديم.
+
+---
+
+## 🛡️ Privacy and security
+
+- **No password handling:** sign-in happens on the university's own page, and the app captures only the session.
+- **Encrypted at rest:** every cached record is AES-GCM encrypted, with the key in the platform Keychain or Keystore.
+- **No student-data server:** the app talks directly to UnicodeSIS and KMoodle from the phone.
+- **Strict sign-in sandbox:** the Google popup allows only Google-owned HTTPS hosts and the portal, with no JS bridges.
+- **Optional app lock** with fingerprint or Face ID.
+
+The full details are in [docs/SECURITY.md](docs/SECURITY.md).
+
+---
+
+## 📖 Documentation
+
+| Document | What's inside |
+|---|---|
+| [ARCHITECTURE](docs/ARCHITECTURE.md) | Layers, modules map, sync engine, storage, diagrams |
+| [FEATURES](docs/FEATURES.md) | Every screen and what it does |
+| [NOTIFICATIONS](docs/NOTIFICATIONS.md) | N1–N12, scheduling, background sync, battery, iOS limits |
+| [UNIVERSITY-API](docs/UNIVERSITY-API.md) | UnicodeSIS endpoints, transcript chain, GPA scale, KMoodle |
+| [SECURITY](docs/SECURITY.md) | Threat model, vault, sign-in sandbox |
+| [DESIGN](docs/DESIGN.md) | Brand, palette, icons, typography, motion |
+| [BUILD](docs/BUILD.md) | EAS profiles, release checks, troubleshooting |
+| [TESTING](docs/TESTING.md) | Test suites and what they guard |
+| [CHANGELOG](CHANGELOG.md) | Version history |
+| [🎞️ Presentation (PDF)](docs/presentation/SU-Plus-Presentation.pdf) | The project in 12 slides ([HTML source](docs/presentation/index.html)) |
+
+<div align="center">
+<br/>
+<a href="docs/presentation/SU-Plus-Presentation.pdf"><img src="docs/images/presentation-cover.png" width="80%" alt="SU+ presentation"/></a>
+<br/><sub>Click to open the presentation</sub>
+</div>
+
+---
+
+<div align="center">
+
+Made with 💜 for Sinai University students · **SU+ 1.14.1**
+
+</div>

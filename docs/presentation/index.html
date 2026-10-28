@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>SU+ — العرض التقديمي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@700;900&display=swap" rel="stylesheet">
+<style>
+@page{size:1920px 1080px;margin:0}
+*{margin:0;box-sizing:border-box}
+body{font-family:Cairo,sans-serif;background:#2a2540;color:#17161D}
+.s{width:1920px;height:1080px;position:relative;overflow:hidden;background:#F4F3F9;padding:110px 130px;page-break-after:always;break-after:page}
+.dark{background:#17161D;color:#fff}.violet{background:radial-gradient(circle at 80% 15%,#9B83FF,#6A4BEF 45%,#3B22B8);color:#fff}
+.tag{display:inline-block;background:#D6F77E;color:#17161D;font-weight:800;font-size:26px;padding:6px 22px;border-radius:999px;margin-bottom:26px}
+h1{font-size:120px;font-weight:900;line-height:1.15}h2{font-size:76px;font-weight:900;line-height:1.2;margin-bottom:40px}
+h3{font-size:36px;font-weight:800;margin-bottom:10px}p,li{font-size:32px;line-height:1.65}
+.lime{background:#D6F77E;color:#17161D;padding:0 22px;border-radius:24px}
+.num{position:absolute;left:130px;bottom:70px;font:700 24px Inter,Cairo;opacity:.45}
+.brand{position:absolute;right:130px;bottom:62px;font:900 30px Inter,Cairo;opacity:.6}
+.grid{display:grid;gap:30px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border-radius:36px;padding:40px;box-shadow:0 10px 40px rgba(40,20,120,.08)}
+.dark .card{background:#25232f;box-shadow:none}
+.ic svg{width:44px;height:44px;stroke:#17161D;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.ic{width:84px;height:84px;border-radius:26px;display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:22px}
+.big{font:900 110px Inter,Cairo;color:#6A4BEF;line-height:1}
+.shot{width:100%;border-radius:30px;box-shadow:0 20px 60px rgba(40,20,120,.18)}
+table{width:100%;border-collapse:collapse;font-size:27px}td{padding:13px 18px;border-bottom:1px solid #e6e3f2}td:first-child{font:800 26px Inter,Cairo;color:#6A4BEF;width:90px}
+.flow{display:flex;align-items:center;gap:22px;justify-content:center;margin-top:40px}
+.box{background:#fff;border-radius:28px;padding:30px 34px;font-size:30px;font-weight:800;text-align:center;min-width:250px;box-shadow:0 10px 30px rgba(40,20,120,.1)}
+.box small{display:block;font-size:22px;font-weight:600;color:#6b6780}.arr{font-size:50px;color:#6A4BEF;font-weight:900}
+.tl{display:flex;justify-content:space-between;position:relative;margin-top:90px}
+.tl:before{content:"";position:absolute;top:34px;left:0;right:0;height:6px;background:#C9BBFA;border-radius:3px}
+.tl div{position:relative;text-align:center;width:300px}.tl b{display:block;margin:0 auto 24px;width:74px;height:74px;border-radius:50%;background:#6A4BEF;border:8px solid #F4F3F9}
+.tl h3{font-family:Inter,Cairo;font-size:40px}.tl p{font-size:25px}
+</style></head><body>
+
+<section class="s violet">
+  <img src="../images/app-icon.png" style="width:170px;border-radius:44px;box-shadow:0 20px 60px rgba(0,0,0,.35)">
+  <h1 style="margin-top:50px;font-family:Inter"><bdi dir="ltr">SU+</bdi></h1>
+  <h1 style="font-size:96px">كل جامعتك <span class="lime">في مكان واحد</span></h1>
+  <p style="font-size:38px;margin-top:30px;opacity:.9">أبلكيشن الطالب لجامعة سيناء · Android & iPhone</p>
+  <img src="../images/screens/s1-3.png" style="position:absolute;left:150px;top:120px;width:400px;border-radius:44px;border:10px solid #17161D;transform:rotate(-6deg);box-shadow:0 40px 90px rgba(0,0,0,.45)">
+  <div class="num" style="opacity:.7;color:#fff">الإصدار 1.14.1</div>
+</section>
+
+<section class="s">
+  <span class="tag">المشكلة</span><h2>الطالب مشتّت بين أنظمة كتير</h2>
+  <div class="grid g3">
+    <div class="card"><div class="ic" style="background:#FFD0DE"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div><h3>بوابة مش للموبايل</h3><p>UnicodeSIS موقع تقيل وصعب على الموبايل، ولازم تدخل كل مرة.</p></div>
+    <div class="card"><div class="ic" style="background:#FFEBA3"><svg viewBox="0 0 24 24"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/></svg></div><h3>KMoodle لوحده</h3><p>الملفات في مكان والجدول في مكان والدرجات في مكان تالت.</p></div>
+    <div class="card"><div class="ic" style="background:#CBE7FF"><svg viewBox="0 0 24 24"><path d="M8.7 3A6 6 0 0 1 18 8a21 21 0 0 0 .6 5M17 17H3s3-2 3-9a4.7 4.7 0 0 1 .3-1.7M10.3 21a1.9 1.9 0 0 0 3.4 0M2 2l20 20"/></svg></div><h3>مفيش إشعارات</h3><p>الدرجة تنزل والغياب يزيد والإنذار يوصل… ومحدش بيقولك.</p></div>
+  </div>
+  <div class="num">02</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s dark">
+  <span class="tag">الحل</span><h2><bdi dir="ltr">SU+</bdi> — أبلكيشن واحد لكل حاجة</h2>
+  <div class="grid g4">
+    <div class="card"><div class="ic" style="background:#C9BBFA"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>دخول واحد</h3><p>بإيميل الجامعة، ومن غير ما نشوف الباسورد.</p></div>
+    <div class="card"><div class="ic" style="background:#D6F77E"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></svg></div><h3>دايماً محدّث</h3><p>تحديث خفيف وتحديث في الخلفية وإعادة دخول صامتة.</p></div>
+    <div class="card"><div class="ic" style="background:#FFDCC4"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></div><h3>بيقولك الأول</h3><p>12 نوع إشعار ذكي، وكل نوع ليه زرار.</p></div>
+    <div class="card"><div class="ic" style="background:#C6F1DF"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>خاص بيك</h3><p>بياناتك مشفّرة على موبايلك بس.</p></div>
+  </div>
+  <div class="num">03</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s"><span class="tag">الشاشات</span><h2>البداية · الرئيسية · الجدول</h2><img class="shot" src="../images/screens-1.png"><div class="num">04</div></section>
+<section class="s"><span class="tag">الشاشات</span><h2>KMoodle · الدرجات · الستريك</h2><img class="shot" src="../images/screens-2.png"><div class="num">05</div></section>
+<section class="s"><span class="tag">الشاشات</span><h2>الخريطة · الأدوات · الكشكول · المزيد</h2><img class="shot" src="../images/screens-3.png"><div class="num">06</div></section>
+
+<section class="s">
+  <span class="tag">الإشعارات الذكية</span><h2 style="margin-bottom:26px">12 نوع — وكل نوع ليه زرار تشغيل</h2>
+  <div class="grid g2" style="gap:50px">
+  <table>
+    <tr><td>N1</td><td>7:00 الصبح: جدول النهاردة</td></tr><tr><td>N2</td><td>قبل المحاضرة بـ 10 دقايق + الروم والدكتور</td></tr>
+    <tr><td>N3</td><td>درجة الكورس ورك نزلت</td></tr><tr><td>N4</td><td>استر يا ستااار درجات الميد ظهرت</td></tr>
+    <tr><td>N5</td><td>درجات الفاينل ظهرت</td></tr><tr><td>N6</td><td>غياب جديد + النسبة وصلت كام</td></tr>
+  </table>
+  <table>
+    <tr><td>N7</td><td>إنذار أول 10% / تاني 20%</td></tr><tr><td>N8</td><td>قبل المهمة بالوقت اللي تختاره</td></tr>
+    <tr><td>N9</td><td>الاستريك هيضيع روح ذاكر</td></tr><tr><td>N10</td><td>مهمة لسه متعملتش بعد ساعتين</td></tr>
+    <tr><td>N11</td><td>ملخص المذاكرة آخر اليوم</td></tr><tr><td>N12</td><td>الدكتور رفع محاضرة / اسايمنت</td></tr>
+  </table></div>
+  <p style="margin-top:34px;color:#6A4BEF;font-weight:800">مذكّر ومؤنث تلقائي من بروفايل الجامعة · ومفيش إشعارات مزعجة زي "تم التحديث"</p>
+  <div class="num">07</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s">
+  <span class="tag">المعمارية</span><h2>كل حاجة على الموبايل — مفيش سيرفر بيخزّن بياناتك</h2>
+  <div class="flow">
+    <div class="box" style="background:#17161D;color:#fff">UnicodeSIS<small style="color:#bbb">بوابة الجامعة</small></div><div class="arr">←</div>
+    <div class="box">Sync engine<small>تحديث خفيف / كامل</small></div><div class="arr">←</div>
+    <div class="box" style="background:#C9BBFA">Encrypted cache<small>AES-GCM</small></div><div class="arr">←</div>
+    <div class="box">Change diff<small>إيه اللي اتغيّر؟</small></div><div class="arr">←</div>
+    <div class="box" style="background:#D6F77E">Notification<small>في الخلفية كل ~15 د</small></div>
+  </div>
+  <div class="grid g3" style="margin-top:70px">
+    <div class="card"><h3>Expo SDK 58 · TypeScript</h3><p>React Native و Expo Router، وأكتر من 100 ملف مصدر.</p></div>
+    <div class="card"><h3>Native modules</h3><p>Kotlin (SuFocus والبطارية) و Java (بوب أب جوجل الآمن).</p></div>
+    <div class="card"><h3>KMoodle</h3><p>Web-service token وربط أوتوماتيك للمواد والدكاترة.</p></div>
+  </div>
+  <div class="num">08</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s dark">
+  <span class="tag">الأمان والخصوصية</span><h2>مصمّم إنه ميعرفش عنك أكتر من اللازم</h2>
+  <div class="grid g2">
+    <div class="card"><h3>مفيش باسوردات</h3><p>الدخول بيتم في صفحة الجامعة أو جوجل نفسها. إحنا بناخد الجلسة بس.</p></div>
+    <div class="card"><h3>تشفير AES-GCM</h3><p>المفتاح في Keychain / Keystore، والبيانات مشفّرة على الجهاز.</p></div>
+    <div class="card"><h3>Sandbox لجوجل</h3><p>دومينات جوجل الرسمية بس، ومن غير أي JS bridge، ومتغطّي بالاختبارات.</p></div>
+    <div class="card"><h3>قفل بالبصمة</h3><p>Face ID أو البصمة، اختياري.</p></div>
+  </div>
+  <div class="num">09</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s">
+  <span class="tag">الجودة</span><h2>كل إصدار بيعدّي على فحوصات قبل ما يتبني</h2>
+  <div class="grid g4" style="text-align:center">
+    <div class="card"><div class="big">137</div><p>اختبار ناجح</p></div>
+    <div class="card"><div class="big">27</div><p>مجموعة اختبارات</p></div>
+    <div class="card"><div class="big">20/20</div><p>expo-doctor</p></div>
+    <div class="card"><div class="big">0</div><p>أخطاء TypeScript</p></div>
+  </div>
+  <p style="margin-top:60px">tsc · npm test · preflight · server tests · expo export (Android + iOS) · npm ci dry-run · EAS preflight</p>
+  <div class="num">10</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s">
+  <span class="tag">الإصدارات</span><h2>رحلة المشروع</h2>
+  <div class="tl">
+    <div><b></b><h3>1.0–1.6</h3><p>الدخول والجدول والدرجات والسجل</p></div>
+    <div><b></b><h3>1.7–1.11</h3><p>KMoodle والستريك والكشكول ودخول جوجل</p></div>
+    <div><b></b><h3>1.12</h3><p><bdi dir="ltr">SU+</bdi>: هوية وتصميم جديد بالكامل</p></div>
+    <div><b></b><h3>1.13</h3><p>12 إشعار ذكي وإعادة دخول صامتة</p></div>
+    <div><b style="background:#D6F77E"></b><h3>1.14</h3><p>الإشعارات في الخلفية وExpo 58 بفحص 20/20</p></div>
+  </div>
+  <div class="num">11</div><div class="brand"><bdi dir="ltr">SU+</bdi></div>
+</section>
+
+<section class="s violet" style="text-align:center;padding-top:230px">
+  <img src="../images/app-icon.png" style="width:150px;border-radius:40px">
+  <h1 style="margin-top:40px">شكراً</h1>
+  <p style="font-size:40px;margin-top:20px"><bdi dir="ltr">SU+</bdi> · كل جامعتك في مكان واحد</p>
+  <p style="font-size:28px;opacity:.75;margin-top:30px;font-family:Inter">github.com/3bdomos2afa/SU-student</p>
+</section>
+</body></html>
