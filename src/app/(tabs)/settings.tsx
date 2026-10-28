@@ -25,7 +25,7 @@ export default function Settings(){
    tr('هيتمسح من الجهاز نهائي:\n• تسجيل دخولك\n• الدرجات والجدول والسجل المحفوظ\n• الكشكول بكل صفحاته ورسوماته\n• جدول المذاكرة والتذكيرات\n• مواد الخطة والحاسبة وبيانات مودل\n\nمفيش رجوع بعد كده. حسابك على موقع الجامعة مش هيتأثر.','This permanently erases from this device:\n• your sign-in\n• saved grades, timetable and records\n• the notebook with all pages and drawings\n• the study schedule and reminders\n• planner, calculator and Moodle data\n\nThis cannot be undone. Your university account is not affected.'),
    [{text:tr('إلغاء','Cancel'),style:'cancel'},{text:tr('امسح كله','Erase everything'),style:'destructive',onPress:()=>{setBusy(true);void a.eraseAll().then(()=>router.replace('/login')).catch(fail).finally(()=>setBusy(false));}}]);
  return <Screen>
-   <Header title={tr('على راحتك','Make it yours')} subtitle="SU+ / 1.14.0"/>
+   <Header title={tr('على راحتك','Make it yours')} subtitle="SU+ / 1.14.1"/>
    {!backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('المزامنة في الخلفية مش متاحة في النسخة دي. بس التحديث لما تفتح الأبلكيشن أو تعمل ريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
    <Glass><View style={{gap:12}}>
      <Txt variant="h3">{session?.name??tr('أدوات المذاكرة على جهازك','Local study tools')}</Txt>

@@ -53,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "cf057f1f21e324cfd2972afd683857d38ec4ea4c650af2573518e65f50d89d65"
+    "sha256": "e2f0b297314affc653ba252cb8bd8f7e9c9b3bae84d6d6711f7daa62c38c66bf"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -113,11 +113,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "483fff7a044fca17a7b9207deb93805deb3bab3be933d40fea8e28423148c1a7"
+    "sha256": "236d4edcbc1dd0da3b3240ca40dadcf07af025359d28c2c31a2352b4695487de"
   },
   {
     "path": "package.json",
-    "sha256": "5eb83a39b6f5ccfcf63dc8dce7b60865a20a2743902d74adcb748d7adb27ea5d"
+    "sha256": "947eee9bf832f9f59fd1ec2516601dae5d7b712512c53c805b416df6ac3b554c"
   },
   {
     "path": "plugins/crash-activity.kt.txt",
@@ -229,7 +229,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "409d35e8cc62eeb17d847e5d222e98303033e078ca9e925aadb30f8cc9800774"
+    "sha256": "d1765b1e07d06e7abcf8a74b4c3c6dbc90a3d17e40d1d6f383c2f809e7aa2e8c"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -365,7 +365,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "12b7d1c4673fd524879bcb38115fb3565121e38dd2d1e7ef007f477f6a293edb"
+    "sha256": "a068d9586c1a9605f27c7f0388534dc596939a04924ec4a82c6e357d7c0628e5"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -389,7 +389,7 @@
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "f134d0724c9a539dfa1724057da8e9ff9f2ec620166a1a5ab9bfcd246f16651d"
+    "sha256": "4de7a206b4fd957b30c9eb7f61b43f4103e9aed1f7978c12d95f3f771af3714f"
   },
   {
     "path": "src/components/portal-modal.tsx",
@@ -697,7 +697,7 @@
   },
   {
     "path": "tests/v1120-suplus.test.ts",
-    "sha256": "dd14c0299496647359cf67eefb0846097100bbef23b77e893c5ac61cf46e1b96"
+    "sha256": "3568cb50fd58752bf513684eef30724ca8a91912844e4ed55d7cd0fbffb671e3"
   },
   {
     "path": "tests/v1130.test.ts",
