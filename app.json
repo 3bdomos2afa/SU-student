@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "SU Student",
+    "name": "SU+",
     "slug": "abdelrahman",
-    "version": "1.11.2",
+    "version": "1.12.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "unicodesis",
@@ -24,7 +24,7 @@
     "android": {
       "package": "com.unicodesis.student",
       "adaptiveIcon": {
-        "backgroundColor": "#1D2331",
+        "backgroundColor": "#6A4BEF",
         "foregroundImage": "./assets/images/android-icon-foreground.png"
       }
     },
@@ -40,10 +40,10 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 180,
           "resizeMode": "contain",
-          "backgroundColor": "#FBF7EE",
+          "backgroundColor": "#F4F3F9",
           "dark": {
             "image": "./assets/images/splash-icon.png",
-            "backgroundColor": "#10131C"
+            "backgroundColor": "#121118"
           }
         }
       ],

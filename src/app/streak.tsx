@@ -1,4 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
+import { Confetti } from '@/components/confetti';
 import { View } from 'react-native';
 import { useApp } from '@/context/app-context';
 import { FocusCard } from '@/components/focus-card';
@@ -37,10 +38,11 @@ export default function StreakScreen() {
     <Screen>
       <PageTop title={tr('الستريك', 'Streak')} subtitle={tr('ذاكر هدفك كل يوم وماتكسرش السلسلة', 'Hit your daily goal and keep the chain')} />
 
+      {v.met ? <Confetti /> : null}
       {/* Flame card */}
-      <View style={{ backgroundColor: TOXIC.navy, borderRadius: 24, borderWidth: 2.5, borderColor: '#0B0D14', padding: 20, gap: 18, boxShadow: hard('#0B0D14', 5) }}>
+      <View style={{ backgroundColor: TOXIC.navy, borderRadius: 24, borderWidth: 2.5, borderColor: 'transparent', padding: 20, gap: 18, boxShadow: hard('#0B0D14', 5) }}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 16 }}>
-          <View style={{ width: 76, height: 76, borderRadius: 22, backgroundColor: TOXIC.lime, borderWidth: 2.5, borderColor: '#0B0D14', alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-6deg' }] }}>
+          <View style={{ width: 76, height: 76, borderRadius: 22, backgroundColor: TOXIC.lime, borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-6deg' }] }}>
             <Ionicons name="flame" size={44} color="#0B0D14" />
           </View>
           <View style={{ flex: 1 }}>

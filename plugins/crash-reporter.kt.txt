@@ -78,7 +78,7 @@ object CrashReporter {
       val p = ctx.packageManager.getPackageInfo(ctx.packageName, 0)
       @Suppress("DEPRECATION") (p.versionName + " (" + p.versionCode + ")")
     } catch (_: Throwable) { "?" }
-    return "SU Student " + version + "\n" +
+    return "SU+ " + version + "\n" +
       "Device: " + Build.MANUFACTURER + " " + Build.MODEL + " (" + Build.DEVICE + ")\n" +
       "Android: " + Build.VERSION.RELEASE + " (SDK " + Build.VERSION.SDK_INT + ")\n" +
       "ABIs: " + Build.SUPPORTED_ABIS.joinToString(",") + "\n" +

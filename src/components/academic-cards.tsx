@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { View } from 'react-native';
 import { useApp } from '@/context/app-context';
 import { canonical, localDate, timetable, type Slot } from '@/lib/academic';

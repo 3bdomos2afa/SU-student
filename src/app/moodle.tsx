@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { Alert, BackHandler, Linking, Modal, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -38,10 +38,10 @@ function Folder({ c, color, count, offline, onPress }: { c: MCourse; color: (typ
   return (
     <PressScale style={{ width: '48%' }} label={c.title} onPress={onPress}>
       <View style={{ opacity: off ? 0.62 : 1 }}>
-        <View style={{ width: '48%', height: 15, marginStart: 14, borderTopLeftRadius: 9, borderTopRightRadius: 9, backgroundColor: color.tab, borderWidth: 2.5, borderBottomWidth: 0, borderColor: palette.ink }} />
-        <View style={{ marginTop: -2, minHeight: 132, padding: 13, gap: 10, borderRadius: 18, backgroundColor: palette.card, borderWidth: 2.5, borderColor: palette.ink, boxShadow: hard(palette.ink, 4) }}>
+        <View style={{ width: '48%', height: 15, marginStart: 14, borderTopLeftRadius: 9, borderTopRightRadius: 9, backgroundColor: color.tab, borderWidth: 2.5, borderBottomWidth: 0, borderColor: 'transparent' }} />
+        <View style={{ marginTop: -2, minHeight: 132, padding: 13, gap: 10, borderRadius: 18, backgroundColor: palette.card, borderWidth: 2.5, borderColor: 'transparent', boxShadow: hard(palette.ink, 4) }}>
           <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <View style={{ width: 44, height: 44, borderRadius: 13, backgroundColor: color.box, borderWidth: 2.5, borderColor: '#0B0D14', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ width: 44, height: 44, borderRadius: 13, backgroundColor: color.box, borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
               <Ionicons name={off ? 'folder-outline' : 'folder-open'} size={22} color={readableOn(color.box)} />
             </View>
             <View style={{ alignItems: 'flex-end', gap: 2 }}>
@@ -76,9 +76,9 @@ function FileCard({ f, saved, pct, read, showCourse, onAction, onRead, onLong }:
         : { bg: palette.soft, fg: palette.text, icon: 'open-outline' as IconName, label: tr('افتح', 'Open') };
   return (
     <PressScale label={f.title} onPress={onAction} onLongPress={onLong}>
-      <View style={{ flexDirection: row, alignItems: 'center', gap: 11, padding: 11, borderRadius: 16, backgroundColor: palette.card, borderWidth: 2.5, borderColor: palette.ink, boxShadow: hard(palette.ink, 3) }}>
+      <View style={{ flexDirection: row, alignItems: 'center', gap: 11, padding: 11, borderRadius: 16, backgroundColor: palette.card, borderWidth: 2.5, borderColor: 'transparent', boxShadow: hard(palette.ink, 3) }}>
         <PressScale label={tr('قريته', 'Read')} onPress={onRead} disabled={!onRead}>
-          <View style={{ width: 42, height: 42, borderRadius: 12, backgroundColor: box, borderWidth: 2, borderColor: palette.ink, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: 42, height: 42, borderRadius: 12, backgroundColor: box, borderWidth: 2, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name={read ? 'checkmark' : FILE_ICON[f.direct ? kindOf(f.name) : 'other']} size={21} color={palette.text} />
           </View>
         </PressScale>
@@ -86,7 +86,7 @@ function FileCard({ f, saved, pct, read, showCourse, onAction, onRead, onLong }:
           <Txt variant="label" numberOfLines={2} style={read ? { opacity: 0.65 } : undefined}>{f.title}</Txt>
           {meta ? <Txt variant="caption" numberOfLines={1}>{meta}</Txt> : null}
         </View>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 5, height: 36, paddingHorizontal: 12, borderRadius: 12, backgroundColor: btn.bg, borderWidth: 2, borderColor: palette.ink }}>
+        <View style={{ flexDirection: row, alignItems: 'center', gap: 5, height: 36, paddingHorizontal: 12, borderRadius: 12, backgroundColor: btn.bg, borderWidth: 2, borderColor: 'transparent' }}>
           {btn.icon ? <Ionicons name={btn.icon} size={15} color={btn.fg} /> : null}
           <Txt variant="label" style={{ color: btn.fg, fontSize: 13, lineHeight: 18 }}>{btn.label}</Txt>
         </View>
@@ -196,13 +196,13 @@ export default function Moodle() {
     const term = termLabel(termOf(o.ref), isAr);
     return <View key={o.ref.id} style={{ gap: 8 }}>
       <PressScale label={term} onPress={() => setOldOpen(on ? null : o.ref.id)}>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 10, padding: 10, borderRadius: 14, backgroundColor: palette.card, borderWidth: 2, borderColor: palette.ink }}>
-          <View style={{ width: 38, height: 38, borderRadius: 11, backgroundColor: palette.yel, borderWidth: 2, borderColor: palette.ink, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flexDirection: row, alignItems: 'center', gap: 10, padding: 10, borderRadius: 14, backgroundColor: palette.card, borderWidth: 2, borderColor: 'transparent' }}>
+          <View style={{ width: 38, height: 38, borderRadius: 11, backgroundColor: palette.yel, borderWidth: 2, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name={on ? 'folder-open' : 'folder'} size={19} color={palette.text} />
           </View>
           <View style={{ flex: 1, minWidth: 0 }}>
             <View style={{ flexDirection: row }}>
-              <View style={{ paddingHorizontal: 9, paddingVertical: 2, borderRadius: 10, backgroundColor: palette.purple, borderWidth: 1.5, borderColor: palette.ink }}>
+              <View style={{ paddingHorizontal: 9, paddingVertical: 2, borderRadius: 10, backgroundColor: palette.purple, borderWidth: 1.5, borderColor: 'transparent' }}>
                 <Txt variant="caption" color="#FFFFFF" style={{ fontSize: 11.5, lineHeight: 16 }}>{term}</Txt>
               </View>
             </View>
@@ -232,7 +232,7 @@ export default function Moodle() {
       </View>
       <Glass tint={color.box}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
-          <View style={{ width: 52, height: 52, borderRadius: 15, backgroundColor: '#FFFFFF', borderWidth: 2.5, borderColor: '#0B0D14', alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: 52, height: 52, borderRadius: 15, backgroundColor: '#FFFFFF', borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name="folder-open" size={26} color="#0B0D14" />
           </View>
           <View style={{ flex: 1 }}>

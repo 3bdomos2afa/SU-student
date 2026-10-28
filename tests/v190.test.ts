@@ -23,7 +23,7 @@ test('brand assets and identity stay consistent', () => {
   const app = JSON.parse(read('app.json')).expo;
   assert.equal(app.slug, 'abdelrahman');
   assert.equal(app.android.package, 'com.unicodesis.student');
-  assert.equal(app.android.adaptiveIcon.backgroundColor, '#1D2331');
+  assert.equal(app.android.adaptiveIcon.backgroundColor, '#6A4BEF');
   for (const f of ['icon.png', 'android-icon-foreground.png', 'splash-icon.png', 'favicon.png']) assert.ok(fs.statSync(`assets/images/${f}`).size > 1000, f);
   assert.ok(read('src/components/brand.tsx').includes('export function BrandMark'));
 });

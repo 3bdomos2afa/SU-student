@@ -1,5 +1,5 @@
 import { Backdrop } from './backdrop';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { fontFamily } from '@/lib/fonts';
 import { useCustomFontsReady } from '@/lib/font-ready';
 
@@ -32,7 +32,7 @@ import { initials } from '@/lib/format';
 import { tap } from '@/lib/haptics';
 import { alpha, hard, readableOn, radius as R } from '@/lib/theme';
 
-export const BRAND_GRADIENT = ['#8B53FE', '#6B3FE0'] as const;
+export const BRAND_GRADIENT = ['#8B6CF6', '#6A4BEF'] as const;
 
 /** True when the OS asks for reduced motion (false until known). */
 export function useReducedMotion() {
@@ -93,12 +93,12 @@ export function GlassBackground() {
 }
 
 type GlassProps = { children?: ReactNode; style?: StyleProp<ViewStyle>; padding?: number; radius?: number; intensity?: number; tint?: string };
-export function Glass({ children, style, padding = 18, radius = 20, tint }: GlassProps) {
+export function Glass({ children, style, padding = 18, radius = 24, tint }: GlassProps) {
   const { palette } = useApp();
   return (
     <View
       style={[
-        { borderRadius: radius, padding, backgroundColor: tint ?? palette.card, borderWidth: 2.5, borderColor: palette.ink, boxShadow: hard(palette.ink, 5) },
+        { borderRadius: radius, padding, backgroundColor: tint ?? palette.card, borderWidth: 2.5, borderColor: 'transparent', boxShadow: hard(palette.ink, 5) },
         style,
       ]}>
       {children}
@@ -190,15 +190,15 @@ type ButtonProps = {
 export function Button({ title, onPress, icon, variant = 'primary', loading, disabled, small, style }: ButtonProps) {
   const { palette, row } = useApp();
   const h = small ? 40 : 54;
-  const bg = variant === 'primary' ? palette.lime : variant === 'danger' ? palette.pnk : variant === 'light' ? '#FFFFFF' : palette.card;
-  const fg = variant === 'primary' ? palette.onLime : variant === 'danger' ? palette.danger : variant === 'light' ? '#0B0D14' : palette.text;
-  const border = variant === 'light' ? '#0B0D14' : palette.ink;
+  const bg = variant === 'primary' ? palette.purple : variant === 'danger' ? palette.pnk : variant === 'light' ? '#FFFFFF' : palette.card;
+  const fg = variant === 'primary' ? '#FFFFFF' : variant === 'danger' ? palette.danger : variant === 'light' ? '#0B0D14' : palette.text;
+  const border = 'transparent';
   return (
     <PressScale onPress={onPress} disabled={disabled || loading} style={style} label={title}>
       <View
         style={{
           flexDirection: row, alignItems: 'center', justifyContent: 'center', gap: 8, height: h, paddingHorizontal: small ? 14 : 22,
-          borderRadius: small ? 13 : 16, borderWidth: small ? 2 : 2.5, borderColor: border, backgroundColor: bg,
+          borderRadius: small ? 20 : 27, borderWidth: small ? 2 : 2.5, borderColor: border, backgroundColor: bg,
           boxShadow: hard(border, small ? 2 : 4), opacity: disabled ? 0.55 : 1,
         }}>
         {loading ? <ActivityIndicator color={fg} size="small" /> : icon ? <Ionicons name={icon} size={small ? 16 : 19} color={fg} /> : null}
@@ -218,7 +218,7 @@ export function Chip({ label, active, onPress, icon, color }: { label?: string; 
     <View
       style={{
         flexDirection: row, alignItems: 'center', gap: 6, paddingHorizontal: label ? 14 : 10, height: 36, borderRadius: 18,
-        borderWidth: 2, borderColor: palette.ink, backgroundColor: active ? c : palette.card, boxShadow: active ? hard(palette.ink, 2) : undefined,
+        borderWidth: 2, borderColor: 'transparent', backgroundColor: active ? c : palette.card, boxShadow: active ? hard(palette.ink, 2) : undefined,
       }}>
       {icon ? <Ionicons name={icon} size={15} color={fg} /> : null}
       {label ? (
@@ -243,7 +243,7 @@ export function IconBadge({ icon, color, size = 44, solid }: { icon: IconName; c
     <View
       style={{
         width: size, height: size, borderRadius: size * 0.3, backgroundColor: solid ? color : alpha(color, 0.22),
-        borderWidth: size >= 36 ? 2 : 1.5, borderColor: palette.ink, alignItems: 'center', justifyContent: 'center',
+        borderWidth: size >= 36 ? 2 : 1.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center',
       }}>
       <Ionicons name={icon} size={size * 0.5} color={solid ? readableOn(color) : color} />
     </View>
@@ -253,7 +253,7 @@ export function IconBadge({ icon, color, size = 44, solid }: { icon: IconName; c
 export function Avatar({ name, size = 48 }: { name: string; size?: number }) {
   const { palette } = useApp();
   return (
-    <View style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.lime, borderWidth: 2.5, borderColor: palette.ink, boxShadow: hard(palette.ink, 3) }}>
+    <View style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.lime, borderWidth: 2.5, borderColor: 'transparent', boxShadow: hard(palette.ink, 3) }}>
       <Txt variant="label" style={{ color: palette.onLime, fontSize: size * 0.36, lineHeight: size * 0.5 }}>
         {initials(name)}
       </Txt>
@@ -264,7 +264,7 @@ export function Avatar({ name, size = 48 }: { name: string; size?: number }) {
 export function Segmented<T extends string>({ options, value, onChange }: { options: { value: T; label: string; icon?: IconName }[]; value: T; onChange: (v: T) => void }) {
   const { palette, row } = useApp();
   return (
-    <View style={{ flexDirection: row, padding: 4, borderRadius: 18, backgroundColor: palette.soft, borderWidth: 2, borderColor: palette.ink, gap: 4 }}>
+    <View style={{ flexDirection: row, padding: 4, borderRadius: 18, backgroundColor: palette.soft, borderWidth: 2, borderColor: 'transparent', gap: 4 }}>
       {options.map((o) => {
         const active = o.value === value;
         return (
@@ -278,7 +278,7 @@ export function Segmented<T extends string>({ options, value, onChange }: { opti
             }}
             style={{
               flex: 1, height: 40, borderRadius: 13, alignItems: 'center', justifyContent: 'center', flexDirection: row, gap: 6,
-              backgroundColor: active ? palette.purple : 'transparent', borderWidth: active ? 2 : 0, borderColor: palette.ink,
+              backgroundColor: active ? palette.purple : 'transparent', borderWidth: active ? 2 : 0, borderColor: 'transparent',
             }}>
             {o.icon ? <Ionicons name={o.icon} size={15} color={active ? '#FFFFFF' : palette.sub} /> : null}
             <Txt variant="label" style={{ color: active ? '#FFFFFF' : palette.sub, fontSize: 13, lineHeight: 18 }}>
@@ -291,6 +291,7 @@ export function Segmented<T extends string>({ options, value, onChange }: { opti
   );
 }
 
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 let ringSeq = 0;
 export function ProgressRing({
   value,
@@ -312,7 +313,16 @@ export function ProgressRing({
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const v = Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0;
-  const [c0, c1] = colors ?? [palette.lime, palette.lime];
+  const [c0, c1] = colors ?? [palette.primary, palette.primary];
+  const reduce = useReducedMotion();
+  const fill = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (reduce) { fill.setValue(v); return; }
+    const a = Animated.timing(fill, { toValue: v, duration: 900, easing: Easing.out(Easing.cubic), useNativeDriver: false });
+    a.start();
+    return () => a.stop();
+  }, [v, reduce, fill]);
+  const dash = fill.interpolate({ inputRange: [0, 1], outputRange: [c, 0] });
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size} style={StyleSheet.absoluteFill}>
@@ -323,7 +333,7 @@ export function ProgressRing({
           </SvgGradient>
         </Defs>
         <Circle cx={size / 2} cy={size / 2} r={r} stroke={track ?? palette.inputBg} strokeWidth={stroke} fill="none" />
-        <Circle
+        <AnimatedCircle
           cx={size / 2}
           cy={size / 2}
           r={r}
@@ -332,7 +342,7 @@ export function ProgressRing({
           fill="none"
           strokeLinecap="round"
           strokeDasharray={`${c} ${c}`}
-          strokeDashoffset={c * (1 - v)}
+          strokeDashoffset={dash as unknown as number}
           rotation={-90}
           origin={`${size / 2}, ${size / 2}`}
         />
@@ -368,9 +378,9 @@ export function ProgressBar({ value, color, height = 8, track }: { value: number
     <View
       accessibilityRole="progressbar"
       accessibilityValue={{ min: 0, max: 100, now: Math.round(fraction * 100) }}
-      style={{ height: height + 3, borderRadius: (height + 3) / 2, backgroundColor: track ?? palette.soft, borderWidth: 1.5, borderColor: palette.ink, overflow: 'hidden' }}>
+      style={{ height: height + 3, borderRadius: (height + 3) / 2, backgroundColor: track ?? palette.soft, borderWidth: 1.5, borderColor: 'transparent', overflow: 'hidden' }}>
       <Animated.View style={{ width: anim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }), height: '100%', alignSelf: isAr ? 'flex-end' : 'flex-start' }}>
-        <View style={{ flex: 1, borderRadius: height / 2, backgroundColor: color ?? palette.lime }} />
+        <View style={{ flex: 1, borderRadius: height / 2, backgroundColor: color ?? palette.primary }} />
       </Animated.View>
     </View>
   );
@@ -389,7 +399,7 @@ export function Field({ icon, style, ...props }: TextInputProps & { icon?: IconN
         backgroundColor: palette.card,
         borderRadius: R.md,
         borderWidth: 2,
-        borderColor: focused ? palette.purple : palette.ink,
+        borderColor: focused ? palette.purple : 'transparent',
         boxShadow: hard(palette.ink, focused ? 3 : 2),
         paddingHorizontal: 14,
         minHeight: 52,
@@ -469,7 +479,7 @@ export function SectionTitle({ title, action, onAction }: { title: string; actio
   return (
     <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
       <View style={{ flexDirection: row, alignItems: 'center', gap: 8 }}>
-        <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: palette.lime, borderWidth: 2, borderColor: palette.ink }} />
+        <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: palette.primary, borderWidth: 2, borderColor: 'transparent' }} />
         <Txt variant="h3">{title}</Txt>
       </View>
       {action ? (

@@ -5,7 +5,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { ActivityIndicator, Modal, Platform, Pressable, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { Button, ProgressBar, Txt } from './ui';
 import { getJSON, setJSON } from '@/lib/storage';
 import { useApp } from '@/context/app-context';

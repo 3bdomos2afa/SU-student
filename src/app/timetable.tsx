@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { useApp } from '@/context/app-context';
 import { timetable } from '@/lib/academic';
 import { DAY_COLORS, WEEK, toMinutes } from '@/lib/student';

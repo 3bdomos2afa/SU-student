@@ -68,7 +68,7 @@ class CrashActivity : Activity() {
     share.setOnClickListener {
       val send = Intent(Intent.ACTION_SEND)
       send.type = "text/plain"
-      send.putExtra(Intent.EXTRA_SUBJECT, "SU Student crash report")
+      send.putExtra(Intent.EXTRA_SUBJECT, "SU+ crash report")
       send.putExtra(Intent.EXTRA_TEXT, report)
       startActivity(Intent.createChooser(send, "ابعت التقرير"))
     }
@@ -76,7 +76,7 @@ class CrashActivity : Activity() {
     copy.text = "نسخ"
     copy.setOnClickListener {
       val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-      cm.setPrimaryClip(ClipData.newPlainText("SU Student crash report", report))
+      cm.setPrimaryClip(ClipData.newPlainText("SU+ crash report", report))
       Toast.makeText(this, "اتنسخ", Toast.LENGTH_SHORT).show()
     }
     val retry = Button(this)

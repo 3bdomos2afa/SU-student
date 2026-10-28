@@ -34,76 +34,37 @@ export type Palette = {
   pnk: string;
 };
 
-export const TOXIC = { lime: '#8EFF01', purple: '#8B53FE', navy: '#1D2331', ink: '#0B0D14' } as const;
+export const TOXIC = { lime: '#D6F77E', purple: '#6A4BEF', navy: '#17161D', ink: '#17161D' } as const;
+
+/** SU+ palette: violet, lilac, lime and pastel cards on a soft mist background. */
+export const SUPLUS = { violet: '#6A4BEF', lilac: '#C9BBFA', lime: '#D6F77E', ink: '#17161D', mist: '#F4F3F9', peach: '#FFDCC4', sky: '#CBE7FF', butter: '#FFEBA3', rose: '#FFD0DE', mint: '#C6F1DF' } as const;
 
 export const palettes: Record<Scheme, Palette> = {
   light: {
-    bg: ['#FBF7EE', '#FBF7EE', '#FBF7EE'],
-    text: '#0B0D14',
-    sub: '#5E6372',
-    faint: '#8C90A0',
-    glassTint: '#FFFFFF',
-    glassBorder: 'rgba(11,13,20,0.16)',
-    glassHighlight: '#FFFFFF',
-    primary: '#6F3DF0',
-    accent: '#2E7D00',
-    pink: '#D63C72',
-    warn: '#B26B00',
-    danger: '#D92D3A',
-    success: '#2E8B00',
-    blobs: ['#8B53FE', '#8EFF01', '#FF8FB0'],
-    inputBg: '#EEE8DC',
-    card: '#FFFFFF',
-    surface: '#FFFFFF',
-    shadow: 'rgba(11,13,20,0.12)',
-    hero: ['#8B53FE', '#7746F0', '#6B3FE0'],
-    ink: '#0B0D14',
-    onInk: '#F2F2F2',
-    lime: '#8EFF01',
-    onLime: '#0B0D14',
-    purple: '#8B53FE',
-    navy: '#1D2331',
-    soft: '#EEE8DC',
-    lil: '#E9DFFF',
-    lim: '#E6FFC2',
-    yel: '#FFF1BF',
-    pnk: '#FFDCE6',
+    bg: ['#F4F3F9', '#F4F3F9', '#F4F3F9'],
+    text: '#17161D', sub: '#6B6878', faint: '#9A98A6',
+    glassTint: '#FFFFFF', glassBorder: 'rgba(23,22,29,0.08)', glassHighlight: '#FFFFFF',
+    primary: '#6A4BEF', accent: '#4F8F12', pink: '#D9487A', warn: '#B87000', danger: '#DE3B47', success: '#3B8F22',
+    blobs: ['#6A4BEF', '#D6F77E', '#FFD0DE'],
+    inputBg: '#ECEAF4', card: '#FFFFFF', surface: '#FFFFFF', shadow: 'rgba(23,22,29,0.06)',
+    hero: ['#7C60F3', '#6A4BEF', '#5B3DE0'],
+    ink: '#17161D', onInk: '#F4F3F9', lime: '#D6F77E', onLime: '#17161D', purple: '#6A4BEF', navy: '#17161D',
+    soft: '#ECEAF4', lil: '#E2D9FE', lim: '#ECF9C6', yel: '#FFEBA3', pnk: '#FFD0DE',
   },
   dark: {
-    bg: ['#10131C', '#10131C', '#10131C'],
-    text: '#F2F2F2',
-    sub: '#9AA3B5',
-    faint: '#6E7689',
-    glassTint: '#1D2331',
-    glassBorder: 'rgba(242,242,242,0.16)',
-    glassHighlight: '#2B3245',
-    primary: '#C9AEFF',
-    accent: '#8EFF01',
-    pink: '#FF8FB0',
-    warn: '#FFD23F',
-    danger: '#FF6B6B',
-    success: '#8EFF01',
-    blobs: ['#8B53FE', '#8EFF01', '#FF8FB0'],
-    inputBg: '#2B3245',
-    card: '#1D2331',
-    surface: '#1D2331',
-    shadow: 'rgba(0,0,0,0.4)',
-    hero: ['#8B53FE', '#7746F0', '#6B3FE0'],
-    ink: '#F2F2F2',
-    onInk: '#0B0D14',
-    lime: '#8EFF01',
-    onLime: '#0B0D14',
-    purple: '#8B53FE',
-    navy: '#1D2331',
-    soft: '#2B3245',
-    lil: '#2F2856',
-    lim: '#26381A',
-    yel: '#3B3420',
-    pnk: '#41243A',
+    bg: ['#121118', '#121118', '#121118'],
+    text: '#F4F3F9', sub: '#A9A6B8', faint: '#74717F',
+    glassTint: '#1E1C26', glassBorder: 'rgba(244,243,249,0.10)', glassHighlight: '#2A2734',
+    primary: '#B9A8FF', accent: '#D6F77E', pink: '#FF9DB8', warn: '#FFD46B', danger: '#FF7A7A', success: '#B8EA6A',
+    blobs: ['#6A4BEF', '#D6F77E', '#FFD0DE'],
+    inputBg: '#2A2734', card: '#1E1C26', surface: '#1E1C26', shadow: 'rgba(0,0,0,0.35)',
+    hero: ['#7C60F3', '#6A4BEF', '#5B3DE0'],
+    ink: '#2E2B3A', onInk: '#F4F3F9', lime: '#D6F77E', onLime: '#17161D', purple: '#7C60F3', navy: '#1E1C26',
+    soft: '#2A2734', lil: '#2E2850', lim: '#2A3418', yel: '#3A3320', pnk: '#3D2430',
   },
 };
 
-export const radius = { sm: 12, md: 16, lg: 20, xl: 28 };
+export const radius = { sm: 14, md: 18, lg: 24, xl: 30 };
 
 /** Adds an alpha channel to a 6-digit hex color. */
 export function alpha(hex: string, a: number) {
@@ -113,9 +74,9 @@ export function alpha(hex: string, a: number) {
   return `${hex.slice(0, 7)}${v}`;
 }
 
-/** Hard, blur-less sticker shadow. */
-export function hard(color: string, offset = 5) {
-  return `${offset}px ${offset}px 0px ${color}`;
+/** Soft, diffused card shadow (the colour argument is kept for call-site compatibility). */
+export function hard(_color: string, offset = 5) {
+  return `0px ${offset + 3}px ${offset * 4 + 4}px rgba(23,22,29,0.07)`;
 }
 
 /** Black or white, whichever reads better on a solid hex background. */

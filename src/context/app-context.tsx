@@ -163,7 +163,7 @@ function useModel() {
     authBusy.current=true;
     const generation=epoch.current;
     try {
-      const r=await LocalAuthentication.authenticateAsync({promptMessage:tr('افتح SU Student','Unlock SU Student'),disableDeviceFallback:false});
+      const r=await LocalAuthentication.authenticateAsync({promptMessage:tr('افتح SU+','Unlock SU+'),disableDeviceFallback:false});
       if(r.success&&generation===epoch.current)setLocked(false);
     } catch { /* Fail closed. Sign-out is the recovery path. */ }
     finally {authBusy.current=false;}

@@ -1,5 +1,5 @@
 import type { BottomTabBarProps } from 'expo-router/tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { useEffect, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -58,7 +58,7 @@ export function LockOverlay() {
   }, [locked]);
   if (!locked) return null;
   return (
-    <Modal visible animationType="none" presentationStyle="fullScreen" onRequestClose={()=>{}}><View style={[StyleSheet.absoluteFill, { backgroundColor:"#0F1530", alignItems: 'center', justifyContent: 'center', padding: 24 }]}>
+    <Modal visible animationType="none" presentationStyle="fullScreen" onRequestClose={()=>{}}><View style={[StyleSheet.absoluteFill, { backgroundColor:"#121118", alignItems: 'center', justifyContent: 'center', padding: 24 }]}>
       <GlassBackground />
       <Glass padding={24} style={{ width: '100%', maxWidth: 380 }}>
         <View style={{ alignItems: 'center', gap: 12 }}>
@@ -81,33 +81,56 @@ const TABS: Record<string, { on: IconName; off: IconName; ar: string; en: string
   settings: { on: 'settings', off: 'settings-outline', ar: 'الإعدادات', en: 'Settings' },
 };
 
+const TAB_ON = '#C9BBFA';
+const TAB_OFF = 'rgba(201,187,250,0)';
+
+function TabButton({ active, icon, label, onPress }: { active: boolean; icon: IconName; label: string; onPress: () => void }) {
+  const { palette, row } = useApp();
+  const s = useRef(new Animated.Value(active ? 1 : 0)).current;
+  useEffect(() => {
+    Animated.spring(s, { toValue: active ? 1 : 0, useNativeDriver: false, speed: 16, bounciness: 9 }).start();
+  }, [active, s]);
+  return (
+    <Pressable accessibilityRole="tab" accessibilityLabel={label} accessibilityState={{ selected: active }} onPress={onPress}>
+      <Animated.View
+        style={{
+          height: 48, minWidth: 46, borderRadius: 24, flexDirection: row, alignItems: 'center', justifyContent: 'center', gap: 6,
+          paddingHorizontal: s.interpolate({ inputRange: [0, 1], outputRange: [12, 16] }),
+          backgroundColor: s.interpolate({ inputRange: [0, 1], outputRange: [TAB_OFF, TAB_ON] }),
+          transform: [{ scale: s.interpolate({ inputRange: [0, 0.5, 1], outputRange: [1, 0.94, 1] }) }],
+        }}>
+        <Ionicons name={icon} size={20} color={active ? '#17161D' : palette.onInk} />
+        {active ? <Txt variant="label" numberOfLines={1} style={{ color: '#17161D', fontSize: 13, lineHeight: 18 }}>{label}</Txt> : null}
+      </Animated.View>
+    </Pressable>
+  );
+}
+
 export type TabBarProps = BottomTabBarProps;
 
-/** Floating tab bar with a gradient pill on the active tab. */
+/** Floating dark pill tab bar; the active tab grows into a lilac bubble with its label. */
 export function GlassTabBar({ state, emitter, navigateToTab }: TabBarProps) {
   const { palette, row, tr } = useApp();
   const insets = useSafeAreaInsets();
   return (
     <View pointerEvents="box-none" style={{ position: 'absolute', zIndex: 100, elevation: 20, left: 0, right: 0, bottom: Math.max(insets.bottom, 10) + 6, alignItems: 'center' }}>
-      <View style={{ flexDirection: row, alignItems: 'center', gap: 4, padding: 7, borderRadius: 40, backgroundColor: palette.ink, boxShadow: '0px 10px 24px rgba(0,0,0,0.3)' }}>
+      <View style={{ flexDirection: row, alignItems: 'center', gap: 4, padding: 6, borderRadius: 40, backgroundColor: palette.ink, boxShadow: '0px 14px 30px rgba(23,22,29,0.28)' }}>
         {state.routes.map((route, i) => {
           const meta = TABS[route.name];
           if (!meta) return null;
           const active = state.index === i;
           return (
-            <Pressable
+            <TabButton
               key={route.key}
-              accessibilityRole="tab"
-              accessibilityLabel={tr(meta.ar, meta.en)}
-              accessibilityState={{ selected: active }}
+              active={active}
+              icon={active ? meta.on : meta.off}
+              label={tr(meta.ar, meta.en)}
               onPress={() => {
                 tap();
                 const event = emitter.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
                 if (!active && !event.defaultPrevented) navigateToTab(route.key);
               }}
-              style={{ width: 54, height: 54, borderRadius: 27, alignItems: 'center', justifyContent: 'center', backgroundColor: active ? palette.lime : 'transparent' }}>
-              <Ionicons name={active ? meta.on : meta.off} size={22} color={active ? palette.onLime : palette.onInk} />
-            </Pressable>
+            />
           );
         })}
       </View>

@@ -53,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "55b8f17b639a1d927ba7803dafd902882ad13884b8e6f9f4c70fdcd35d296e10"
+    "sha256": "c97c795cc19e8db7ee6b25396a14e7d9c9db7d703d86028979e76ce05fbc0c87"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -73,19 +73,19 @@
   },
   {
     "path": "assets/images/android-icon-foreground.png",
-    "sha256": "c301a6e7491885a8778875b086600a10b740edcbacc54a527d1c478c1f0ec1bc"
+    "sha256": "69ae4a527773b27c23bd22d92d2834c1db0177568b9bf7a96b2a4d8a7e8e9f4e"
   },
   {
     "path": "assets/images/favicon.png",
-    "sha256": "72bb0dd86cf7b0de49e3c6f0658291c5c4dc6fb010e6ab24dab26c0195ea9547"
+    "sha256": "077a3ca65d67f4e320b489224998946e2562e7f55060e8a74cc00bdb972b0a83"
   },
   {
     "path": "assets/images/icon.png",
-    "sha256": "753ff6cb8c3abe1932eb9d5c3cfb60109bbba4cb89be00d37f002d297697f9ac"
+    "sha256": "b365144a24d2dde0afaac41f836263d3955b405ad152f29ba9b14d16a771dba3"
   },
   {
     "path": "assets/images/splash-icon.png",
-    "sha256": "20d74b1c5f8f853ffdcf9cee1662811601919b8162b736b98330c43a615252c8"
+    "sha256": "9b6dda135f9250f9bfcaaed5dbe2f7e21a9c0a0acbcbcb30a0ea0af09d367e33"
   },
   {
     "path": "assets/sounds/su_chime.wav",
@@ -113,19 +113,19 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "529f57a0af16987abff952e28e50da56b993cb2609ebfedc59ed23ce68a7ba8a"
+    "sha256": "ead8554c2fb25ff69a1fabc59a8f1f061ed5d2eff39dccfaa3f0af6cc9534eb6"
   },
   {
     "path": "package.json",
-    "sha256": "baaf53637a90b89fbbbb49d3aecaf87c265077ab00c136cdfe16936c0ec8ee09"
+    "sha256": "c77357b133a99ad8553ae7da884e5d703e2e3faecff3e45a3a7ec3ffc944a1d5"
   },
   {
     "path": "plugins/crash-activity.kt.txt",
-    "sha256": "c288eb481167865b38371553ce9997ddd2dc71b5ea9569640cc0461eeb444deb"
+    "sha256": "3aec80b3b92a81dbfdbbc946da74733183fbada74f673ef7931d23d71aa8df29"
   },
   {
     "path": "plugins/crash-reporter.kt.txt",
-    "sha256": "b60ad75de889044dff73acc60d861b4875d4502bfe0653d91a57e20b3f3b2a64"
+    "sha256": "99a01461a246efa31690eea19676c34d3a5c2f440fb68d8738a253d1274d6999"
   },
   {
     "path": "plugins/google-test-popup.java.txt",
@@ -217,11 +217,11 @@
   },
   {
     "path": "src/app/(tabs)/index.tsx",
-    "sha256": "3830f87c46e948e310898a7d6664f5a7b31dbc1f1cf4be4fc99cf03934a706d1"
+    "sha256": "b0d39ca8e0bc13f6c76773498084a44052ac7c920661626dfb1f8ae1463f87ca"
   },
   {
     "path": "src/app/(tabs)/plan.tsx",
-    "sha256": "ea70c24de001282a32fec58d63c59561281d9439adc76993ac55734151e91ded"
+    "sha256": "a99ffafec2995f1dd168c261e5b2beb1c81c4df97f52033720cbb48d0b92be39"
   },
   {
     "path": "src/app/(tabs)/services.tsx",
@@ -229,7 +229,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "b72dbf2c1587638660c7c8365e15e28fdb267313b89e418e1b4edc515f731128"
+    "sha256": "a89fb1ca526e9ab7c6649a961e3fd73114d6f8afe8330a771d8ab995f45e796a"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -245,7 +245,7 @@
   },
   {
     "path": "src/app/course/[code].tsx",
-    "sha256": "b23fa57154e263eabfa1085d296a082995b2e8646840772ff0c01029385e0d51"
+    "sha256": "de121d2edd378d793ffcfb668600d174ea4d391bf80c59a6867046bb4c0ece2c"
   },
   {
     "path": "src/app/courses.tsx",
@@ -265,15 +265,15 @@
   },
   {
     "path": "src/app/moodle.tsx",
-    "sha256": "2e5b3efcba5320df2f7dbc77b6d04d63596da291a116b9dc26c7d2101853199f"
+    "sha256": "7c0128015a00cd9c1a6cd60609f309e7d703f3a696ce51ded6f871d275ba3ce8"
   },
   {
     "path": "src/app/note.tsx",
-    "sha256": "6573c94f08e19ec60d6e1e51bd01b92f77af774b76087bf5329be36f562a73e9"
+    "sha256": "2a380980a5b53aecd3a63421d29e295930e09492aecb72c2b38a64e1bdbdf919"
   },
   {
     "path": "src/app/notebook.tsx",
-    "sha256": "a08526222eede21a8c524337d710079723fd83600701b814e91542f4846365c7"
+    "sha256": "dfdbc85ad316522354c50aa7fbed384270a33ac3d1a2477be52272165c4bf33a"
   },
   {
     "path": "src/app/oauth/callback.tsx",
@@ -293,7 +293,7 @@
   },
   {
     "path": "src/app/streak.tsx",
-    "sha256": "5eee84da22a37598e7e63a8795912acdf2ef501deb439528cdc0165564d51e8e"
+    "sha256": "5a1251065ee9f4a992c833accfb69fecfb4be5ce81207b41252f425b0d100951"
   },
   {
     "path": "src/app/study.tsx",
@@ -301,11 +301,11 @@
   },
   {
     "path": "src/app/timetable.tsx",
-    "sha256": "9fc1ad847b29f48aa8d29733d1a7697f83aa4126981c58a963452328abd19837"
+    "sha256": "683cbc4d623450065905a8978f7601ccb88b03c222c109239091e3d54d6e8937"
   },
   {
     "path": "src/app/topic.tsx",
-    "sha256": "e6fa9c7459ceea118a1ffd6a243592feabf9a105bf7af1186ca764e458bd8302"
+    "sha256": "f6a1209fd6da98326b5cc7c2a9a2ffc496c24d9fcecb1ae2fe98ac0608f938af"
   },
   {
     "path": "src/app/transcript.tsx",
@@ -321,11 +321,11 @@
   },
   {
     "path": "src/components/academic-cards.tsx",
-    "sha256": "d96bdd63aadeba8a8bd9e81fdf0a60be39934f3735ecec77c109c922154fdcf7"
+    "sha256": "41f1cb58183076385d91a9096b975c5258d652185bdefebe9f7aa1253e32ff27"
   },
   {
     "path": "src/components/backdrop.tsx",
-    "sha256": "8a1f242c7c1f45369eb05832050433d19b7eff52863b88c8b300c688c863f866"
+    "sha256": "06826c9c0712bcd3b2257d5df87e37cd5815ba6d8b1c1aea975ea0ff12a6e73e"
   },
   {
     "path": "src/components/bars.tsx",
@@ -333,11 +333,15 @@
   },
   {
     "path": "src/components/brand.tsx",
-    "sha256": "5f64804823e1c736903f8264e88e08fd4d30d55eb47bf51139d1986513e2b689"
+    "sha256": "44d1c7df9830d4fda5bf37a10a989709d4fac12227eb69c5ea98baff43a0acd8"
   },
   {
     "path": "src/components/chrome.tsx",
-    "sha256": "907d80b7713f1d92aa6e23ed384e545900ac5864e46dafb1459b193e6b4ae13c"
+    "sha256": "d1ec0a52e9eda92918354e2cf13de27f41467782ef6e6a8d34404a359a066096"
+  },
+  {
+    "path": "src/components/confetti.tsx",
+    "sha256": "0b7e4554bfa1dce8f3c33d965723ea52fca029a7d75395e5c42d74bddde0b120"
   },
   {
     "path": "src/components/course-evidence.tsx",
@@ -345,11 +349,11 @@
   },
   {
     "path": "src/components/course-row.tsx",
-    "sha256": "59ece1ad565a4a24e97753f091b32b631b4e969f420c34182b0476c2cc4944d1"
+    "sha256": "c6ebb3404ce0fc07b74521280cbcd84b6ef712dba84691f6d233cdc571aaa3ca"
   },
   {
     "path": "src/components/dropdown.tsx",
-    "sha256": "c729b999478eea1babb91e729ad5bc331474e99f90cad572e2d9f6f8749bcc53"
+    "sha256": "c0f5d0621f314373a08a63a03c9003fd831b3a5d7f04f951e09c80998e5837f6"
   },
   {
     "path": "src/components/entrance.tsx",
@@ -357,7 +361,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "ecbbf87e54dec5e00953fbc4dc97254f36a7b723548338a989096a9c8aa03a9f"
+    "sha256": "e2d48ca306fa0626db60bb3d6e0d0ea40e071bfc4bd4cc0add3b16a624221348"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -368,20 +372,24 @@
     "sha256": "8bbc24f48cb2d695e05831cf47993ed1464d09c86a4cfe66d72ccbc7367d6c07"
   },
   {
+    "path": "src/components/icon.tsx",
+    "sha256": "65b28e7448c8907b1703c2c0a7f35b4bac987b501abcc834ec83db4c708324dd"
+  },
+  {
     "path": "src/components/map-canvas.tsx",
     "sha256": "6be1c7b19c5480a322deab4343d570cef6ce1ec2ffba0f79d7f47172473d661d"
   },
   {
     "path": "src/components/page.tsx",
-    "sha256": "3fe207a35c871aacd8a478d7eabdf99b1129dd0589fd47c522d1e9a992b485a1"
+    "sha256": "be08ee5550148cc81817444d0355636ce42de203d5a232d16b4655fa1ab9b072"
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "7153bf4e4188d673ba4250ec1473499f51ecaac02b61207c2f22f8465108342a"
+    "sha256": "43a00ead94743a0f3a52fc909261251643241006cbe627ebd6fa620713d4cee1"
   },
   {
     "path": "src/components/portal-modal.tsx",
-    "sha256": "146d6f0505193b7cdc60d9f938d4980aa776923c687c32be4767efbc1fb99c02"
+    "sha256": "4413978d64954c6bd19f0e8f82185ed0ca683a5450ee78c439aaaf80f30c71e0"
   },
   {
     "path": "src/components/reminder-controller.tsx",
@@ -393,15 +401,15 @@
   },
   {
     "path": "src/components/streak-card.tsx",
-    "sha256": "58a16506fe827a19908ca42d4c5f7e6ae6077291d48e50ed0fb873d91544733d"
+    "sha256": "495d6c6cc9a48407d096d13b2a9e72bc02d86bef360e1955bda45979eea5156e"
   },
   {
     "path": "src/components/ui.tsx",
-    "sha256": "eda2511e4933071ad8ed39a3c72a638b55550b9f2622be9c6d57704b2b26786e"
+    "sha256": "1d441addfb7deda11c42b4863e0954f02e34518f9677706b7109876d49a32b6b"
   },
   {
     "path": "src/context/app-context.tsx",
-    "sha256": "862313c72a554f78d2fbc573c4f5e80f8680328e5bd7aa866b449ea5e5f0e801"
+    "sha256": "53220911c5ab41f67af32aed03461efada3a96d50998c326243b50aab102e85a"
   },
   {
     "path": "src/data/curriculum-helpers.ts",
@@ -410,6 +418,10 @@
   {
     "path": "src/data/curriculum.ts",
     "sha256": "4f058acfa56805f92d2cef2a4ef53a3fa581c66861e893b192b78da47e9dfa2e"
+  },
+  {
+    "path": "src/data/lucide.ts",
+    "sha256": "a92c74aa26b276faaaf924c256a28ee4e7e4d8b776e1bc67c9e589e8de5aecb8"
   },
   {
     "path": "src/data/services.ts",
@@ -441,7 +453,7 @@
   },
   {
     "path": "src/lib/data-sample.ts",
-    "sha256": "0e4601c9be1a0ef8a627b164b7f0df41b7585ee77539504da2569789d70e8508"
+    "sha256": "59f126790351348edec44a4021752457542393717ce9fe7db9c50a45665b4465"
   },
   {
     "path": "src/lib/field-labels.ts",
@@ -581,7 +593,7 @@
   },
   {
     "path": "src/lib/theme.ts",
-    "sha256": "51e8a0a68e4535326bd07d65e92e5efde273f3af15116871c1cafc6cab457fda"
+    "sha256": "0b8fef8655c4d128d2128207a47723f8d3f3ea685ae65d7387a8284d18c3c6d9"
   },
   {
     "path": "src/lib/university-sso.ts",
@@ -664,6 +676,10 @@
     "sha256": "c8423a456b02a09e4c276f4f8bebce9a91f3716a3bd727ce2df463faf3280714"
   },
   {
+    "path": "tests/v1120-suplus.test.ts",
+    "sha256": "67d77a765830ca7e56cdbe1d5ee4b0a962605a2306314336850d855cede8eb97"
+  },
+  {
     "path": "tests/v13.test.ts",
     "sha256": "c80c892d1975047e2656b41d7fe4f3684d4fe092c6e03acd16a17340e60d16af"
   },
@@ -685,7 +701,7 @@
   },
   {
     "path": "tests/v190.test.ts",
-    "sha256": "1c7cd559250dcd4ae91f382092db0d6bbc02cbf0b4c4e3a756086b4f0a650759"
+    "sha256": "48b25f281ffbfa45e838f074e27063e8336b8025ce77a696f56ad72615e16639"
   },
   {
     "path": "tsconfig.json",

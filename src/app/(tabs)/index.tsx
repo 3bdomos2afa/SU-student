@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { router } from 'expo-router';
 import { View } from 'react-native';
 
@@ -61,16 +61,20 @@ export default function Home() {
               <Txt variant="caption">{session ? (code ? `ID · ${code}` : tr('الرقم الجامعي بيتحمّل…', 'Loading student code…')) : tr('حساب الجامعة مش مربوط', 'University account not linked')}</Txt>
             </View>
             <PressScale label="Language" onPress={() => a.updateSettings({ lang: lang === 'ar' ? 'en' : 'ar' })}>
-              <View style={{ height: 36, paddingHorizontal: 12, borderRadius: 18, backgroundColor: palette.card, borderWidth: 2, borderColor: palette.ink, flexDirection: row, alignItems: 'center', gap: 6 }}>
+              <View style={{ height: 36, paddingHorizontal: 12, borderRadius: 18, backgroundColor: palette.card, borderWidth: 2, borderColor: 'transparent', flexDirection: row, alignItems: 'center', gap: 6 }}>
                 <Ionicons name="language" size={14} color={palette.text} />
                 <Txt variant="label" style={{ fontSize: 12, lineHeight: 16 }}>{lang === 'ar' ? 'EN' : 'عربي'}</Txt>
               </View>
             </PressScale>
           </View>
-          <View style={{ backgroundColor: TOXIC.purple, borderRadius: 24, borderWidth: 2.5, borderColor: palette.ink, padding: 20, overflow: 'hidden', boxShadow: hard(palette.ink, 5) }}>
-            <Ionicons name="sparkles" size={64} color="rgba(142,255,1,0.35)" style={{ position: 'absolute', top: -6, [isAr ? 'left' : 'right']: -6 }} />
+          <View style={{ backgroundColor: TOXIC.purple, borderRadius: 28, borderWidth: 2.5, borderColor: 'transparent', padding: 20, overflow: 'hidden', boxShadow: hard(palette.ink, 5) }}>
+            <Ionicons name="sparkles" size={64} color="rgba(214,247,126,0.45)" style={{ position: 'absolute', top: -6, [isAr ? 'left' : 'right']: -6 }} />
             <View style={{ flexDirection: row, alignItems: 'center', gap: 14 }}>
-              <Txt variant="display" color="#FFFFFF" style={{ flex: 1, fontSize: 30, lineHeight: 40 }}>{tr('ذاكر شوية،\nافتخر كتير', 'Study a bit,\nbrag a lot')}</Txt>
+              <View style={{ flex: 1, gap: 2 }}>
+                <Txt variant="caption" color="rgba(255,255,255,0.82)">{tr('تقدّمك في البرنامج', 'Program progress')}</Txt>
+                <Txt variant="display" color="#FFFFFF" style={{ fontSize: 40, lineHeight: 50 }}>{earned == null ? '—' : `${Math.min(100, Math.round((earned / PROGRAM_TOTAL_CREDITS) * 100))}%`}</Txt>
+                <Txt variant="caption" color="rgba(255,255,255,0.82)">{tr('من الساعات المعتمدة', 'of required credits')}</Txt>
+              </View>
               <ProgressRing value={(earned ?? 0) / PROGRAM_TOTAL_CREDITS} size={98} stroke={10} track="rgba(255,255,255,0.22)" colors={[TOXIC.lime, TOXIC.lime]}>
                 <Txt variant="h2" color="#FFFFFF" center>{earned ?? '—'}</Txt>
                 <Txt variant="caption" color="rgba(255,255,255,0.85)" center style={{ fontSize: 10.5, lineHeight: 14 }}>{tr(`من ${PROGRAM_TOTAL_CREDITS} ساعة`, `of ${PROGRAM_TOTAL_CREDITS} cr`)}</Txt>
@@ -82,7 +86,7 @@ export default function Home() {
                 { k: tr('مهام النهاردة', 'Tasks today'), v: String(pendingToday.length) },
                 { k: tr('محاضرات النهاردة', 'Classes today'), v: cache.SEC_TIMETABLE ? String(todaySlots.length) : '—' },
               ].map((m) => (
-                <View key={m.k} style={{ flex: 1, borderRadius: 16, paddingVertical: 9, paddingHorizontal: 6, backgroundColor: 'rgba(255,255,255,0.16)', borderWidth: 2, borderColor: TOXIC.ink }}>
+                <View key={m.k} style={{ flex: 1, borderRadius: 16, paddingVertical: 9, paddingHorizontal: 6, backgroundColor: 'rgba(255,255,255,0.16)', borderWidth: 2, borderColor: 'transparent' }}>
                   <Txt variant="h3" color="#FFFFFF" center>{m.v}</Txt>
                   <Txt variant="caption" color="rgba(255,255,255,0.85)" center numberOfLines={1} style={{ fontSize: 11 }}>{m.k}</Txt>
                 </View>
@@ -112,7 +116,7 @@ export default function Home() {
           {quick.map((q) => (
             <PressScale key={q.en} label={tr(q.ar, q.en)} onPress={() => router.push(q.path as never)} style={{ width: '23%' }}>
               <View style={{ alignItems: 'center', gap: 8 }}>
-                <View style={{ width: 62, height: 62, borderRadius: 31, backgroundColor: palette[q.color], borderWidth: 2.5, borderColor: palette.ink, alignItems: 'center', justifyContent: 'center', boxShadow: hard(palette.ink, 3) }}>
+                <View style={{ width: 62, height: 62, borderRadius: 31, backgroundColor: palette[q.color], borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center', boxShadow: hard(palette.ink, 3) }}>
                   <Ionicons name={q.icon} size={26} color={palette.text} />
                 </View>
                 <Txt variant="label" center style={{ fontSize: 12.5, lineHeight: 17 }}>{tr(q.ar, q.en)}</Txt>

@@ -1,7 +1,7 @@
 import { academic, canonical } from '@/lib/academic';
 import { curriculumCourses } from '@/data/curriculum';
 import { CourseEvidence } from '@/components/course-evidence';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Pressable, View } from 'react-native';
 

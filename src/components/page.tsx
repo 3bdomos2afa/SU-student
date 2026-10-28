@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { View } from 'react-native';
 import { useApp } from '@/context/app-context';
 import { terms, type Cache, type Term } from '@/lib/academic';

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { useApp } from '@/context/app-context';
 import { academic, canonical } from '@/lib/academic';
 import { curriculumCourses, type CurriculumCourse } from '@/data/curriculum';

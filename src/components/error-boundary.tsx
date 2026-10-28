@@ -15,7 +15,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { failed: 
     return <View style={{ flex: 1, backgroundColor: '#F5F4EE', padding: 28, justifyContent: 'center', gap: 18 }}>
       <Text style={{ fontSize: 25, color: '#163B39', textAlign: 'center' }}>تعذر عرض الصفحة · Something went wrong</Text>
       <Text selectable style={{ fontSize: 16, textAlign: 'center', color: '#163B39' }}>
-        {`SU Student 1.11.2\n${this.state.code}\nبياناتك المحفوظة لم تُمسح. ابعت الكود ونوع الموبايل للمطور.\nYour saved data was not deleted. Share only this code and device model.`}
+        {`SU+ 1.12.0\n${this.state.code}\nبياناتك المحفوظة لم تُمسح. ابعت الكود ونوع الموبايل للمطور.\nYour saved data was not deleted. Share only this code and device model.`}
       </Text>
       <Pressable accessibilityRole="button" onPress={() => this.setState({ failed: false, code: '' })}
         style={{ padding: 18, backgroundColor: '#216B61', borderRadius: 18 }}>

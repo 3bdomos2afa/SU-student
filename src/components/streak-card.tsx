@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@/components/icon';
 import { router } from 'expo-router';
 import { AppState, View } from 'react-native';
 import { useApp } from '@/context/app-context';
@@ -28,9 +28,9 @@ export function StreakCard() {
   const ink = '#F2F2F2';
   return (
     <PressScale label={tr('الستريك', 'Streak')} onPress={() => router.push('/streak' as never)}>
-      <View style={{ backgroundColor: TOXIC.navy, borderRadius: 22, borderWidth: 2.5, borderColor: '#0B0D14', padding: 16, gap: 12, boxShadow: hard('#0B0D14', 5) }}>
+      <View style={{ backgroundColor: TOXIC.navy, borderRadius: 22, borderWidth: 2.5, borderColor: 'transparent', padding: 16, gap: 12, boxShadow: hard('#0B0D14', 5) }}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
-          <View style={{ width: 52, height: 52, borderRadius: 15, backgroundColor: TOXIC.lime, borderWidth: 2.5, borderColor: '#0B0D14', alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: 52, height: 52, borderRadius: 15, backgroundColor: TOXIC.lime, borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name="flame" size={28} color="#0B0D14" />
           </View>
           <View style={{ flex: 1 }}>

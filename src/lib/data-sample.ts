@@ -13,7 +13,7 @@ export function buildDataSample(cache:Record<string,{data:unknown;at:string}>,ve
  let text='';
  for(const limit of [25,10,5,2,1]){
   const services=Object.fromEntries(Object.keys(cache).sort().map(k=>[k,{at:cache[k]?.at,data:sampleValue(cache[k]?.data,limit)}]));
-  text=JSON.stringify({app:'SU Student',version,generated:new Date().toISOString(),masked:'secrets and personal identifiers replaced with •••',services});
+  text=JSON.stringify({app:'SU+',version,generated:new Date().toISOString(),masked:'secrets and personal identifiers replaced with •••',services});
   if(text.length<=maxChars)return text;
  }
  return text.slice(0,maxChars);
