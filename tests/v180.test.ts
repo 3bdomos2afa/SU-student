@@ -12,13 +12,16 @@ import { curriculumCourses } from '../src/data/curriculum';
 const e = (data: unknown) => ({ data, at: '2026-10-24T10:00:00Z' });
 const now = new Date(2026, 9, 24, 12);
 
-test('one absence heads-up at 20%, never a self-made warning', () => {
+test('every new absence alerts with the new percentage, never a self-made warning', () => {
   const p = (v: number) => ({ SEC_ATTENDANCE: e([{ CourseCode: 'INT 301', CourseName: 'شبكات', AbcensePercentage: v }]) });
-  assert.deepEqual(diffAlerts(p(10), p(15), true, now), []);
+  const first = diffAlerts(p(10), p(15), true, now);
+  assert.equal(first.length, 1); assert.match(first[0].title, /^انت غبت/); assert.match(first[0].title, /15%/);
+  assert.match(diffAlerts(p(10), p(15), true, now, true)[0].title, /^انتي غبتي/);
   const a = diffAlerts(p(15), p(20), true, now);
   assert.equal(a.length, 1); assert.equal(a[0].kind, 'absence'); assert.match(a[0].title, /20%/); assert.match(a[0].body, /25%/);
   assert.equal(a[0].route, '/absence?code=INT%20301');
-  assert.deepEqual(diffAlerts(p(20), p(23), true, now), []);
+  assert.deepEqual(diffAlerts(p(20), p(20), true, now), []);
+  assert.ok(a.every(x => x.kind !== 'warning'));
 });
 test('terms are named by study year, not by calendar', () => {
   const list = [

@@ -15,6 +15,8 @@ import { timetable } from '@/lib/academic';
 import { teachersFor, termLabel, termOf } from '@/lib/moodle-match';
 import { hard, readableOn } from '@/lib/theme';
 import { loadPrivate, removePrivate, savePrivate } from '@/lib/vault';
+import { moodleAlerts } from '@/lib/moodle-alerts';
+import { deliverAlerts } from '@/lib/alert-delivery';
 import { PageTop } from '@/components/page';
 import { Button, Field, Glass, PressScale, Screen, Txt } from '@/components/ui';
 
@@ -103,6 +105,8 @@ export default function Moodle() {
   const [read, setRead] = useState<string[]>([]); const [ready, setReady] = useState(false);
   const [saved, setSaved] = useState<Record<string, Saved>>({}); const [progress, setProgress] = useState<Record<string, number>>({});
   const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [login, setLogin] = useState<string | null>(null);
+  // Silent KMoodle re-login: the remembered Google account finishes the launch in a hidden WebView.
+  const [silent, setSilent] = useState<string | null>(null);
   const [q, setQ] = useState(''); const [sel, setSel] = useState<string | null>(null); const [oldOpen, setOldOpen] = useState<number | null>(null);
   const slots = useMemo(() => timetable(cache), [cache]);
   const courses = currentCourses(cache).map(c => ({ code: c.code, title: c.title, teachers: teachersFor(slots, c.code, c.row?.InstructorName) }));
@@ -131,14 +135,20 @@ export default function Moodle() {
   async function refresh(t = token) {
     if (!t) return; if (!courses.length) { setError(tr('موادك الحالية لسه متحمّلتش من بوابة الجامعة.', 'Your current courses are not loaded from the portal yet.')); return; }
     setBusy(true); setError('');
-    try { const d = await loadMoodle(t, courses); setData(d); await savePrivate(K.data, d); }
+    try { const d = await loadMoodle(t, courses); const before = data ?? await loadPrivate<MoodleData | null>(K.data, null); setData(d); await savePrivate(K.data, d);
+      void deliverAlerts(owner, moodleAlerts(before, d, lang !== 'en'), lang !== 'en').catch(() => 0); }
     catch (e) {
       if (e instanceof MoodleError && (e.code === 'expired' || e.code === 'invalidtoken')) await expired();
       else setError(tr('مش قادرين نوصل لـ Moodle دلوقتي. جرّب تاني كمان شوية.', 'Could not reach Moodle. Try again.'));
     } finally { setBusy(false); }
   }
-  async function expired() { setToken(null); await removePrivate(K.token); setError(tr('جلسة Moodle انتهت. سجّل دخول تاني.', 'Moodle session ended. Sign in again.')); }
-  async function gotToken(t: string) { setLogin(null); setToken(t); await savePrivate(K.token, t); void refresh(t); }
+  async function expired() { setToken(null); await removePrivate(K.token); setError(''); setSilent(newId() + newId()); }
+  useEffect(() => {
+    if (!silent) return;
+    const t = setTimeout(() => { setSilent(null); setError(tr('جلسة Moodle خلصت ومقدرناش نجددها لوحدنا. دوس دخول Moodle.', 'Moodle session ended. Tap Sign in to Moodle.')); }, 30000);
+    return () => clearTimeout(t);
+  }, [silent]); // eslint-disable-line react-hooks/exhaustive-deps
+  async function gotToken(t: string) { setLogin(null); setSilent(null); setToken(t); await savePrivate(K.token, t); void refresh(t); }
   /** Downloaded files stay on the phone after signing out; they are the student's own copies. */
   async function signOut() { setToken(null); setData(null); setSel(null); await Promise.all([removePrivate(K.token), removePrivate(K.data)]); }
   function toggleRead(k: string) { const next = read.includes(k) ? read.filter(x => x !== k) : [...read, k].slice(-3000); setRead(next); void savePrivate(K.read, next); }
@@ -338,6 +348,13 @@ export default function Moodle() {
           }} /> : null}
       </View>
     </Modal>
+    {silent ? <View style={{ width: 1, height: 1, opacity: 0, position: 'absolute' }} pointerEvents="none">
+      <WebView source={{ uri: launchUrl(silent) }} userAgent={GOOGLE_TEST_USER_AGENT || undefined}
+        sharedCookiesEnabled thirdPartyCookiesEnabled javaScriptEnabled domStorageEnabled
+        originWhitelist={['http://*', 'https://*', 'moodlemobile://*', 'intent://*']}
+        onShouldStartLoadWithRequest={r => { if (/^https?:/i.test(r.url)) return true; const p = parseLaunch(r.url); if (p) void gotToken(p.token); return false; }} />
+    </View> : null}
+    {silent ? <Txt variant="caption" center color={palette.sub}>{tr('بنجدد دخول KMoodle…', 'Renewing KMoodle sign-in…')}</Txt> : null}
     <Txt variant="caption" center color={palette.faint}>{tr(`البيانات من ${MOODLE.replace('https://', '')} ومتشفّرة على موبايلك. الملفات المتنزّلة جوه الأبلكيشن بس.`, 'Data comes from the official Moodle and is encrypted on your phone. Downloads stay inside the app.')}</Txt>
   </Screen>;
 }

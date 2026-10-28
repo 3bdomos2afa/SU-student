@@ -13,6 +13,14 @@ export function backgroundOrder(prev: Cache, now = Date.now()) {
   return list;
 }
 
+/** Automatic foreground syncs (app open, back online, every 10 min): profile + what changes; heavy walkers every 6 h. */
+export function autoOrder(prev: Cache, now = Date.now()) {
+  const list = ['SEC_PROFILE', ...backgroundOrder(prev, now)];
+  const old = Date.parse(prev.SEC_ABSENCE?.at ?? '');
+  if ('SEC_ABSENCE' in Object.fromEntries(SYNC_ORDER.map(k => [k, 1])) && (!Number.isFinite(old) || now - old > 6 * 3600000)) list.push('SEC_ABSENCE');
+  return [...new Set(list)].filter(k => SYNC_ORDER.includes(k));
+}
+
 /** Removes marks of courses the student is no longer registered in (e.g. after moving to a new term). */
 export function pruneGrades(cache: Cache): Cache {
   const keep = new Set(gradeActions(cache));

@@ -25,7 +25,7 @@ export default function Transcript() {
       </View></PressScale>; };
   const newest = [...list].reverse();
   return <Screen padBottom={false} refreshing={a.refreshing} onRefresh={a.refreshAll}>
-    <PageTop title={tr('السجل الدراسي', 'Transcript')} subtitle={tr('معدّلك ترم بترم — دوس على الترم تشوف مواده', 'Your GPA term by term — tap a term for its courses')} />
+    <PageTop title={tr('السجل الدراسي', 'Transcript')} subtitle={tr('تراكمك ترم بترم — دوس على الترم تشوف مواده', 'Your CGPA term by term — tap a term for its courses')} />
     {!list.length && !legacy.length ? <Glass><Txt variant="sub">{tr('السجل لسه متحمّلش. حدّث بيانات الجامعة.', 'Not loaded yet. Refresh university data.')}</Txt><Button small title={tr('تحديث', 'Refresh')} disabled={!a.session || a.refreshing} onPress={() => { void a.refreshAll(); }} /></Glass> : null}
     {info.gpa !== null || info.earned !== null ? <Glass><View style={{ flexDirection: row, flexWrap: 'wrap', gap: 8 }}>
       <Stat k={tr('التراكمي (CGPA)', 'CGPA')} v={f2(info.gpa)} color={info.gpa === null ? undefined : gpaColor(info.gpa)} />
@@ -33,14 +33,15 @@ export default function Transcript() {
       <Stat k={tr('ساعات مسجّلة', 'Attempted')} v={info.attempted === null ? '—' : String(info.attempted)} />
     </View></Glass> : null}
     {points.length ? <Glass><View style={{ gap: 8 }}>
-      <Txt variant="h3">{tr('المعدل (GPA) والتراكمي (CGPA)', 'GPA and CGPA')}</Txt>
+      <Txt variant="h3">{tr('التراكمي (CGPA) ترم بترم', 'CGPA term by term')}</Txt>
+      <Txt variant="caption">{tr('الخط الملوّن هو التراكمي، والمتقطّع معدل الترم لوحده.', 'Colored line = CGPA, dashed = term GPA.')}</Txt>
       <GpaChart points={points} isAr={isAr} palette={palette} />
     </View></Glass> : null}
     {newest.map(t => { const gpa = gpaOf(t), cg = number(t.summary?.CGPA);
-      return <Expand key={t.serial} color={gpa === null ? palette.faint : gpaColor(gpa)} open={t === newest[0]}
+      return <Expand key={t.serial} color={(cg ?? gpa) === null ? palette.faint : gpaColor((cg ?? gpa)!)} open={t === newest[0]}
         head={<View style={{ gap: 4 }}>
           <Txt variant="h3">{label(t, 'long')}{t.current ? tr(' · الحالي', ' · current') : ''}</Txt>
-          <Txt variant="caption">{`${tr('المعدل (GPA)', 'GPA')} ${f2(gpa)} · ${tr('التراكمي (CGPA)', 'CGPA')} ${f2(cg)} · ${tr(`${t.courses.length} مادة`, `${t.courses.length} courses`)}`}</Txt>
+          <Txt variant="caption">{`${tr('التراكمي', 'CGPA')} ${f2(cg)} · ${tr('معدل الترم', 'Term GPA')} ${f2(gpa)} · ${tr(`${t.courses.length} مادة`, `${t.courses.length} courses`)}`}</Txt>
         </View>}>
         {t.courses.length ? t.courses.map(line) : <Txt variant="sub">{tr('مفيش مواد متسجلة للترم ده.', 'No courses for this term.')}</Txt>}
         {t.summary ? <Txt variant="caption">{tr(`مكتسب لحد الترم ده ${text(t.summary.CumEarnedCredits) || '—'} ساعة`, `${text(t.summary.CumEarnedCredits) || '—'} credits earned so far`)}</Txt> : null}

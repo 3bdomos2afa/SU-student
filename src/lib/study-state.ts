@@ -1,6 +1,6 @@
 import { normalizeFocus, type Focus } from './focus';
 import { normalizeStreak, type Streak } from './streak';
-import { defaultReminders, type ReminderPrefs } from './reminder-plan';
+import { normalizePrefs, type ReminderPrefs } from './reminder-plan';
 export type GpaBase = { cgpa: string; hours: string; target: string };
 export type Task = { id: string; title: string; done: boolean; date?:string; time?:string; duration?:number; course?:string; notes?:string; remind?:number };
 export type CourseNote={registered?:boolean;failures?:number};
@@ -32,7 +32,7 @@ export function normalizeStudy(value: unknown): Study {
  }
  if(v.focus)result.focus=normalizeFocus(v.focus);
  if(v.streak)result.streak=normalizeStreak(v.streak);
- if(v.reminders){result.reminders={...defaultReminders};for(const k of Object.keys(defaultReminders) as (keyof ReminderPrefs)[])result.reminders[k]=v.reminders[k]===true;}
+ if(v.reminders)result.reminders=normalizePrefs(v.reminders);
  if(typeof v.absenceNotifiedAt==='string')result.absenceNotifiedAt=v.absenceNotifiedAt;
  return result;
 }

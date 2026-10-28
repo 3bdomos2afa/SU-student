@@ -7,9 +7,21 @@ let generation=0;
 /** Android channel sound cannot change after creation, hence a versioned id for the chime channel. */
 export const TASK_CHANNEL='su-tasks-v2';
 export const TASK_SOUND='su_chime.wav';
+/** High importance so reminders pop up as banners; channel importance cannot change later, hence a new id. */
+export const MAIN_CHANNEL='su-main-v3';
+const SHOW={shouldShowBanner:true,shouldShowList:true,shouldPlaySound:true,shouldSetBadge:false};
+let handlerSet=false;
+/** Installed at startup so notifications also show while the app is open. */
+export async function installNotificationHandler(){
+ if(handlerSet)return;const n=await native();if(!n)return;
+ n.setNotificationHandler({handleNotification:async()=>SHOW});handlerSet=true;
+}
+void installNotificationHandler().catch(()=>{});
 export async function ensureChannels(n:N){
  if(Platform.OS!=='android')return;
- await n.setNotificationChannelAsync('study',{name:'المذاكرة والجامعة',importance:n.AndroidImportance.DEFAULT,lockscreenVisibility:n.AndroidNotificationVisibility.PRIVATE});
+ await n.setNotificationChannelAsync(MAIN_CHANNEL,{name:'الجدول والمذاكرة',description:'ملخص اليوم، قبل المحاضرة، الاستريك والمهام',importance:n.AndroidImportance.HIGH,
+  vibrationPattern:[0,200,120,200],enableVibrate:true,lockscreenVisibility:n.AndroidNotificationVisibility.PRIVATE});
+ await n.deleteNotificationChannelAsync('study').catch(()=>{});
  await n.setNotificationChannelAsync(TASK_CHANNEL,{name:'مواعيد المهام والتركيز',description:'تنبيه بصوت قبل المهمة بدقايق ووقت بدايتها',
   importance:n.AndroidImportance.HIGH,sound:TASK_SOUND,vibrationPattern:[0,260,140,260],enableVibrate:true,lightColor:'#6D28D9',
   lockscreenVisibility:n.AndroidNotificationVisibility.PRIVATE});
@@ -20,11 +32,26 @@ export async function requestReminders(){
  const p=await n.requestPermissionsAsync();
  return p.granted||p.ios?.status===n.IosAuthorizationStatus.PROVISIONAL;
 }
+/** Asks for the notification permission (Android 13+/iOS) without nagging: only while the system still allows asking. */
+export async function prepareNotifications(){
+ const n=await native();if(!n)return false;
+ await ensureChannels(n).catch(()=>{});await installNotificationHandler().catch(()=>{});
+ let p=await n.getPermissionsAsync();
+ if(!p.granted&&p.canAskAgain)p=await n.requestPermissionsAsync();
+ return p.granted||p.ios?.status===n.IosAuthorizationStatus.PROVISIONAL;
+}
+/** Android 12+: exact alarms make class/task reminders arrive on the minute instead of minutes late. */
+export async function exactAlarms(ask=false){
+ if(Platform.OS!=='android')return true;
+ try{const n=await native();if(!n)return true;
+  const p=await n.getExactAlarmPermissionsAsync();if(p.granted||!ask)return p.granted;
+  return (await n.requestExactAlarmPermissionsAsync()).granted;}catch{return true;}
+}
 export function reconcileReminders(items:PlannedReminder[]){
  const version=++generation;
  queue=queue.catch(()=>false).then(async()=>{
   const n=await native();if(!n||version!==generation)return false;
-  n.setNotificationHandler({handleNotification:async()=>({shouldShowBanner:true,shouldShowList:true,shouldPlaySound:true,shouldSetBadge:false})});
+  await installNotificationHandler().catch(()=>{});
   await ensureChannels(n).catch(()=>{});
   const permission=await n.getPermissionsAsync();
   const enabled=permission.granted||permission.ios?.status===n.IosAuthorizationStatus.PROVISIONAL;
@@ -44,7 +71,9 @@ export function reconcileReminders(items:PlannedReminder[]){
     content:{title:item.title,body:item.body,sound:item.loud?TASK_SOUND:'default',color:'#6D28D9',
      ...(item.loud?{priority:n.AndroidNotificationPriority.MAX}:{}),
      data:{route:item.route,fingerprint:item.fingerprint}},
-    trigger:{type:n.SchedulableTriggerInputTypes.DATE,date:new Date(item.at),channelId:item.loud?TASK_CHANNEL:'study'}});
+    // Class and task reminders are time-critical: alarmClock delivery is never deferred by battery saving.
+    trigger:{type:n.SchedulableTriggerInputTypes.DATE,date:new Date(item.at),channelId:item.loud?TASK_CHANNEL:MAIN_CHANNEL,
+     delivery:item.loud||item.id.includes('-class-')?'alarmClock':'bestEffort'}});
   }
   return enabled||items.length===0;
  });
@@ -60,17 +89,4 @@ export async function listenReminderNavigation(open:(route:string)=>void){
  if(last){handle(last);await n.clearLastNotificationResponseAsync();}
  const sub=n.addNotificationResponseReceivedListener(handle);
  return()=>sub.remove();
-}
-/** Shows a local notification right away (used for "sync complete"). */
-export async function notifyNow(title:string,body:string){
- try{
-  const n=await native();if(!n)return false;
-  await ensureChannels(n).catch(()=>{});
-  let p=await n.getPermissionsAsync();
-  if(!p.granted&&p.canAskAgain)p=await n.requestPermissionsAsync();
-  if(!(p.granted||p.ios?.status===n.IosAuthorizationStatus.PROVISIONAL))return false;
-  n.setNotificationHandler({handleNotification:async()=>({shouldShowBanner:true,shouldShowList:true,shouldPlaySound:false,shouldSetBadge:false})});
-  await n.scheduleNotificationAsync({content:{title,body,data:{route:'/(tabs)'}},trigger:Platform.OS==='android'?{channelId:'study'}:null});
-  return true;
- }catch{return false;}
 }

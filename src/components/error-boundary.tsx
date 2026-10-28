@@ -9,17 +9,18 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { failed: 
     // A failed render must not leave the native splash covering the recovery screen.
     try { Promise.resolve(require('expo-splash-screen').hideAsync()).catch(() => {}); } catch {}
   }
-  // No raw error message, stack, student data or credentials are persisted or sent remotely.
+  // SU+ 1.13.0 — no raw error message, stack, student data or credentials are persisted or sent remotely.
   render() {
     if (!this.state.failed) return this.props.children;
-    return <View style={{ flex: 1, backgroundColor: '#F5F4EE', padding: 28, justifyContent: 'center', gap: 18 }}>
-      <Text style={{ fontSize: 25, color: '#163B39', textAlign: 'center' }}>تعذر عرض الصفحة · Something went wrong</Text>
-      <Text selectable style={{ fontSize: 16, textAlign: 'center', color: '#163B39' }}>
-        {`SU+ 1.12.0\n${this.state.code}\nبياناتك المحفوظة لم تُمسح. ابعت الكود ونوع الموبايل للمطور.\nYour saved data was not deleted. Share only this code and device model.`}
+    // Friendly recovery only: no error code or "send to developer" (the bug-report page is hidden in 1.13.0).
+    return <View style={{ flex: 1, backgroundColor: '#F4F1FF', padding: 28, justifyContent: 'center', gap: 18 }}>
+      <Text style={{ fontSize: 24, color: '#1E1446', textAlign: 'center', fontWeight: '700' }}>حصلت لخبطة صغيرة</Text>
+      <Text style={{ fontSize: 16, textAlign: 'center', color: '#4B3F7A' }}>
+        {`بياناتك زي ما هي ومتمسحتش. دوس "جرّب تاني" وهنفتح الصفحة من الأول.\nSomething went wrong. Your data is safe — tap retry.`}
       </Text>
       <Pressable accessibilityRole="button" onPress={() => this.setState({ failed: false, code: '' })}
-        style={{ padding: 18, backgroundColor: '#216B61', borderRadius: 18 }}>
-        <Text style={{ textAlign: 'center', color: 'white' }}>إعادة المحاولة / Retry</Text>
+        style={{ padding: 18, backgroundColor: '#6A4BEF', borderRadius: 999 }}>
+        <Text style={{ textAlign: 'center', color: 'white', fontSize: 16, fontWeight: '700' }}>جرّب تاني / Retry</Text>
       </Pressable>
     </View>;
   }

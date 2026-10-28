@@ -1,4 +1,4 @@
-// GPA per term as a colored line chart (oldest → newest), with the cumulative GPA as a dashed line.
+// Cumulative GPA (CGPA) per term is the main colored line (oldest → newest); the term GPA is the thin dashed line.
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import Svg, { Circle, Defs, G, Line, LinearGradient, Path, Stop, Text as SvgText } from 'react-native-svg';
@@ -18,9 +18,11 @@ export function GpaChart({ points, isAr, palette }: { points: GpaPoint[]; isAr: 
   const x = (i: number) => points.length === 1 ? left + plotW / 2 : left + 12 + (i * (plotW - 24)) / (points.length - 1);
   const y = (g: number) => top + plotH * (1 - Math.max(0, Math.min(4, g)) / 4);
   const path = (vals: (number | null)[]) => vals.map((v, i) => v === null ? '' : `${i > 0 && vals[i - 1] !== null ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).filter(Boolean).join(' ');
-  const gpaPath = path(points.map(p => p.gpa));
+  // Main value = CGPA (falls back to the term GPA when the university did not return a cumulative value).
+  const main = points.map(p => p.cgpa ?? p.gpa);
+  const gpaPath = path(main);
   const area = points.length > 1 ? `${gpaPath} L${x(points.length - 1).toFixed(1)},${top + plotH} L${x(0).toFixed(1)},${top + plotH} Z` : '';
-  const hasCgpa = points.some(p => p.cgpa !== null);
+  const hasTerm = points.some(p => p.cgpa !== null);
   return (
     <View style={{ gap: 10 }} onLayout={e => setW(e.nativeEvent.layout.width)}>
       {w > 0 ? (
@@ -32,7 +34,7 @@ export function GpaChart({ points, isAr, palette }: { points: GpaPoint[]; isAr: 
                 <Stop offset="1" stopColor={palette.primary} stopOpacity={0} />
               </LinearGradient>
               <LinearGradient id="gpaLine" gradientUnits="userSpaceOnUse" x1={String(x(0))} y1="0" x2={String(x(Math.max(1, points.length - 1)))} y2="0">
-                {points.map((p, i) => <Stop key={i} offset={String(points.length === 1 ? 0 : i / (points.length - 1))} stopColor={gpaColor(p.gpa)} />)}
+                {main.map((g, i) => <Stop key={i} offset={String(points.length === 1 ? 0 : i / (points.length - 1))} stopColor={gpaColor(g)} />)}
               </LinearGradient>
             </Defs>
             {[0, 1, 2, 3, 4].map(g => (
@@ -42,12 +44,13 @@ export function GpaChart({ points, isAr, palette }: { points: GpaPoint[]; isAr: 
               </G>
             ))}
             {area ? <Path d={area} fill="url(#gpaFill)" /> : null}
-            {hasCgpa ? <Path d={path(points.map(p => p.cgpa))} stroke={palette.sub} strokeWidth={1.6} strokeDasharray="5 5" fill="none" /> : null}
+            {hasTerm ? <Path d={path(points.map(p => p.gpa))} stroke={palette.sub} strokeWidth={1.6} strokeDasharray="5 5" fill="none" /> : null}
             {points.length > 1 ? <Path d={gpaPath} stroke="url(#gpaLine)" strokeWidth={3.5} fill="none" strokeLinecap="round" strokeLinejoin="round" /> : null}
             {points.map((p, i) => (
               <G key={`p${i}`}>
-                <Circle cx={x(i)} cy={y(p.gpa)} r={7} fill={gpaColor(p.gpa)} stroke="#FFFFFF" strokeWidth={2.5} />
-                <SvgText x={x(i)} y={y(p.gpa) - 13} fontSize={11} fontWeight="700" fill={gpaColor(p.gpa)} textAnchor="middle">{p.gpa.toFixed(2)}</SvgText>
+                {hasTerm ? <Circle cx={x(i)} cy={y(p.gpa)} r={3} fill={palette.sub} /> : null}
+                <Circle cx={x(i)} cy={y(main[i])} r={7} fill={gpaColor(main[i])} stroke="#FFFFFF" strokeWidth={2.5} />
+                <SvgText x={x(i)} y={y(main[i]) - 13} fontSize={11} fontWeight="700" fill={gpaColor(main[i])} textAnchor="middle">{main[i].toFixed(2)}</SvgText>
                 <SvgText x={x(i)} y={H - 28} fontSize={10.5} fill={palette.sub} textAnchor="middle">{p.label}</SvgText>
                 <SvgText x={x(i)} y={H - 13} fontSize={9.5} fill={palette.sub} fillOpacity={0.75} textAnchor="middle">{p.sub}</SvgText>
               </G>
@@ -62,10 +65,14 @@ export function GpaChart({ points, isAr, palette }: { points: GpaPoint[]; isAr: 
             <Txt variant="caption">{l}</Txt>
           </View>
         ))}
-        {hasCgpa ? (
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+          <View style={{ width: 16, height: 4, borderRadius: 2, backgroundColor: palette.primary }} />
+          <Txt variant="caption">{isAr ? 'التراكمي' : 'CGPA'}</Txt>
+        </View>
+        {hasTerm ? (
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
             <View style={{ width: 16, borderTopWidth: 2, borderStyle: 'dashed', borderColor: palette.sub }} />
-            <Txt variant="caption">{isAr ? 'التراكمي' : 'CGPA'}</Txt>
+            <Txt variant="caption">{isAr ? 'معدل الترم' : 'Term GPA'}</Txt>
           </View>
         ) : null}
       </View>

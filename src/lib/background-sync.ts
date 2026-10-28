@@ -9,6 +9,8 @@ import type { Cache } from './academic';
 import { diffAlerts, gradeActions } from './change-alerts';
 import { deliverAlerts } from './alert-delivery';
 import { backgroundOrder, pruneGrades } from './sync-plan';
+import { isFemale } from './notify-text';
+import { moodleCheck } from './moodle-alerts';
 
 export const SYNC_TASK = 'su-student-university-sync';
 
@@ -41,11 +43,10 @@ export async function runBackgroundSync() {
   if (still?.studentId !== session.studentId) return;
   const fresh = pruneGrades(next);
   await savePrivate(key, fresh);
-  await deliverAlerts(session.studentId, diffAlerts(prev, fresh, isAr), isAr);
-  if (state.expired) await deliverAlerts(session.studentId, [{
-    id: `expired:${session.signedInAt}`, route: '/(tabs)/settings',
-    title: isAr ? 'سجّل دخولك تاني' : 'Sign in again',
-    body: isAr ? 'جلسة الجامعة خلصت، فالتحديث التلقائي واقف لحد ما تدخل تاني.' : 'Your university session expired, so automatic updates are paused.' }], isAr);
+  const study = await loadPrivate<{ reminders?: { gender?: 'auto' | 'm' | 'f' } } | null>(`su:v2:study:${session.studentId}`, null);
+  await deliverAlerts(session.studentId, diffAlerts(prev, fresh, isAr, new Date(), isFemale(study?.reminders?.gender, fresh)), isAr);
+  // New KMoodle lecture files and assignments (silent if KMoodle was never opened).
+  await moodleCheck(session.studentId, fresh, isAr).catch(() => 0);
 }
 
 // Synchronous task definition remains at module scope for headless startup.

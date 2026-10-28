@@ -25,23 +25,25 @@ test('invalid persisted timer cannot create infinite countdowns',()=>{
  assert.equal(normalizeFocus({duration:60,remaining:-9,endAt:NaN}).remaining,0);
 });
 const now=new Date('2026-10-24T06:00:00').getTime();
-const enabled={...defaultReminders,enabled:true};
-test('reminders are opt-in and completed/deleted tasks do not remain in the plan',()=>{
- const t={id:'1',title:'private course name',done:false,date:'2026-10-24',time:'09:00'};
- assert.equal(reminderPlan([t],[],freshFocus(),defaultReminders,false,now).length,0);
- const p=reminderPlan([t],[],freshFocus(),enabled,false,now);
- // Default: 5 minutes before (loud) and at start; no title on the lock screen unless opted in.
- assert.equal(p.length,2);assert.ok(p.every(x=>!x.body.includes(t.title)&&!x.title.includes(t.title)&&x.loud));
- assert.equal(p[0].at,new Date('2026-10-24T08:55:00').getTime());
- assert.equal(reminderPlan([{...t,remind:-1}],[],freshFocus(),enabled,false,now).length,0);
- assert.ok(reminderPlan([t],[],freshFocus(),{...enabled,details:true},false,now)[0].title.includes(t.title));
- assert.equal(reminderPlan([{...t,done:true}],[],freshFocus(),enabled,false,now).length,0);
- assert.equal(reminderPlan([],[],freshFocus(),enabled,false,now).length,0);
+const enabled={...defaultReminders};
+const off={...defaultReminders,enabled:false};
+const taskOnly=<T extends {id:string}>(p:T[])=>p.filter(x=>x.id.includes('-task-'));
+test('reminders are on by default, can be switched off, and finished tasks leave the plan',()=>{
+ const t={id:'1',title:'Networks revision',done:false,date:'2026-10-24',time:'09:00'};
+ assert.equal(reminderPlan([t],[],freshFocus(),off,false,now).length,0);
+ const p=taskOnly(reminderPlan([t],[],freshFocus(),enabled,false,now));
+ // 5 minutes before (loud, names the task) and a nudge 2 hours after if it is still not ticked.
+ assert.equal(p.length,2);
+ assert.equal(p[0].at,new Date('2026-10-24T08:55:00').getTime());assert.ok(p[0].loud);assert.ok(p[0].title.includes(t.title));
+ assert.equal(p[1].at,new Date('2026-10-24T11:00:00').getTime());assert.equal(p[1].loud,false);
+ assert.equal(taskOnly(reminderPlan([{...t,remind:-1}],[],freshFocus(),enabled,false,now)).length,1);
+ assert.equal(taskOnly(reminderPlan([t],[],freshFocus(),{...enabled,tasks:false,overdue:false},false,now)).length,0);
+ assert.equal(taskOnly(reminderPlan([{...t,done:true}],[],freshFocus(),enabled,false,now)).length,0);
 });
-test('focus reminder is retained within 48 item platform limit',()=>{
+test('focus reminder is retained within the 60 item platform limit',()=>{
  const tasks=Array.from({length:100},(_,i)=>({id:String(i),title:'Task',done:false,date:'2026-10-24',time:'09:00'}));
  const p=reminderPlan(tasks,[],startFocus(freshFocus(),now),enabled,true,now);
- assert.equal(p.length,48);assert.equal(p[0].id,'su13-focus');
+ assert.equal(p.length,60);assert.equal(p[0].id,'su13-focus');
  assert.ok(p.every(x=>x.at>now));
 });
 test('class reminders are ten minutes early and never guess weekday or ambiguous time',()=>{

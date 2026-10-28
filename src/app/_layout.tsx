@@ -1,5 +1,6 @@
 import '@/lib/background-sync';
 import { ReminderController } from '@/components/reminder-controller';
+import { SilentRelogin } from '@/components/silent-relogin';
 import { useFonts } from 'expo-font';
 import { fonts } from '@/lib/fonts';
 import { FontReadyContext } from '@/lib/font-ready';
@@ -52,6 +53,7 @@ function Shell() {
         <Stack.Screen name="course/[code]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       </Stack>
       <ReminderController />
+      <SilentRelogin />
       <NetworkBanner />
       <LockOverlay />
     </View></FontReadyContext.Provider>

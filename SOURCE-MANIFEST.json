@@ -53,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "c97c795cc19e8db7ee6b25396a14e7d9c9db7d703d86028979e76ce05fbc0c87"
+    "sha256": "0b491934d2abcd72c138093338b3a6c1e7191c3c3f270062a998ec0c51322ebf"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -113,11 +113,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "ead8554c2fb25ff69a1fabc59a8f1f061ed5d2eff39dccfaa3f0af6cc9534eb6"
+    "sha256": "aa9d6cf9c1a1da824b17a2fd54e5507b8922d51a63e9136bb5453e1669d20611"
   },
   {
     "path": "package.json",
-    "sha256": "c77357b133a99ad8553ae7da884e5d703e2e3faecff3e45a3a7ec3ffc944a1d5"
+    "sha256": "081ff0f12fb495c770ed0094edc1695896fd83420243ab03a0a1f1b029cc1280"
   },
   {
     "path": "plugins/crash-activity.kt.txt",
@@ -129,7 +129,7 @@
   },
   {
     "path": "plugins/google-test-popup.java.txt",
-    "sha256": "5a97644398de7db90927efdabf7eb87445a6b3fb8a591621b564340a9c2f2511"
+    "sha256": "329645c4daec9e5be299ccfe620b2b45dec70059feb635731ef077ddf6b07ac2"
   },
   {
     "path": "plugins/with-android-no-minify.cjs",
@@ -229,7 +229,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "a89fb1ca526e9ab7c6649a961e3fd73114d6f8afe8330a771d8ab995f45e796a"
+    "sha256": "1ca6f8fd70e78c5502051cb05712c147a9043eeb2ec2f7be92f0f83bfda7da57"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -237,7 +237,7 @@
   },
   {
     "path": "src/app/_layout.tsx",
-    "sha256": "82258d10a1e60056a5ec35a492db5118d64c43dde4eba27511dfb02e67c775e6"
+    "sha256": "0eb54cad777f248a1d6a067930d27c62cfb892d4ec396c302a64391afe2fddcb"
   },
   {
     "path": "src/app/absence.tsx",
@@ -265,7 +265,7 @@
   },
   {
     "path": "src/app/moodle.tsx",
-    "sha256": "7c0128015a00cd9c1a6cd60609f309e7d703f3a696ce51ded6f871d275ba3ce8"
+    "sha256": "3655a3c7e358397401a76e91c682d1658bd0bf67243d33709d123bc1aec27d7d"
   },
   {
     "path": "src/app/note.tsx",
@@ -309,7 +309,7 @@
   },
   {
     "path": "src/app/transcript.tsx",
-    "sha256": "01e43046100f5f1b6468af907742edf7b3e9aae13cfeb4ea20f5ed0175cbea12"
+    "sha256": "94223b5f91b0b7f2452034e7e372c668d32c82a24d41ae07c5efa115b40fe08b"
   },
   {
     "path": "src/app/warnings.tsx",
@@ -361,7 +361,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "e2d48ca306fa0626db60bb3d6e0d0ea40e071bfc4bd4cc0add3b16a624221348"
+    "sha256": "08878c8c2a4dcfdb9cf3a9e05c67ae3f94b296cd8d63b73aa2a34e2b15992885"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -369,7 +369,7 @@
   },
   {
     "path": "src/components/gpa-chart.tsx",
-    "sha256": "8bbc24f48cb2d695e05831cf47993ed1464d09c86a4cfe66d72ccbc7367d6c07"
+    "sha256": "7eb827ce7ac6d093352db478443002eef3224edca344adecc0a4aa002f9e503b"
   },
   {
     "path": "src/components/icon.tsx",
@@ -385,19 +385,23 @@
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "43a00ead94743a0f3a52fc909261251643241006cbe627ebd6fa620713d4cee1"
+    "sha256": "95ae8e44ee8ae2bbd219500e8eff201ecc0057fb2e146ea35f2d93e25ef84af4"
   },
   {
     "path": "src/components/portal-modal.tsx",
-    "sha256": "4413978d64954c6bd19f0e8f82185ed0ca683a5450ee78c439aaaf80f30c71e0"
+    "sha256": "235e7c89871d6e4725861a17e49f274e5decd03a8e7644eb3dbb8ad90acf3ad9"
   },
   {
     "path": "src/components/reminder-controller.tsx",
-    "sha256": "28f3394914ac1d994e172880444c48e8622d35446245b337b8eb8bcd97264b74"
+    "sha256": "62baa0978d4f9463e5a58ef7b07598cb2f56f7ca5d7e04d3028669bf09197296"
   },
   {
     "path": "src/components/reminder-settings.tsx",
-    "sha256": "55b865a7316024f784c250232d6d25e8e31dce25f4d4ba0d4b55d708709ca923"
+    "sha256": "195d6344cbc054964364a9151692eff8fb14f58c62572e4f423e85fad94d9666"
+  },
+  {
+    "path": "src/components/silent-relogin.tsx",
+    "sha256": "2e87a2a94f5cfcb40698fe9ff8c1c0b68fe6abcdba580c49ce55e1bb615c6133"
   },
   {
     "path": "src/components/streak-card.tsx",
@@ -409,7 +413,7 @@
   },
   {
     "path": "src/context/app-context.tsx",
-    "sha256": "53220911c5ab41f67af32aed03461efada3a96d50998c326243b50aab102e85a"
+    "sha256": "acdb65109d17b07e1cbdda2adcbc0aafe5f05a2d387e0b2c5555af404c0853c6"
   },
   {
     "path": "src/data/curriculum-helpers.ts",
@@ -437,7 +441,7 @@
   },
   {
     "path": "src/lib/alert-delivery.ts",
-    "sha256": "d59e27bc4f80a72facb404099edd4c16ee56ca24d556a58096c29031d4c7f315"
+    "sha256": "bcbad499e239e1884a75467a19e2a5d7ee543f94215427bab1c21b461714d852"
   },
   {
     "path": "src/lib/background-guard.ts",
@@ -445,11 +449,11 @@
   },
   {
     "path": "src/lib/background-sync.ts",
-    "sha256": "2bb07e0926b809039c9191f670ff9cfd874a7433a9935e9f22f458b3977a83e9"
+    "sha256": "7f392f34ec411ecb145d51f7435dbb1e7b21a9577c672d6b0fa49e2cf5054690"
   },
   {
     "path": "src/lib/change-alerts.ts",
-    "sha256": "876785a550ac1874f99f63008d5aa807b692507aa00fe90ef34368c323853ec1"
+    "sha256": "393be7a1b32be5b35e9e043f2607b03dd7f90efce3325355856112c836eabdb6"
   },
   {
     "path": "src/lib/data-sample.ts",
@@ -504,6 +508,10 @@
     "sha256": "01a5c476bc0a63f5afef7e3b144a4737819412085a98371ae057fedcfd9f1983"
   },
   {
+    "path": "src/lib/moodle-alerts.ts",
+    "sha256": "d0b0d004c14e15da9b14335b006ec8e775899a5bc53f8158c08d559adfce3861"
+  },
+  {
     "path": "src/lib/moodle-download.ts",
     "sha256": "992526284d4c2d76bc4c848ba1b4d7c25ce18c842978ff60c3581180f08bb321"
   },
@@ -537,7 +545,11 @@
   },
   {
     "path": "src/lib/notifications.ts",
-    "sha256": "c7d89ccb369a1a6ac3d4fed1b22c74fe78405d95abb0d75afdd701f87a362c8a"
+    "sha256": "da55c9108f1e9ad4596b66434d5a4ea2ff94ca37c64dec749323109dcb970b94"
+  },
+  {
+    "path": "src/lib/notify-text.ts",
+    "sha256": "122c369ea4bece711ce7bc78a6cc9b1c377999249d0e1c9e27956699a69ea768"
   },
   {
     "path": "src/lib/planner.ts",
@@ -549,7 +561,7 @@
   },
   {
     "path": "src/lib/reminder-plan.ts",
-    "sha256": "8d8f1ffa8a56863fa33a4f80d3a91aa238a5cda07278593b7138733867e6f7e4"
+    "sha256": "8991e14a6fc25f4056d4116b18923b6fa65e9f3bb28dcc7dbdc4bd2fe687f746"
   },
   {
     "path": "src/lib/sso-config.json",
@@ -577,11 +589,11 @@
   },
   {
     "path": "src/lib/study-state.ts",
-    "sha256": "e690908d0326d675373afadca567eb8b21b02a39fb9611f477101cd46f83fc7e"
+    "sha256": "13e67f91e2830bf8f93a4cc1354a23c4281884806e696507f5f7d9c64fa53755"
   },
   {
     "path": "src/lib/sync-plan.ts",
-    "sha256": "1c3a687d7de092a4d9fc43442227bf4ce16bd3bb73e51de9ce5b85f03f4fefe1"
+    "sha256": "f99186b4b032f21cc3b2435ae9d8920a242f98ae8b50dc6e60fe2f2b7f5267d2"
   },
   {
     "path": "src/lib/sync-result.ts",
@@ -617,7 +629,7 @@
   },
   {
     "path": "tests/crash-reporter.test.ts",
-    "sha256": "c29d477c6b8f01be470bf83081c0d1129baa81d2e4261e728429248a43890ccb"
+    "sha256": "95cbc83232c6e00c8b3e978e313394fae2801b23f96cfc10c7aeb40aa3d8653d"
   },
   {
     "path": "tests/google-trial.test.ts",
@@ -677,15 +689,19 @@
   },
   {
     "path": "tests/v1120-suplus.test.ts",
-    "sha256": "67d77a765830ca7e56cdbe1d5ee4b0a962605a2306314336850d855cede8eb97"
+    "sha256": "53037337806b448c6e400f1746414d4aac8e701087fd307c80b8a05c3fd81504"
+  },
+  {
+    "path": "tests/v1130.test.ts",
+    "sha256": "e30e5e49c5d395d1fae9ed40ca3580820b6f606f0190f18efc5ab7c759ca6df7"
   },
   {
     "path": "tests/v13.test.ts",
-    "sha256": "c80c892d1975047e2656b41d7fe4f3684d4fe092c6e03acd16a17340e60d16af"
+    "sha256": "c13d59f350a7030e9a7de56914b78a9c05dd58c3212c3802a7b88960b203fc3d"
   },
   {
     "path": "tests/v16.test.ts",
-    "sha256": "2540f61120f199f0f9d96d44cc1402dd5d01406b062e20ea3f3a86472e030b64"
+    "sha256": "a45ccb1e73a8b81697cfd5b0d45ab5c8505889ef36821647b07595e7f7385d2d"
   },
   {
     "path": "tests/v173.test.ts",
@@ -697,11 +713,11 @@
   },
   {
     "path": "tests/v180.test.ts",
-    "sha256": "1a2bec46eadb6d5452fa5761ec6216f3feef457a74ff519295537b2c065e3a4f"
+    "sha256": "5a6080e7b21562784deaa0261a8f88ead6beaf8ea82ad92d9493c0f7d6e16f18"
   },
   {
     "path": "tests/v190.test.ts",
-    "sha256": "48b25f281ffbfa45e838f074e27063e8336b8025ce77a696f56ad72615e16639"
+    "sha256": "0035c5ffb927a383ef335288d86773ecf9d9140f55157baa48c7c7f3b9a4f7f3"
   },
   {
     "path": "tsconfig.json",

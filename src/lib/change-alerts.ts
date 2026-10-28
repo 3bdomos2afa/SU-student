@@ -4,6 +4,7 @@ import { curriculumCourses } from '../data/curriculum';
 const ABSENCE_NOTICE = 20;
 import { canonical, courseRows, number, rowsDeep, text, type Cache, type Row } from './academic';
 import { marks } from './marks';
+import { kindOf, say } from './notify-text';
 
 export type AlertKind = 'absence' | 'warning' | 'midterm' | 'coursework' | 'final' | 'courses';
 export type ChangeAlert = { id: string; kind: AlertKind; title: string; body: string; route: string };
@@ -53,7 +54,25 @@ export function gradeActions(cache: Cache, max = 14) {
   return [...seen.values()].slice(0, max).map(code => `GRADES:${code}`);
 }
 
-export function diffAlerts(prev: Cache, next: Cache, isAr: boolean, now = new Date()): ChangeAlert[] {
+/** Which kind of class the new absence was in, when the university splits counts by lecture/section. */
+function missedKind(a: Row, b: Row): 'lecture' | 'section' | '' {
+  let lec = 0, sec = 0;
+  for (const [k, v] of Object.entries(b)) {
+    if (/percent/i.test(k)) continue;
+    const n = number(v), o = number(a[k]); if (n === null || o === null || n <= o) continue;
+    if (/lec|محاضر/i.test(k)) lec++; else if (/sec|lab|سكشن|سيكشن|تمارين/i.test(k)) sec++;
+  }
+  return lec && !sec ? 'lecture' : sec && !lec ? 'section' : '';
+}
+/** 1 = first warning (10%), 2 = second (20%). */
+function warnLevel(r: Row): 1 | 2 | null {
+  const s = Object.entries(r).filter(([k]) => !/id$|code/i.test(k)).map(([, v]) => text(v)).join(' ');
+  if (/أول|اول|first|10\s*%/i.test(s)) return 1;
+  if (/تان|ثان|second|20\s*%/i.test(s)) return 2;
+  return null;
+}
+
+export function diffAlerts(prev: Cache, next: Cache, isAr: boolean, now = new Date(), female = false): ChangeAlert[] {
   const out: ChangeAlert[] = [];
   const tr = (ar: string, en: string) => (isAr ? ar : en);
   const when = (r?: Row) => `${tr('اليوم', 'Day')}: ${dayLabel((r && rowDate(r)) || now, isAr)}`;
@@ -67,18 +86,21 @@ export function diffAlerts(prev: Cache, next: Cache, isAr: boolean, now = new Da
     const t = titles.get(c); return t ? `${t} (${code})` : code;
   };
 
-  // One heads-up when a course's absence reaches 20% (exclusion is at 25%). Official warnings only come from the university.
+  // Every new absence: which class, the course and the new percentage (exclusion is at 25%).
   if (prev.SEC_ATTENDANCE && next.SEC_ATTENDANCE) {
-    const old = new Map<string, number>();
-    for (const r of courseRows(prev, 'SEC_ATTENDANCE')) { const p = pct(r), c = canonical(r.CourseCode); if (p !== null && !old.has(c)) old.set(c, p); }
+    const old = new Map<string, Row>();
+    for (const r of courseRows(prev, 'SEC_ATTENDANCE')) { const c = canonical(r.CourseCode); if (c && !old.has(c)) old.set(c, r); }
     const done = new Set<string>();
     for (const r of courseRows(next, 'SEC_ATTENDANCE')) {
-      const c = canonical(r.CourseCode); if (done.has(c)) continue; done.add(c);
-      const p = pct(r); if (p === null || p < ABSENCE_NOTICE) continue;
-      if ((old.get(c) ?? 0) >= ABSENCE_NOTICE) continue;
-      out.push({ id: `abs20:${c}`, kind: 'absence', route: `/absence?code=${encodeURIComponent(text(r.CourseCode))}`,
-        title: tr(`غيابك وصل ${fmt(p)}% في ${named(text(r.CourseCode), [r])}`, `Absence reached ${fmt(p)}%: ${named(text(r.CourseCode), [r])}`),
-        body: [tr('الحرمان عند 25%، فحاول متفوّتش المحاضرات الجاية.', 'Exclusion is at 25% — watch the next classes.'), when(r)].join('\n') });
+      const c = canonical(r.CourseCode); if (!c || done.has(c)) continue; done.add(c);
+      const p = pct(r); if (p === null || p <= 0) continue;
+      const was = old.get(c), before = was ? (pct(was) ?? 0) : 0;
+      if (p <= before) continue;
+      const k = was ? missedKind(was, r) : '';
+      out.push({ id: `abs:${c}:${fmt(p)}`, kind: 'absence', route: `/absence?code=${encodeURIComponent(text(r.CourseCode))}`,
+        title: say.absence(female, k ? kindOf(k, isAr) : '', named(text(r.CourseCode), [r]), fmt(p), isAr),
+        body: [p >= ABSENCE_NOTICE ? tr('الحرمان عند 25%، فحاول متفوّتش المحاضرات الجاية.', 'Exclusion is at 25% — watch the next classes.')
+          : tr('الحرمان عند 25%.', 'Exclusion is at 25%.'), when(r)].join('\n') });
     }
   }
 
@@ -87,7 +109,7 @@ export function diffAlerts(prev: Cache, next: Cache, isAr: boolean, now = new Da
     for (const r of courseRows(next, 'SEC_WARNINGS')) {
       const f = stable(r); if (old.has(f)) continue; old.add(f);
       out.push({ id: `warn:${hash(f)}`, kind: 'warning', route: '/warnings',
-        title: tr(`وصلك إنذار جديد: ${named(text(r.CourseCode), [r])}`, `New warning: ${named(text(r.CourseCode), [r])}`),
+        title: say.warning(warnLevel(r), named(text(r.CourseCode), [r]), isAr),
         body: [details(r), when(r)].filter(Boolean).join('\n') });
     }
   }
@@ -99,7 +121,7 @@ export function diffAlerts(prev: Cache, next: Cache, isAr: boolean, now = new Da
       const g = text(r.GradeName).trim(); if (!g) continue;
       const k = key(r); if (old.has(k)) continue; old.add(k);
       out.push({ id: `final:${hash(k)}`, kind: 'final', route: '/transcript',
-        title: tr(`نتيجة الفاينل نزلت: ${named(text(r.CourseCode), [r])}`, `Final result: ${named(text(r.CourseCode), [r])}`),
+        title: say.final(named(text(r.CourseCode), [r]), isAr),
         body: [tr(`تقديرك: ${g}`, `Grade: ${g}`), when(r)].join('\n') });
     }
   }
@@ -125,10 +147,10 @@ export function diffAlerts(prev: Cache, next: Cache, isAr: boolean, now = new Da
     const old = new Map(marks(prev[key]?.data).map(m => [m.key, m.value]));
     for (const m of marks(next[key]?.data)) {
       if (!m.value || old.get(m.key) === m.value) continue;
-      const what = m.part === 'quiz' ? tr('درجة كويز', 'Quiz mark')
-        : { midterm: tr('درجة الميد', 'Midterm mark'), coursework: tr('درجة كورس ورك', 'Coursework mark'), final: tr('درجة الفاينل', 'Final mark') }[m.kind];
+      const n = named(code, []);
+      const title = m.part === 'quiz' ? say.quiz(n, isAr) : m.kind === 'midterm' ? say.midterm(n, isAr) : m.kind === 'final' ? say.final(n, isAr) : say.coursework(n, isAr);
       out.push({ id: `grade:${canonical(code)}:${hash(m.part === 'quiz' ? m.key : m.label)}:${m.value}`, kind: m.kind, route: '/grades',
-        title: tr(`${what} نزلت: ${named(code, [])}`, `${what} posted: ${named(code, [])}`),
+        title,
         body: [`${m.label}: ${m.value}${m.max ? tr(` من ${m.max}`, ` / ${m.max}`) : ''}`, when()].join('\n') });
     }
   }

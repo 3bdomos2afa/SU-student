@@ -26,7 +26,7 @@ test('midterm, coursework and final marks are detected and classified', () => {
   const next = { [k]: e([{ TemplateDetails: 'Midterm', StudentDegree: '17', MaxDegree: 20 }, { TemplateDetails: 'Quiz 1', StudentDegree: '8', MaxDegree: 10 }, { TemplateDetails: 'Final Exam', StudentDegree: '50', MaxDegree: 60 }]) };
   const a = diffAlerts(prev, next, true, now);
   assert.deepEqual(a.map(x => x.kind), ['midterm', 'final']);
-  assert.match(a[0].body, /17 من 20/); assert.match(a[0].title, /درجة الميد/);
+  assert.match(a[0].body, /17 من 20/); assert.match(a[0].title, /درجات الميد/);
   assert.equal(assessmentKind('أعمال السنة'), 'coursework'); assert.equal(assessmentKind('امتحان نصف الترم'), 'midterm');
 });
 test('a final grade in the transcript alerts once', () => {

@@ -41,9 +41,9 @@ test('Kotlin sources are pure Android and carry the app package', () => {
   assert.match(sources['CrashActivity.kt'], /class CrashActivity : Activity\(\)/);
   assert.match(sources['CrashActivity.kt'], /ACTION_SEND/);
 });
-test('plugin is part of the app config and shipped files', () => {
+test('the bug-report screen is hidden: plugin kept in the sources but not in the app config', () => {
   const app = require('../app.json').expo;
-  assert.ok(app.plugins.includes('./plugins/with-crash-reporter.cjs'));
+  assert.ok(!app.plugins.includes('./plugins/with-crash-reporter.cjs'));
   const preflight = readFileSync('scripts/build-preflight.cjs', 'utf8');
   for (const f of ['plugins/with-crash-reporter.cjs', 'plugins/crash-reporter.kt.txt', 'plugins/crash-activity.kt.txt']) assert.ok(preflight.includes(f), f);
 });

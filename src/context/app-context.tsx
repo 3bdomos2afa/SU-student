@@ -1,14 +1,15 @@
 import { syncResult } from '@/lib/sync-result';
-import { notifyNow } from '@/lib/notifications';
 import { diffAlerts, gradeActions } from '@/lib/change-alerts';
-import { pruneGrades } from '@/lib/sync-plan';
+import { pruneGrades, autoOrder } from '@/lib/sync-plan';
 import { hideFocusLive } from '@/lib/focus-live';
 import { setJSON as setStoredJSON } from '@/lib/storage';
 import { deliverAlerts } from '@/lib/alert-delivery';
 import { setBackgroundSync } from '@/lib/background-sync';
 import { freshFocus, type Focus } from '@/lib/focus';
 import { creditFocus, emptyStreak, markTask, normalizeStreak, startFree, stopFree, type Streak } from '@/lib/streak';
-import { defaultReminders, type ReminderPrefs } from '@/lib/reminder-plan';
+import { normalizePrefs, type ReminderPrefs } from '@/lib/reminder-plan';
+import { isFemale } from '@/lib/notify-text';
+import { moodleCheck } from '@/lib/moodle-alerts';
 import { reconcileReminders } from '@/lib/notifications';
 import { emptyStudy, normalizeStudy, normalizeTask, type CourseNote, type Study, type GpaBase, type Task } from '@/lib/study-state';
 export type { GpaBase, Task } from '@/lib/study-state';
@@ -49,6 +50,7 @@ function useModel() {
   const [reminderError,setReminderError]=useState(false);
   const [storageError,setStorageError] = useState(false);
   const [authExpired,setAuthExpired] = useState(false);
+  const femaleRef=useRef(false);const lastMoodle=useRef(0);
   const settingsRef = useRef(settings); settingsRef.current=settings;
   const lastAuto = useRef(0);
   const wasOnline = useRef(true);
@@ -203,15 +205,17 @@ function useModel() {
         : tr('التحديث مانفعش، وبياناتك القديمة زي ما هي. جرّب تاني بعدين.','Could not refresh. Existing data is unchanged. Try again later.')};
     }
   },[online,tr]);
-  const refreshAll=useCallback(async()=>{
+  const refreshAll=useCallback(async(full=true)=>{
     if(syncBusy.current||!online||!sessRef.current||lockedRef.current)return false;
     syncBusy.current=true;setRefreshing(true);
     const generation=epoch.current;
     lastAuto.current=Date.now();const before=cacheRef.current;
-    let failures=0,successes=0,requested=SYNC_ORDER.length;
+    // Pull-to-refresh fetches everything; automatic syncs fetch what changes (fast) and the heavy walkers every 6 h.
+    const order=full?SYNC_ORDER:autoOrder(cacheRef.current);
+    let failures=0,successes=0,requested=order.length;
     try {
       // Parallel pool (6 at a time); most important services first, so the home fills in quickly.
-      const queue=[...SYNC_ORDER];let stop=false;
+      const queue=[...order];let stop=false;
       const worker=async()=>{
         while(queue.length&&!stop){
           if(generation!==epoch.current||lockedRef.current){stop=true;break;}
@@ -226,15 +230,14 @@ function useModel() {
       if(generation===epoch.current){const pruned=pruneGrades(cacheRef.current);if(pruned!==cacheRef.current){cacheRef.current=pruned;setCache(pruned);}}
       const owner=sessRef.current;
       if(owner&&generation===epoch.current)await enqueue(()=>generation===epoch.current?savePrivate(`su:v2:cache:${owner.studentId}`,cacheRef.current):Promise.resolve());
-      if(owner&&generation===epoch.current&&settingsRef.current.alerts!==false){const ar=settingsRef.current.lang!=='en';void deliverAlerts(owner.studentId,diffAlerts(before,cacheRef.current,ar),ar).catch(()=>0);}
+      if(owner&&generation===epoch.current&&settingsRef.current.alerts!==false){const ar=settingsRef.current.lang!=='en';void deliverAlerts(owner.studentId,diffAlerts(before,cacheRef.current,ar,new Date(),femaleRef.current),ar).catch(()=>0);
+        // KMoodle new files, at most every 20 minutes.
+        if(Date.now()-lastMoodle.current>1200000){lastMoodle.current=Date.now();void moodleCheck(owner.studentId,cacheRef.current,ar).catch(()=>0);}}
       const report=syncResult(requested,successes,failures);
       if(generation===epoch.current)setSyncErrors(report.errors);
       if(generation===epoch.current&&successes>0){
-        offline.current=false;setBanner('synced');
-        if(announceSync.current){announceSync.current=false;
-          void notifyNow(report.complete?tr('تمام، التحديث خلص ✅','Update finished ✅'):tr('التحديث لسه مخلصش','Update incomplete'),report.errors
-            ?tr(`بياناتك اتحدثت. ${report.errors} خدمة مقدرتش تتحدث، محتاجة إعادة محاولة.`,`Your data is updated. ${report.errors} service(s) need another attempt.`)
-            :tr('الخدمات المربوطة اتحدثت. بص على وقت التحديث لكل قسم.','Connected services refreshed. Check each section’s update time.'));}
+        // Quiet: no "update finished" notification or banner.
+        offline.current=false;setBanner(b=>b==='back'?null:b);setAuthExpired(false);
       }
       return report.complete;
     } finally {if(generation===epoch.current){syncBusy.current=false;setRefreshing(false);}}
@@ -244,13 +247,14 @@ function useModel() {
   useEffect(()=>{if(ready&&session&&!locked&&online&&syncedFor.current!==session.signedInAt){syncedFor.current=session.signedInAt;void refreshAll();}},[ready,session?.signedInAt,locked,online]);
   const refreshRef=useRef(refreshAll);refreshRef.current=refreshAll;
   // Automatic sync: when the internet comes back, when the app returns to the foreground, and after unlocking.
-  const autoSync=useCallback((minGap=120000)=>{if(Date.now()-lastAuto.current<minGap||!sessRef.current||lockedRef.current)return;void refreshRef.current();},[]);
+  const autoSync=useCallback((minGap=120000)=>{if(Date.now()-lastAuto.current<minGap||!sessRef.current||lockedRef.current)return;void refreshRef.current(false);},[]);
   useEffect(()=>{const back=online&&!wasOnline.current;wasOnline.current=online;if(back&&ready)autoSync(0);},[online,ready,autoSync]);
   useEffect(()=>{const sub=AppState.addEventListener('change',s=>{if(s==='active')setTimeout(()=>autoSync(),600);});return()=>sub.remove();},[autoSync]);
   useEffect(()=>{if(ready&&!locked)autoSync();},[locked,ready,autoSync]);
   // While the app stays open: refresh every 10 minutes so new marks/courses appear without pulling down.
   useEffect(()=>{if(!ready||!session)return;const t=setInterval(()=>{if(AppState.currentState==='active')autoSync(540000);},600000);return()=>clearInterval(t);},[ready,session?.studentId,autoSync]);
   useEffect(()=>{if(ready)void setBackgroundSync(!!session&&settings.alerts!==false);},[ready,session?.studentId,settings.alerts]);
+  femaleRef.current=isFemale(study.reminders?.gender,cache);
   const times=Object.values(cache).map(x=>x?.at).filter(Boolean).sort();
   return {
     ready,settings,updateSettings,session,signIn,signOut,eraseAll,locked,unlock,setBiometric,
@@ -273,8 +277,8 @@ function useModel() {
     setStreak:(patch:Partial<Pick<Streak,'target'|'remind'>>)=>setStudy(s=>({...s,streak:{...normalizeStreak(s.streak),...patch}})),
     startFree:()=>setStudy(s=>({...s,streak:startFree(normalizeStreak(s.streak))})),
     stopFree:()=>setStudy(s=>({...s,streak:stopFree(normalizeStreak(s.streak))})),
-    reminders:study.reminders??defaultReminders,
-    setReminders:(patch:Partial<ReminderPrefs>)=>setStudy(s=>({...s,reminders:{...defaultReminders,...s.reminders,...patch}})),
+    reminders:normalizePrefs(study.reminders),
+    setReminders:(patch:Partial<ReminderPrefs>)=>setStudy(s=>({...s,reminders:{...normalizePrefs(s.reminders),...patch,v:2}})),
     reminderError,setReminderError,
     absenceNotifiedAt:study.absenceNotifiedAt,
     markAbsenceNotified:(at:string)=>setStudy(s=>({...s,absenceNotifiedAt:at})),

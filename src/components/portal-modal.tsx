@@ -15,7 +15,7 @@ import { ssoConfigured, universityGoogleSignIn } from '@/lib/university-sso';
 import { googleTapAgain } from '@/lib/google-tap';
 
 // Reads the session the official page stores after a successful login. Never reads passwords.
-const bridge = `
+export const PORTAL_BRIDGE = `
 (function(){
   if(window.top!==window || location.origin!==${JSON.stringify(PORTAL_ORIGIN)} || window.__suBridge) return;
   window.__suBridge=true;
@@ -49,7 +49,9 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
   const [forget, setForget] = useState(false);
   const handled = useRef(false);
   const web = useRef<WebView>(null);
-  const autoTap = useRef(false);
+  // Google is tapped again automatically when the popup closed without finishing (at most 3 times per opening).
+  const tapped = useRef(false);
+  const attempts = useRef(0);
   // true after a Google sign-in on this phone (until sign-out): the Google button is tapped for the student.
   const [remembered, setRemembered] = useState(false);
   const externalBusy = useRef(false);
@@ -58,7 +60,7 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
   // Android: the page runs with a Chrome user agent so its own Google button opens a real popup. Google may still refuse.
   const [googleMode, setGoogleMode] = useState(testAvailable);
   const close = () => { setError(''); handled.current = false; onClose(); };
-  useEffect(() => { if (visible) { void Promise.all([getJSON<boolean>('su:v2:forget-web', false), getJSON<boolean>('su:v2:google-used', false)]).then(([f, g]) => { setForget(f === true); setRemembered(g === true && f !== true); }).catch(() => {}); autoTap.current = false; setGoogleMode(testAvailable); handled.current = false; setError(''); setBusy(''); setKey(k => k + 1); } }, [visible]);
+  useEffect(() => { if (visible) { void Promise.all([getJSON<boolean>('su:v2:forget-web', false), getJSON<boolean>('su:v2:google-used', false)]).then(([f, g]) => { setForget(f === true); setRemembered(g === true && f !== true); }).catch(() => {}); tapped.current = false; attempts.current = 0; setGoogleMode(testAvailable); handled.current = false; setError(''); setBusy(''); setKey(k => k + 1); } }, [visible]);
 
   async function google() {
     if (busy) return;
@@ -68,7 +70,8 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
     catch { setError(tr('الدخول بجوجل مكملش. اتأكد إنك داخل بإيميل الجامعة وجرّب تاني.', 'Google sign-in did not finish. Use your university email and try again.')); }
     finally { setBusy(''); }
   }
-  const tapGoogle = () => { web.current?.injectJavaScript(googleTapAgain()); };
+  const tapGoogle = () => { tapped.current = true; web.current?.injectJavaScript(googleTapAgain()); };
+  useEffect(() => { if (!visible) { tapped.current = false; attempts.current = 0; } }, [visible]);
   async function openExternal(url: string) {
     if (isGoogle(url)) { void google(); return; }
     if (externalBusy.current) return;
@@ -133,7 +136,8 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
         ) : (
           <View style={{ flex: 1, borderTopLeftRadius: 22, borderTopRightRadius: 22, overflow: 'hidden', backgroundColor: '#fff' }}>
             <WebView<{}> key={key} ref={web} source={{ uri: PORTAL_LOGIN }} style={{ flex: 1 }}
-              onLoadEnd={() => { if (!browse && googleMode && remembered && !autoTap.current) { autoTap.current = true; tapGoogle(); } }}
+              onLoadEnd={e => { const u = e.nativeEvent.url || ''; if (browse || !googleMode || handled.current || !/\/login/i.test(u)) return;
+                if ((remembered || tapped.current) && attempts.current < 3) { attempts.current++; tapGoogle(); } }}
               originWhitelist={['*']}
               userAgent={googleMode ? GOOGLE_TEST_USER_AGENT : undefined}
               setSupportMultipleWindows
@@ -149,7 +153,7 @@ export function PortalModal({ visible, onClose, browse = false }: { visible: boo
                 return false;
               }}
               onOpenWindow={googleMode ? undefined : e => { void openExternal(e.nativeEvent.targetUrl); }}
-              injectedJavaScript={browse ? 'true;' : bridge}
+              injectedJavaScript={browse ? 'true;' : PORTAL_BRIDGE}
               injectedJavaScriptForMainFrameOnly
               onMessage={async e => {
                 if (browse || handled.current || !isPortalURL(e.nativeEvent.url) || e.nativeEvent.data.length > 22000) return;

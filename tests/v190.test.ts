@@ -31,7 +31,7 @@ test('brand assets and identity stay consistent', () => {
 test('notification channel ids stay stable', () => {
   const n = read('src/lib/notifications.ts');
   assert.ok(n.includes("TASK_CHANNEL='su-tasks-v2'"));
-  assert.ok(n.includes("setNotificationChannelAsync('study'"));
+  assert.ok(n.includes("MAIN_CHANNEL='su-main-v3'"));
 });
 test('a Git/EAS build without raw fonts falls back instead of failing', () => {
   const pre = read('scripts/build-preflight.cjs');
