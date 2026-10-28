@@ -5,12 +5,12 @@ import { ION_TO_LUCIDE, LUCIDE } from '../src/data/lucide';
 
 const read = (p: string) => fs.readFileSync(p, 'utf8');
 
-test('SU+ 1.13.0 name, version and brand colours', () => {
+test('SU+ 1.14.0 name, version and brand colours', () => {
   const app = JSON.parse(read('app.json')).expo;
   assert.equal(app.name, 'SU+');
-  assert.equal(app.version, '1.13.0');
+  assert.equal(app.version, '1.14.0');
   assert.equal(app.android.package, 'com.unicodesis.student');
-  assert.equal(JSON.parse(read('package.json')).version, '1.13.0');
+  assert.equal(JSON.parse(read('package.json')).version, '1.14.0');
   assert.match(read('src/lib/theme.ts'), /#6A4BEF/);
   assert.match(read('src/components/brand.tsx'), /#D6F77E/);
 });

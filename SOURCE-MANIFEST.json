@@ -53,7 +53,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "0b491934d2abcd72c138093338b3a6c1e7191c3c3f270062a998ec0c51322ebf"
+    "sha256": "cf057f1f21e324cfd2972afd683857d38ec4ea4c650af2573518e65f50d89d65"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -105,7 +105,7 @@
   },
   {
     "path": "modules/su-focus/android/src/main/java/expo/modules/sufocus/SuFocusModule.kt",
-    "sha256": "2e53740792135bf40f5ab5834cd10b872831302cbd122272f47ace2129bdc764"
+    "sha256": "a71f756caebad3266cc595606c6faadd2014eb5dd0b1b6b62428699c97c672b1"
   },
   {
     "path": "modules/su-focus/expo-module.config.json",
@@ -113,11 +113,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "aa9d6cf9c1a1da824b17a2fd54e5507b8922d51a63e9136bb5453e1669d20611"
+    "sha256": "483fff7a044fca17a7b9207deb93805deb3bab3be933d40fea8e28423148c1a7"
   },
   {
     "path": "package.json",
-    "sha256": "081ff0f12fb495c770ed0094edc1695896fd83420243ab03a0a1f1b029cc1280"
+    "sha256": "5eb83a39b6f5ccfcf63dc8dce7b60865a20a2743902d74adcb748d7adb27ea5d"
   },
   {
     "path": "plugins/crash-activity.kt.txt",
@@ -229,7 +229,7 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "1ca6f8fd70e78c5502051cb05712c147a9043eeb2ec2f7be92f0f83bfda7da57"
+    "sha256": "409d35e8cc62eeb17d847e5d222e98303033e078ca9e925aadb30f8cc9800774"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
@@ -328,6 +328,10 @@
     "sha256": "06826c9c0712bcd3b2257d5df87e37cd5815ba6d8b1c1aea975ea0ff12a6e73e"
   },
   {
+    "path": "src/components/background-health.tsx",
+    "sha256": "b5cf3d7ca1fe7b8dff36d7a1fc57ceca934680c03de39dc760bf8bc5179d614b"
+  },
+  {
     "path": "src/components/bars.tsx",
     "sha256": "fb400911283077e8877b40f87efa84b49bf1169947644a29d0dc5da42c9d2a84"
   },
@@ -361,7 +365,7 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "08878c8c2a4dcfdb9cf3a9e05c67ae3f94b296cd8d63b73aa2a34e2b15992885"
+    "sha256": "12b7d1c4673fd524879bcb38115fb3565121e38dd2d1e7ef007f477f6a293edb"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -385,7 +389,7 @@
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "95ae8e44ee8ae2bbd219500e8eff201ecc0057fb2e146ea35f2d93e25ef84af4"
+    "sha256": "f134d0724c9a539dfa1724057da8e9ff9f2ec620166a1a5ab9bfcd246f16651d"
   },
   {
     "path": "src/components/portal-modal.tsx",
@@ -450,6 +454,10 @@
   {
     "path": "src/lib/background-sync.ts",
     "sha256": "7f392f34ec411ecb145d51f7435dbb1e7b21a9577c672d6b0fa49e2cf5054690"
+  },
+  {
+    "path": "src/lib/battery-vendor.ts",
+    "sha256": "f013b210d43a5f5ff6e2765334b8c4006c1439210955e463b4a045c086eeb13f"
   },
   {
     "path": "src/lib/change-alerts.ts",
@@ -689,11 +697,15 @@
   },
   {
     "path": "tests/v1120-suplus.test.ts",
-    "sha256": "53037337806b448c6e400f1746414d4aac8e701087fd307c80b8a05c3fd81504"
+    "sha256": "dd14c0299496647359cf67eefb0846097100bbef23b77e893c5ac61cf46e1b96"
   },
   {
     "path": "tests/v1130.test.ts",
     "sha256": "e30e5e49c5d395d1fae9ed40ca3580820b6f606f0190f18efc5ab7c759ca6df7"
+  },
+  {
+    "path": "tests/v1140.test.ts",
+    "sha256": "a807aac2ed05242438b09030a6ceb3cf0159381e37e27582eddc2d2dc3d0fca9"
   },
   {
     "path": "tests/v13.test.ts",
