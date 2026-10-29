@@ -1,6 +1,7 @@
 import '@/lib/background-sync';
 import { ReminderController } from '@/components/reminder-controller';
 import { SilentRelogin } from '@/components/silent-relogin';
+import { MoodleAuto } from '@/components/moodle-auto';
 import { useFonts } from 'expo-font';
 import { fonts } from '@/lib/fonts';
 import { FontReadyContext } from '@/lib/font-ready';
@@ -54,6 +55,7 @@ function Shell() {
       </Stack>
       <ReminderController />
       <SilentRelogin />
+      <MoodleAuto />
       <NetworkBanner />
       <LockOverlay />
     </View></FontReadyContext.Provider>

@@ -1,4 +1,5 @@
 import { useTerms } from '@/components/page';
+import { PageTop } from '@/components/page';
 import { courseByCode } from '@/data/curriculum-helpers';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -35,7 +36,7 @@ export default function Grades(){
  const best=points.reduce<GpaPoint|null>((b,p)=>!b||p.gpa>b.gpa?p:b,null);
  const tone=(g:string)=>{const s=transcriptStatus(g);return s==='failed'?palette.danger:s==='passed'?palette.success:palette.sub;};
  const markTone=(m:Mark)=>{if(m.score===null||!m.outOf)return palette.sub;const r=m.score/m.outOf;return r>=0.85?palette.success:r>=0.6?palette.primary:r>=0.5?palette.warn:palette.danger;};
- const kindLabel=(m:Mark)=>m.part==='quiz'?tr('كويز','Quiz'):m.kind==='midterm'?tr('ميد تيرم','Midterm'):m.kind==='final'?tr('فاينل','Final'):tr('أعمال سنة','Coursework');
+ const kindLabel=(m:Mark)=>m.part==='quiz'?tr('كويز','Quiz'):m.kind==='midterm'?tr('ميد تيرم','Midterm'):m.kind==='final'?tr('فاينل','Final'):tr('كورس وورك','Coursework');
  const when=(at:string)=>new Date(at).toLocaleString(locale,{weekday:'short',hour:'numeric',minute:'2-digit'});
  const title=(c:Row)=>text(c.CourseNameEN)||text(c.CourseName)||courseByCode.get(text(c.CourseCode))?.title||text(c.CourseCode);
  async function load(code:string){setBusy(code);setError('');try{const r=await a.fetchService(`GRADES:${code}`,true);setError(r.error??'');}finally{setBusy('');}}
@@ -43,13 +44,12 @@ export default function Grades(){
   return <PressScale key={`${code}-${i}`} label={code} onPress={()=>router.push(`/course/${encodeURIComponent(code)}`)}>
    <View style={{flexDirection:row,alignItems:'center',gap:12,paddingVertical:6}}>
     <View style={{flex:1,gap:2}}><Txt variant="label" numberOfLines={2}>{title(c)}</Txt>
-     <Txt variant="caption">{[code,text(c.CreditHours)?`${text(c.CreditHours)} ${tr('ساعات','cr')}`:''].filter(Boolean).join(' · ')}</Txt></View>
+     <Txt variant="caption">{[text(c.CreditHours)?`${text(c.CreditHours)} ${tr('ساعات','cr')}`:''].filter(Boolean).join(' · ')}</Txt></View>
     <Txt variant="h3" color={tone(g)}>{g}</Txt>
    </View></PressScale>;};
  const empty=final?!history.length&&!legacy.length:!current.length;
  return <Screen padBottom={false} refreshing={a.refreshing} onRefresh={a.refreshAll}>
-  <Button small variant="glass" title={tr('رجوع','Back')} onPress={()=>router.canGoBack()?router.back():router.replace('/(tabs)')}/>
-  <Header title={tr('الدرجات والأنشطة','Grades & coursework')} subtitle={final?tr('كل ترم بتقديراته ومعدّله','Every term with its grades and GPA'):tr('الترم ده بس: فاينل وميد تيرم وأعمال سنة. اللي لسه مانزلش بيبان —','This term only: final, midterm and coursework. Unpublished marks show —')}/>
+  <PageTop title={tr('الدرجات والأنشطة','Grades & coursework')} subtitle={final?tr('كل ترم بتقديراته ومعدّله','Every term with its grades and GPA'):tr('الترم ده بس: فاينل وميد تيرم وكورس وورك. اللي لسه مانزلش بيبان —','This term only: final, midterm and coursework. Unpublished marks show —')}/>
   <Button small variant="glass" icon="time-outline" title={tr('السجل الدراسي كله','Full transcript')} onPress={()=>router.push('/transcript' as never)}/>
   {error?<Txt color={palette.warn}>{error}</Txt>:null}
   {empty?<Glass><Txt>{tr('لسه مفيش بيانات اتحمّلت. حدّث بيانات الجامعة.','Nothing loaded yet. Refresh university data.')}</Txt><Button title={tr('تحديث','Refresh')} loading={a.refreshing} disabled={!a.session} onPress={a.refreshAll}/></Glass>:null}
@@ -84,7 +84,7 @@ export default function Grades(){
     <View style={{flexDirection:row,alignItems:'center',gap:10}}>
      <PressScale style={{flex:1}} label={code} onPress={()=>router.push(`/course/${encodeURIComponent(code)}`)}>
       <Txt variant="h3" numberOfLines={2}>{title(c)}</Txt>
-      <Txt variant="caption">{[code,text(c.CreditHours)?`${text(c.CreditHours)} ${tr('ساعات','cr')}`:''].filter(Boolean).join(' · ')}</Txt>
+      <Txt variant="caption">{[text(c.CreditHours)?`${text(c.CreditHours)} ${tr('ساعات','cr')}`:''].filter(Boolean).join(' · ')}</Txt>
      </PressScale>
      {total?<Chip active label={`${fmt(total.score)} / ${fmt(total.outOf)}`}/>:null}
     </View>

@@ -113,8 +113,9 @@ export function termOf(r: Pick<MCourseRef, 'fullname' | 'shortname' | 'idnumber'
 }
 const KIND: Record<TermKind, [string, string]> = { fall: ['ترم أول', 'Fall'], spring: ['ترم تاني', 'Spring'], summer: ['سمر', 'Summer'] };
 export function termLabel(tag: TermTag, ar = true) {
-  const k = tag.kind ? KIND[tag.kind][ar ? 0 : 1] : ar ? 'ترم مش معروف' : 'Unknown term';
-  return tag.year ? `${k} · ${tag.year}/${String((tag.year + 1) % 100).padStart(2, '0')}` : k;
+  const k = tag.kind ? KIND[tag.kind][ar ? 0 : 1] : '';
+  const yr = tag.year ? `${tag.year}/${String((tag.year + 1) % 100).padStart(2, '0')}` : '';
+  return [k, yr ? (ar ? `سنة ${yr}` : yr) : ''].filter(Boolean).join(' · ');
 }
 
 /** The student's doctors for a course from the timetable (lecture doctors first; section TAs only if no lecture). */

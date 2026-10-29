@@ -39,11 +39,11 @@ export default function Tools() {
   const draft = (plan ?? fillPlan(sugg, L)).filter(c => byCode.has(c));
   const hours = draft.reduce((s, c) => s + (byCode.get(c)?.course.credits ?? 0), 0);
   const hrs = (n: number) => tr(n === 0 ? 'بدون ساعات' : n === 1 ? 'ساعة' : n === 2 ? 'ساعتين' : `${n} ساعات`, `${n} cr`);
-  const termOf = (c: PlanCourse) => tr(`مستوى ${c.level} · ${c.semester === 1 ? 'ترم أول' : 'ترم تاني'}`, `Level ${c.level} · Term ${c.semester}`);
+  const termOf = (c: PlanCourse) => tr(`سنة ${['أولى','تانية','تالتة','رابعة','خامسة','سادسة'][c.level - 1] ?? c.level} · ${c.semester === 1 ? 'ترم أول' : 'ترم تاني'}`, `Year ${c.level} · Term ${c.semester}`);
   const otherTag = (c: PlanCourse) => !nextSem || c.semester === nextSem ? '' : nextSem === 2
     ? tr('من الترم الأول، ممكن تفتح في التاني وممكن لأ', 'A first-term course: it may or may not open in the second term')
     : tr('من الترم التاني، ممكن تفتح في الأول وممكن لأ', 'A second-term course: it may or may not open in the first term');
-  const meta = (s: Suggestion) => [s.course.code, hrs(s.course.credits), termOf(s.course)].join(' · ');
+  const meta = (s: Suggestion) => [hrs(s.course.credits), termOf(s.course)].join(' · ');
   const freed = sheet?.mode === 'swap' && sheet.code ? byCode.get(sheet.code)?.course.credits ?? 0 : 0;
   const sheetOptions = sugg.filter(s => !draft.includes(s.course.code)).map(s => { const after = hours - freed + s.course.credits;
     return { value: s.course.code, label: s.course.title + (s.failures ? tr(` · شلتها ×${s.failures}`, ` · failed ×${s.failures}`) : ''),
@@ -90,7 +90,7 @@ export default function Tools() {
           </View>; })}
         {sheetOptions.length ? <Button small variant="glass" icon="add" title={tr('ضيف مادة', 'Add a course')} onPress={() => setSheet({ mode: 'add' })} /> : null}
         <View style={{ flexDirection: row, gap: 8, flexWrap: 'wrap' }}>
-          <Button small icon="share-outline" title={tr('شارك الخطة', 'Share plan')} disabled={!draft.length} onPress={() => { void Share.share({ message: draft.map(c => { const s = byCode.get(c)!; return `${s.course.code} — ${s.course.title} (${s.course.credits})`; }).join('\n') + `\n${tr('الإجمالي', 'Total')}: ${hours}` }); }} />
+          <Button small icon="share-outline" title={tr('شارك الخطة', 'Share plan')} disabled={!draft.length} onPress={() => { void Share.share({ message: draft.map(c => { const s = byCode.get(c)!; return `${s.course.title} (${s.course.credits})`; }).join('\n') + `\n${tr('الإجمالي', 'Total')}: ${hours}` }); }} />
           <Button small variant="glass" icon="refresh" title={tr('رجّع الاقتراح', 'Reset')} onPress={() => setPlan(null)} />
           <Button small variant="glass" icon="map-outline" title={tr('افتح الخريطة', 'Open the map')} onPress={() => router.push('/(tabs)/plan' as never)} />
         </View>

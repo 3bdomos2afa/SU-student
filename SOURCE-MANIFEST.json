@@ -5,7 +5,7 @@
   },
   {
     "path": ".gitignore",
-    "sha256": "7f68b0574451e30f8aaaa6f86598faa7f028948b17ca16cefb799e6d944ace56"
+    "sha256": "6cb2c70d2e485f69cf29781298982051b5aafd625d5cb9979e829dc7b79c58c8"
   },
   {
     "path": "AUTH-SETUP.md",
@@ -14,6 +14,10 @@
   {
     "path": "BUILD-FIX-AR.md",
     "sha256": "ec49672afde5ee33a2a316f4aaf2dd61543af21ab94d66abf26a4906d432a062"
+  },
+  {
+    "path": "CHANGELOG.md",
+    "sha256": "944d7234482715062a0653eb4360e88dcd166b197d540d233ff674b510d8e9ae"
   },
   {
     "path": "CRASH-REPORT-AR.md",
@@ -29,7 +33,7 @@
   },
   {
     "path": "README.md",
-    "sha256": "95277812979fa1343d16e2f8e45065f3a1812af1fb8aa7fdc6d76f0ce5b55551"
+    "sha256": "8bb133b4269d6225d5baf3d7c10c7bd16c19a39b33aadababd4e518129c8bd3f"
   },
   {
     "path": "STARTUP-FIX-1.7.2-AR.md",
@@ -53,7 +57,7 @@
   },
   {
     "path": "app.json",
-    "sha256": "e2f0b297314affc653ba252cb8bd8f7e9c9b3bae84d6d6711f7daa62c38c66bf"
+    "sha256": "6a9604b5003e7e6df722059253211e39201fe5723bf7d1f728c974ad4912eaf7"
   },
   {
     "path": "assets/fonts/Froople.ttf",
@@ -92,12 +96,132 @@
     "sha256": "7d2ea342bcb7027bd4a3b20a42c12b4203d2df5fd15a0e4161da797e11f21c75"
   },
   {
+    "path": "docs/ARCHITECTURE.md",
+    "sha256": "81a9538bb8228edd0c8aec20a10017f77285dc8eafc8c9e8bbbddf0e00c17570"
+  },
+  {
+    "path": "docs/BUILD.md",
+    "sha256": "dbcb9dd75672b19d552a9f1c835439ed68de9d423508430ac024e3925d5bbb79"
+  },
+  {
+    "path": "docs/DESIGN.md",
+    "sha256": "e3f6770ce6a6aaf8fff907566140bcb40d5adbdaf018371c9014b176e7f5fbd7"
+  },
+  {
+    "path": "docs/FEATURES.md",
+    "sha256": "05c61f9195a7c51233ef03d37d44c75fecbb5910b01154582ab929e9265973b2"
+  },
+  {
+    "path": "docs/NOTIFICATIONS.md",
+    "sha256": "e67cc2f3aa7cec9ae4b5bde8d60f9fe4bac7d9f82c34bcb13542fb497e982d3a"
+  },
+  {
+    "path": "docs/SECURITY.md",
+    "sha256": "f0282192f1853d270df3b437f2004865304e89390f72022a518d4b018e3cf6fc"
+  },
+  {
+    "path": "docs/TESTING.md",
+    "sha256": "4b539d5ec5c34c4cc61b4373cbc438e17c316f2a0cdc725cb38eba079b871527"
+  },
+  {
+    "path": "docs/UNIVERSITY-API.md",
+    "sha256": "b627e131589cbc30f3a42c9b89e6f00e529b4587507a222727290ee6c5754473"
+  },
+  {
+    "path": "docs/images/app-icon.png",
+    "sha256": "b365144a24d2dde0afaac41f836263d3955b405ad152f29ba9b14d16a771dba3"
+  },
+  {
+    "path": "docs/images/banner.png",
+    "sha256": "fdd8dbfc35800cd49049e236c1f72c7a2631368b7bde8383917e5a991ce70143"
+  },
+  {
+    "path": "docs/images/brand-board.png",
+    "sha256": "d7bacb4168667ca44bc3c88fdbdffe000f32af474844213dd104822f2bbccad8"
+  },
+  {
+    "path": "docs/images/icons.png",
+    "sha256": "7d6c48228cd290c2a983363fbb4232aaf157f41e6eeb82a26fb0bee11842264a"
+  },
+  {
+    "path": "docs/images/presentation-cover.png",
+    "sha256": "0744891656025e25ed8c08fc1301f90e96e889867c1ca4b6f5e7044928112c1a"
+  },
+  {
+    "path": "docs/images/screens-1.png",
+    "sha256": "ac5fa91956f5d55a0f72d4ca992e5d1e91379b9a33d5e773c541b93f24de7475"
+  },
+  {
+    "path": "docs/images/screens-2.png",
+    "sha256": "d8a51d2bb4829cf687226f59214bda8f4b41f1fe8e082bf350f5341878204bfd"
+  },
+  {
+    "path": "docs/images/screens-3.png",
+    "sha256": "8cdaace0b2e20c9969f9ebc140405c5093b3c73225d280d9d54beaf8b5f57b07"
+  },
+  {
+    "path": "docs/images/screens/s1-1.png",
+    "sha256": "1f4736fe50dca3fc9927ac87b5c3d209f1010568fa80c653205fd9990b7239d6"
+  },
+  {
+    "path": "docs/images/screens/s1-2.png",
+    "sha256": "fa94712b6005eae9b89af4ceb1053020751012ade7e48565e9d00327bec09551"
+  },
+  {
+    "path": "docs/images/screens/s1-3.png",
+    "sha256": "7201b93df40208cde734a037a22485753ccce518734da1cead0e127432ee6733"
+  },
+  {
+    "path": "docs/images/screens/s1-4.png",
+    "sha256": "8be3936118c0011a6aefbf3f5383aebc2309daf810f53c15c32191bd8818f655"
+  },
+  {
+    "path": "docs/images/screens/s2-1.png",
+    "sha256": "c8cfff29d4ec19d6cb29e1ed16550e8a2719cfbd652e70d820d1ad48fb7877f3"
+  },
+  {
+    "path": "docs/images/screens/s2-2.png",
+    "sha256": "e22a3f62fcb4c6ad89ff59a999c8dabb207a67cc8707c60b24307f80646b8605"
+  },
+  {
+    "path": "docs/images/screens/s2-3.png",
+    "sha256": "9f425bdd3502996aba71b3e8e94b4683ded59e10832214aa19a7cfa66401a8b4"
+  },
+  {
+    "path": "docs/images/screens/s2-4.png",
+    "sha256": "897d6b56eb0326605dc2cc6e5e72c9613ac452151ec66a266d0ff6a923149777"
+  },
+  {
+    "path": "docs/images/screens/s3-1.png",
+    "sha256": "a22370e4d670989f4bfae8b1217650a38e45afb9cf1f170a516e70a5d9ffa607"
+  },
+  {
+    "path": "docs/images/screens/s3-2.png",
+    "sha256": "d1abf29f085e271c97d584c702332ebead8e2fc0ecb6cb54f02cb11de73534f9"
+  },
+  {
+    "path": "docs/images/screens/s3-3.png",
+    "sha256": "1b64ea6af1a8bea516a28c96da383e4aed4295a218430ea76da8fd23308c3735"
+  },
+  {
+    "path": "docs/images/screens/s3-4.png",
+    "sha256": "048f4f7aada6d7cef0e0b7023af3f659865021b67381d4fdd643523fcb5f050d"
+  },
+  {
+    "path": "docs/presentation/SU-Plus-Presentation.pdf",
+    "sha256": "e26ab78eadd613c5c9204f19e1b88436185248c78f1ea36cfd54187c3ec2acb8"
+  },
+  {
+    "path": "docs/presentation/index.html",
+    "sha256": "f4799d2c526aaec4dcff103c046e791f6078acba204abe297a764a02397a8ad3"
+  },
+  {
     "path": "eas.json",
     "sha256": "99beba26569ea31719d0afdd5ab88543a8e08189e3daf78c8085c66c90653ca9"
   },
   {
     "path": "index.js",
-    "sha256": "5bafd467c453cac95e015adc75402b87eb323d9a6e5b5ec2b3b2d25746bda30f"
+    "sha256": "33e0c578a32cdef0d0ddbad0a97699d9b68f8328b2ffce9637f93051cde38875"
   },
   {
     "path": "modules/su-focus/android/build.gradle",
@@ -113,11 +237,11 @@
   },
   {
     "path": "package-lock.json",
-    "sha256": "236d4edcbc1dd0da3b3240ca40dadcf07af025359d28c2c31a2352b4695487de"
+    "sha256": "6f7f60f2720fafea7ec1540fd18068de7325d359b3cc6ffcb20a6c3826856ea9"
   },
   {
     "path": "package.json",
-    "sha256": "947eee9bf832f9f59fd1ec2516601dae5d7b712512c53c805b416df6ac3b554c"
+    "sha256": "7e4e59227388c044878fb17165e4be1894df49cc65f20080c409f91dd5de2bed"
   },
   {
     "path": "plugins/crash-activity.kt.txt",
@@ -129,7 +253,7 @@
   },
   {
     "path": "plugins/google-test-popup.java.txt",
-    "sha256": "329645c4daec9e5be299ccfe620b2b45dec70059feb635731ef077ddf6b07ac2"
+    "sha256": "46f512187e49cbbb3483065a9dfd38109f709246977795c63dbd542a5315d49c"
   },
   {
     "path": "plugins/with-android-no-minify.cjs",
@@ -141,7 +265,7 @@
   },
   {
     "path": "plugins/with-google-webview-test.cjs",
-    "sha256": "ea95431c7ff10a81cbd084328f026c7a9f33d94641411d0d1aa923072af99289"
+    "sha256": "22c5b810787068dd1615bffe036e0634b4170b0536cd5770104e3aca1db65dc0"
   },
   {
     "path": "plugins/with-portal-network.cjs",
@@ -217,11 +341,11 @@
   },
   {
     "path": "src/app/(tabs)/index.tsx",
-    "sha256": "b0d39ca8e0bc13f6c76773498084a44052ac7c920661626dfb1f8ae1463f87ca"
+    "sha256": "159b942c4fa162811a8211420b2e7958ee0173c6a6223893e21a534558fa4762"
   },
   {
     "path": "src/app/(tabs)/plan.tsx",
-    "sha256": "a99ffafec2995f1dd168c261e5b2beb1c81c4df97f52033720cbb48d0b92be39"
+    "sha256": "c226b1ce9f98722ae23a0306880a01e85826a62d7ab0adaceb92ea334d0b6dc0"
   },
   {
     "path": "src/app/(tabs)/services.tsx",
@@ -229,15 +353,15 @@
   },
   {
     "path": "src/app/(tabs)/settings.tsx",
-    "sha256": "d1765b1e07d06e7abcf8a74b4c3c6dbc90a3d17e40d1d6f383c2f809e7aa2e8c"
+    "sha256": "8b5f3d7191efd9f06336abf5177789bee3d847e51083f6480201ea8c6636003f"
   },
   {
     "path": "src/app/(tabs)/tools.tsx",
-    "sha256": "c1c62a11a41c59115f60d2c4c6353ff00d00ef94924044892ab66129cda3527b"
+    "sha256": "ad0f2efedf2f1970689dff5d8b81f4c2425fc795d5a1669abcf32b2d9805596c"
   },
   {
     "path": "src/app/_layout.tsx",
-    "sha256": "0eb54cad777f248a1d6a067930d27c62cfb892d4ec396c302a64391afe2fddcb"
+    "sha256": "4fdc383b1deaf58d49beefa596ace9a3616d3efd89c0a4d5d8c876a57671e02e"
   },
   {
     "path": "src/app/absence.tsx",
@@ -245,15 +369,15 @@
   },
   {
     "path": "src/app/course/[code].tsx",
-    "sha256": "de121d2edd378d793ffcfb668600d174ea4d391bf80c59a6867046bb4c0ece2c"
+    "sha256": "c4aa44cf1faec94da3cb4ffa4a0d644fc98d41dbda67bdd9f949e4b46d295d64"
   },
   {
     "path": "src/app/courses.tsx",
-    "sha256": "1d07dda7d5c01acc66d19ce11335554e5b1c67b09ebaa9f9d37e1cc15b4a3e1b"
+    "sha256": "0fda47b2dfd3533ef310d7d23e5b0c807ab0e43d0e41283fc803573ebf20722a"
   },
   {
     "path": "src/app/grades.tsx",
-    "sha256": "dcda6b4bde77821197fc9d82ffca5f47c8cc5ba0fb6735c0dcf8931642646905"
+    "sha256": "e6f70c7e012b6e5d19f8927bcfc95b7f1e586faa26e7eef2f240132e403bdb48"
   },
   {
     "path": "src/app/index.tsx",
@@ -265,7 +389,7 @@
   },
   {
     "path": "src/app/moodle.tsx",
-    "sha256": "3655a3c7e358397401a76e91c682d1658bd0bf67243d33709d123bc1aec27d7d"
+    "sha256": "6a4acb0cb90ffeda7f359501cd4dda3caf15fcb1bfb717b0a5dce03fe55ea04a"
   },
   {
     "path": "src/app/note.tsx",
@@ -273,7 +397,7 @@
   },
   {
     "path": "src/app/notebook.tsx",
-    "sha256": "dfdbc85ad316522354c50aa7fbed384270a33ac3d1a2477be52272165c4bf33a"
+    "sha256": "c6ab29622e950d5f57bed6ea439b871ca3fb2c2c7e1337583a92a57f8791fcf9"
   },
   {
     "path": "src/app/oauth/callback.tsx",
@@ -293,15 +417,15 @@
   },
   {
     "path": "src/app/streak.tsx",
-    "sha256": "5a1251065ee9f4a992c833accfb69fecfb4be5ce81207b41252f425b0d100951"
+    "sha256": "05cbf225c25098e8ec813375fdcc2b569888d03f05f28d94e0f5ab97e63d06f8"
   },
   {
     "path": "src/app/study.tsx",
-    "sha256": "4555b982f5100bfb0868217284cb40cf83ad5f3163a2061370b4423ec3709a04"
+    "sha256": "c6c50d5df2c5712a66ac38cb519dcf182823ebaa5bbdea443ce5dec346279d43"
   },
   {
     "path": "src/app/timetable.tsx",
-    "sha256": "683cbc4d623450065905a8978f7601ccb88b03c222c109239091e3d54d6e8937"
+    "sha256": "1a2d62e54664f6d7aa5d27d924569eedab112c8327351e044c116fa1d519cb21"
   },
   {
     "path": "src/app/topic.tsx",
@@ -309,7 +433,7 @@
   },
   {
     "path": "src/app/transcript.tsx",
-    "sha256": "94223b5f91b0b7f2452034e7e372c668d32c82a24d41ae07c5efa115b40fe08b"
+    "sha256": "eced0903a04bc15f7fdc612b8b847909a23bb39f36a646b6fb221d17a712e495"
   },
   {
     "path": "src/app/warnings.tsx",
@@ -321,7 +445,7 @@
   },
   {
     "path": "src/components/academic-cards.tsx",
-    "sha256": "41f1cb58183076385d91a9096b975c5258d652185bdefebe9f7aa1253e32ff27"
+    "sha256": "d8fb2efe9866631cc3e6d552ae69d80605b68fafb2640cbd919cab473f851b65"
   },
   {
     "path": "src/components/backdrop.tsx",
@@ -329,7 +453,7 @@
   },
   {
     "path": "src/components/background-health.tsx",
-    "sha256": "b5cf3d7ca1fe7b8dff36d7a1fc57ceca934680c03de39dc760bf8bc5179d614b"
+    "sha256": "b3f66614edd871dd8be1e396f0e7faad1bb90d01d59e81bd7ead4799d89dd8c6"
   },
   {
     "path": "src/components/bars.tsx",
@@ -353,7 +477,7 @@
   },
   {
     "path": "src/components/course-row.tsx",
-    "sha256": "c6ebb3404ce0fc07b74521280cbcd84b6ef712dba84691f6d233cdc571aaa3ca"
+    "sha256": "b35258602d5b7f6de5cd8620b5977a73cb6a2d9ddfa202c3713d9459840283d9"
   },
   {
     "path": "src/components/dropdown.tsx",
@@ -365,7 +489,11 @@
   },
   {
     "path": "src/components/error-boundary.tsx",
-    "sha256": "a068d9586c1a9605f27c7f0388534dc596939a04924ec4a82c6e357d7c0628e5"
+    "sha256": "e69bd64633c5614c2afce2d420fa32b2d6db921c24b86750eefec553c5481782"
+  },
+  {
+    "path": "src/components/fire.tsx",
+    "sha256": "74199f2aad040f0cd18f013db4aa8b912ad738d33ff591fb25cb744333a5409a"
   },
   {
     "path": "src/components/focus-card.tsx",
@@ -384,12 +512,16 @@
     "sha256": "6be1c7b19c5480a322deab4343d570cef6ce1ec2ffba0f79d7f47172473d661d"
   },
   {
+    "path": "src/components/moodle-auto.tsx",
+    "sha256": "4587a62394bb346b6137059b0a7b9e9545fc86006552395f5c2cc77c7df9e8b7"
+  },
+  {
     "path": "src/components/page.tsx",
-    "sha256": "be08ee5550148cc81817444d0355636ce42de203d5a232d16b4655fa1ab9b072"
+    "sha256": "3e42c9d9ba2a21e671abeed346ca5c33380ea7036486f5407015d2a35f20cb46"
   },
   {
     "path": "src/components/portal-entry.tsx",
-    "sha256": "4de7a206b4fd957b30c9eb7f61b43f4103e9aed1f7978c12d95f3f771af3714f"
+    "sha256": "8f4273d9add637485a299e97ff69f6c5bbabd85cccb55b3f83b2cec770b66cfb"
   },
   {
     "path": "src/components/portal-modal.tsx",
@@ -405,15 +537,19 @@
   },
   {
     "path": "src/components/silent-relogin.tsx",
-    "sha256": "2e87a2a94f5cfcb40698fe9ff8c1c0b68fe6abcdba580c49ce55e1bb615c6133"
+    "sha256": "6ae57fb0c794798451776fd14eb78bc93254ab76f0b63f6acdfa0ae052979ef4"
+  },
+  {
+    "path": "src/components/streak-badge.tsx",
+    "sha256": "2a720c7e8fdf4c6bae2d348a89919443274eebd4c1b8f22219e78dbeda1ca42d"
   },
   {
     "path": "src/components/streak-card.tsx",
-    "sha256": "495d6c6cc9a48407d096d13b2a9e72bc02d86bef360e1955bda45979eea5156e"
+    "sha256": "1b97eee47de85cf43396af3a64b281028cd950c56bc2b89d7780e0f0d044912d"
   },
   {
     "path": "src/components/ui.tsx",
-    "sha256": "1d441addfb7deda11c42b4863e0954f02e34518f9677706b7109876d49a32b6b"
+    "sha256": "f839bd282e28b528af793ff0072da235256e47a6bd922eccbfd7f7b03b567186"
   },
   {
     "path": "src/context/app-context.tsx",
@@ -453,7 +589,7 @@
   },
   {
     "path": "src/lib/background-sync.ts",
-    "sha256": "7f392f34ec411ecb145d51f7435dbb1e7b21a9577c672d6b0fa49e2cf5054690"
+    "sha256": "bb3930e109fe5cfe6cd7d330ada5a939c6eefcd5101812b637c76d30847744be"
   },
   {
     "path": "src/lib/battery-vendor.ts",
@@ -469,7 +605,7 @@
   },
   {
     "path": "src/lib/field-labels.ts",
-    "sha256": "7c8e0dfa2f307e91de7a7375c67e825e75db0dff27188b97ec3db2c0b31a91eb"
+    "sha256": "f0750f3f3d4fc330627a9c9a75862700285bfbc907bb7fa88e88a910c1c2f4b8"
   },
   {
     "path": "src/lib/focus-live.ts",
@@ -489,7 +625,7 @@
   },
   {
     "path": "src/lib/google-tap.ts",
-    "sha256": "e09b4596126d045d738073182619da43c45399891f22ed45180e05b27a459eb3"
+    "sha256": "2e6c42239bd840fa589dfd383d72dd0c0fd8cfefb9a532d3ad35d35f398f94f7"
   },
   {
     "path": "src/lib/google-webview-policy.json",
@@ -529,7 +665,7 @@
   },
   {
     "path": "src/lib/moodle-match.ts",
-    "sha256": "cace76e481ef137cdd1a93b5db8f463ed019795ec6b42ef56b9bfade7068057b"
+    "sha256": "30d579d562a3ed91ebb69d058b1e088f8d1399fc6391ecb89e406e41cc713de9"
   },
   {
     "path": "src/lib/moodle.ts",
@@ -568,6 +704,10 @@
     "sha256": "46558b19e5fc2bfeca836e051c8330cc353a19ad3ab9b8875212615a9c638358"
   },
   {
+    "path": "src/lib/relogin-state.ts",
+    "sha256": "c3377a6ca449895752a5ce98cda8031bb4f286d0924078d6439e4ea5ada22629"
+  },
+  {
     "path": "src/lib/reminder-plan.ts",
     "sha256": "8991e14a6fc25f4056d4116b18923b6fa65e9f3bb28dcc7dbdc4bd2fe687f746"
   },
@@ -593,7 +733,7 @@
   },
   {
     "path": "src/lib/student.ts",
-    "sha256": "7e37c2304e5ef4ac1233bf1322f2785975ac03f4585a2888e6094060e04dbb11"
+    "sha256": "fdedc376f12139e1f1e6344e63f956ebac3650d3c754ea3c737908c8a023796a"
   },
   {
     "path": "src/lib/study-state.ts",
@@ -613,7 +753,7 @@
   },
   {
     "path": "src/lib/theme.ts",
-    "sha256": "0b8fef8655c4d128d2128207a47723f8d3f3ea685ae65d7387a8284d18c3c6d9"
+    "sha256": "b14696ecc1e65d0ee37e0f7d1f3681eaf1e1d370db68fc61d41423a399210b53"
   },
   {
     "path": "src/lib/university-sso.ts",
@@ -689,7 +829,7 @@
   },
   {
     "path": "tests/v1111-moodle-match.test.ts",
-    "sha256": "d29328ac38195f04132406fae9b4f7ed07b2b200bf170d4019a5e1d3f5a88627"
+    "sha256": "73cf840f54cc26989d3cd95dd1fcc1acef70d30e15a4196bb12bc165f312101f"
   },
   {
     "path": "tests/v1112-google-tap.test.ts",
@@ -697,7 +837,7 @@
   },
   {
     "path": "tests/v1120-suplus.test.ts",
-    "sha256": "3568cb50fd58752bf513684eef30724ca8a91912844e4ed55d7cd0fbffb671e3"
+    "sha256": "985f7fe62cc57bbdebc6ce49c53a840488e4d8334c18c660e15a0ccb4b6a8f39"
   },
   {
     "path": "tests/v1130.test.ts",

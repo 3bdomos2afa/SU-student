@@ -10,16 +10,16 @@
 
 ### كل جامعتك في مكان واحد — *Your whole university, in one place.*
 
-A student companion app for **Sinai University**, built with Expo and React Native for **Android** and **iPhone**. Timetable, grades, transcript, absence, KMoodle files, study streak, planner and smart notifications all live in one app.
+A student companion app for **Sinai University**, built with Expo and React Native for **Android** (Android only). Timetable, grades, transcript, absence, KMoodle files, study streak, planner and smart notifications all live in one app.
 
 <br/>
 
-![Version](https://img.shields.io/badge/version-1.14.1-6A4BEF?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.15.0-6A4BEF?style=for-the-badge)
 ![Expo SDK](https://img.shields.io/badge/Expo_SDK-58-17161D?style=for-the-badge&logo=expo&logoColor=white)
 ![React Native](https://img.shields.io/badge/React_Native-0.88-61DAFB?style=for-the-badge&logo=react&logoColor=17161D)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 <br/>
-![Platforms](https://img.shields.io/badge/platforms-Android_·_iOS-D6F77E?style=for-the-badge&labelColor=17161D)
+![Platforms](https://img.shields.io/badge/platform-Android_only-D6F77E?style=for-the-badge&labelColor=17161D)
 ![Tests](https://img.shields.io/badge/tests-137_passing-2ea44f?style=for-the-badge)
 ![expo-doctor](https://img.shields.io/badge/expo--doctor-20%2F20-2ea44f?style=for-the-badge)
 ![Arabic first](https://img.shields.io/badge/UI-عربي_·_English-C9BBFA?style=for-the-badge&labelColor=17161D)
@@ -129,22 +129,22 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 
 <table>
 <tr>
-<td align="center"><img src="docs/images/screens/s1-1.png" width="190"/><br/><sub><b>Welcome</b></sub></td>
-<td align="center"><img src="docs/images/screens/s1-2.png" width="190"/><br/><sub><b>Link account</b></sub></td>
-<td align="center"><img src="docs/images/screens/s1-3.png" width="190"/><br/><sub><b>Home</b></sub></td>
-<td align="center"><img src="docs/images/screens/s1-4.png" width="190"/><br/><sub><b>Timetable</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-1.png" width="190"/><br/><sub><b>Home</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-2.png" width="190"/><br/><sub><b>Timetable</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-3.png" width="190"/><br/><sub><b>Study plan</b></sub></td>
+<td align="center"><img src="docs/images/screens/s1-4.png" width="190"/><br/><sub><b>Streak</b></sub></td>
 </tr>
 <tr>
 <td align="center"><img src="docs/images/screens/s2-1.png" width="190"/><br/><sub><b>KMoodle files</b></sub></td>
-<td align="center"><img src="docs/images/screens/s2-2.png" width="190"/><br/><sub><b>Course folder</b></sub></td>
-<td align="center"><img src="docs/images/screens/s2-3.png" width="190"/><br/><sub><b>Grades</b></sub></td>
-<td align="center"><img src="docs/images/screens/s2-4.png" width="190"/><br/><sub><b>Streak</b></sub></td>
+<td align="center"><img src="docs/images/screens/s2-2.png" width="190"/><br/><sub><b>Grades</b></sub></td>
+<td align="center"><img src="docs/images/screens/s2-3.png" width="190"/><br/><sub><b>Transcript</b></sub></td>
+<td align="center"><img src="docs/images/screens/s2-4.png" width="190"/><br/><sub><b>Degree map</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/images/screens/s3-1.png" width="190"/><br/><sub><b>Degree map</b></sub></td>
-<td align="center"><img src="docs/images/screens/s3-2.png" width="190"/><br/><sub><b>Tools · GPA</b></sub></td>
-<td align="center"><img src="docs/images/screens/s3-3.png" width="190"/><br/><sub><b>Notebook</b></sub></td>
-<td align="center"><img src="docs/images/screens/s3-4.png" width="190"/><br/><sub><b>More · Services</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-1.png" width="190"/><br/><sub><b>Tools · GPA</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-2.png" width="190"/><br/><sub><b>Notebook</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-3.png" width="190"/><br/><sub><b>Notebook page</b></sub></td>
+<td align="center"><img src="docs/images/screens/s3-4.png" width="190"/><br/><sub><b>Settings</b></sub></td>
 </tr>
 </table>
 
@@ -298,6 +298,6 @@ The full details are in [docs/SECURITY.md](docs/SECURITY.md).
 
 <div align="center">
 
-Made with 💜 for Sinai University students · **SU+ 1.14.1**
+Made with 💜 for Sinai University students · **SU+ 1.15.0**
 
 </div>

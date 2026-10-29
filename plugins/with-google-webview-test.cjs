@@ -11,7 +11,8 @@ function patchText(source, helper) {
     throw new Error('Google trial: WebView source changed; stop rather than applying an unsafe patch.');
   }
   const guard = `
-        if (${JSON.stringify(policy.userAgent)}.equals(view.getSettings().getUserAgentString())
+        if (view.getSettings().getUserAgentString() != null
+            && view.getSettings().getUserAgentString().startsWith(${JSON.stringify(policy.userAgent)})
             && view.getUrl() != null
             && suAllowedGoogleTestUrl(view.getUrl())
             && "unicodesis.su.edu.eg".equals(android.net.Uri.parse(view.getUrl()).getHost())) {

@@ -7,6 +7,7 @@ import { currentCourses } from '@/lib/student';
 import { lastUpdate, newId, TOPIC_COLORS, withCourseTopics } from '@/lib/notebook';
 import { updateNotebook, useNotebook } from '@/lib/notebook-store';
 import { PageTop } from '@/components/page';
+import { courseByCode } from '@/data/curriculum-helpers';
 import { Button, Field, Glass, PressScale, Screen, Txt } from '@/components/ui';
 
 export function stamp(iso: string, lang: string) {
@@ -33,14 +34,13 @@ export default function Notebook() {
     {ready && !nb.topics.length ? <Glass><Txt variant="sub">{tr('أول ما موادك تتزامن هيتعمل كشكول لكل مادة. وتقدر تضيف موضوع من دلوقتي.', 'A notebook per course appears once your courses sync. You can add a topic now.')}</Txt></Glass> : null}
     {nb.topics.map(t => <PressScale key={t.id} label={t.name} onPress={() => router.push(`/topic?id=${encodeURIComponent(t.id)}` as never)}>
       <Glass padding={0}><View style={{ flexDirection: row, alignItems: 'stretch' }}>
-        <View style={{ width: 16, borderTopLeftRadius: 26, borderBottomLeftRadius: 26, backgroundColor: t.color }} />
         <View style={{ flex: 1, padding: 14, gap: 4, flexDirection: row, alignItems: 'center' }}>
           <View style={{ width: 44, height: 44, borderRadius: 14, backgroundColor: `${t.color}22`, alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name={t.course ? 'school-outline' : 'bookmark-outline'} size={22} color={t.color} />
           </View>
           <View style={{ flex: 1, gap: 2, paddingHorizontal: 10 }}>
             <Txt variant="label" numberOfLines={2}>{t.name}</Txt>
-            <Txt variant="caption">{[t.course, tr(`${t.pages.length} صفحة`, `${t.pages.length} pages`), lastUpdate(t) ? stamp(lastUpdate(t), lang) : ''].filter(Boolean).join(' · ')}</Txt>
+            <Txt variant="caption">{[t.course ? (courseByCode.get(t.course)?.title ?? '') : '', tr(`${t.pages.length} صفحة`, `${t.pages.length} pages`), lastUpdate(t) ? stamp(lastUpdate(t), lang) : ''].filter(Boolean).join(' · ')}</Txt>
           </View>
           <Ionicons name={a.isAr ? 'chevron-back' : 'chevron-forward'} size={20} color={palette.sub} />
         </View>

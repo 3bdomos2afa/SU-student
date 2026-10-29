@@ -32,9 +32,11 @@ export function BackgroundHealth() {
   const ar = lang !== 'en';
   const [h, setH] = useState<BatteryState>(read);
   const [vendorDone, setVendorDone] = useState(false);
+  const [last, setLast] = useState<string | null>(null);
   const refresh = useCallback(() => setH(read()), []);
   useEffect(() => {
     void getJSON<boolean>(DONE_KEY, false).then(setVendorDone);
+    void getJSON<string | null>('su:v2:bg-last', null).then(setLast);
     // Re-check when the student comes back from the system dialog / settings page.
     const sub = AppState.addEventListener('change', s => { if (s === 'active') refresh(); });
     return () => sub.remove();
@@ -74,6 +76,9 @@ export function BackgroundHealth() {
       <Button small variant={vendorDone ? 'glass' : 'primary'} title={vendorDone ? tr('✓ عملتها', '✓ Done') : tr('عملتها', 'I did it')}
         onPress={() => { const d = !vendorDone; setVendorDone(d); void setJSON(DONE_KEY, d); }} />
     </View> : null}
+    <Txt variant="caption">{last
+      ? tr(`آخر مرة شيّك على الجامعة والأبلكيشن مقفول: ${new Date(last).toLocaleString('ar-EG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false })}`, `Last background check: ${new Date(last).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`)
+      : tr('لسه مشيّكش في الخلفية. سيب الأبلكيشن مقفول ربع ساعة وارجع شوف.', 'No background check yet. Close the app for 15 minutes and look again.')}</Txt>
     {allGood && h.supported ? <Txt variant="caption">{tr('كده تمام. الأبلكيشن هيشيّك على الجامعة كل ربع ساعة تقريباً حتى وهو مقفول.', 'All set. SU+ checks roughly every 15 minutes even when closed.')}</Txt> : null}
   </View></Glass>;
 }

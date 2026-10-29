@@ -41,7 +41,7 @@ export const SUPLUS = { violet: '#6A4BEF', lilac: '#C9BBFA', lime: '#D6F77E', in
 
 export const palettes: Record<Scheme, Palette> = {
   light: {
-    bg: ['#F4F3F9', '#F4F3F9', '#F4F3F9'],
+    bg: ['#F1EEF9', '#F1EEF9', '#F1EEF9'],
     text: '#17161D', sub: '#6B6878', faint: '#9A98A6',
     glassTint: '#FFFFFF', glassBorder: 'rgba(23,22,29,0.08)', glassHighlight: '#FFFFFF',
     primary: '#6A4BEF', accent: '#4F8F12', pink: '#D9487A', warn: '#B87000', danger: '#DE3B47', success: '#3B8F22',
@@ -52,15 +52,15 @@ export const palettes: Record<Scheme, Palette> = {
     soft: '#ECEAF4', lil: '#E2D9FE', lim: '#ECF9C6', yel: '#FFEBA3', pnk: '#FFD0DE',
   },
   dark: {
-    bg: ['#121118', '#121118', '#121118'],
-    text: '#F4F3F9', sub: '#A9A6B8', faint: '#74717F',
-    glassTint: '#1E1C26', glassBorder: 'rgba(244,243,249,0.10)', glassHighlight: '#2A2734',
-    primary: '#B9A8FF', accent: '#D6F77E', pink: '#FF9DB8', warn: '#FFD46B', danger: '#FF7A7A', success: '#B8EA6A',
+    bg: ['#0E0D13', '#0E0D13', '#0E0D13'],
+    text: '#F7F6FC', sub: '#B8B4CC', faint: '#7E7A90',
+    glassTint: '#1B1926', glassBorder: 'rgba(185,168,255,0.14)', glassHighlight: '#2A2640',
+    primary: '#9D85FF', accent: '#D6F77E', pink: '#FF8FB1', warn: '#FFC94A', danger: '#FF6B6B', success: '#B8EA6A',
     blobs: ['#6A4BEF', '#D6F77E', '#FFD0DE'],
-    inputBg: '#2A2734', card: '#1E1C26', surface: '#1E1C26', shadow: 'rgba(0,0,0,0.35)',
+    inputBg: '#262338', card: '#1B1926', surface: '#1B1926', shadow: 'rgba(0,0,0,0.45)',
     hero: ['#7C60F3', '#6A4BEF', '#5B3DE0'],
     ink: '#2E2B3A', onInk: '#F4F3F9', lime: '#D6F77E', onLime: '#17161D', purple: '#7C60F3', navy: '#1E1C26',
-    soft: '#2A2734', lil: '#2E2850', lim: '#2A3418', yel: '#3A3320', pnk: '#3D2430',
+    soft: '#2A2740', lil: '#3A2C85', lim: '#2C5A12', yel: '#6B4A0E', pnk: '#5C1E3B',
   },
 };
 

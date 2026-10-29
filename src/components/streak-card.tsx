@@ -28,21 +28,21 @@ export function StreakCard() {
   const ink = '#F2F2F2';
   return (
     <PressScale label={tr('الستريك', 'Streak')} onPress={() => router.push('/streak' as never)}>
-      <View style={{ backgroundColor: TOXIC.navy, borderRadius: 22, borderWidth: 2.5, borderColor: 'transparent', padding: 16, gap: 12, boxShadow: hard('#0B0D14', 5) }}>
+      <View style={{ backgroundColor: TOXIC.purple, borderRadius: 22, borderWidth: 2.5, borderColor: 'transparent', padding: 16, gap: 12, boxShadow: hard('#0B0D14', 5) }}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
           <View style={{ width: 52, height: 52, borderRadius: 15, backgroundColor: TOXIC.lime, borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name="flame" size={28} color="#0B0D14" />
           </View>
           <View style={{ flex: 1 }}>
             <Txt variant="h2" color={ink}>{v.current ? tr(`${v.current} يوم ستريك`, `${v.current}-day streak`) : tr('ابدأ ستريك جديد', 'Start a streak')}</Txt>
-            <Txt variant="caption" color="#9AA3B5">
+            <Txt variant="caption" color="rgba(255,255,255,0.78)">
               {v.met ? tr('هدف النهارده خلص ✓ برافو عليك', 'Today’s goal done ✓') : tr(`النهارده ${hm(v.today)} من ${hm(streak.target)} ساعة`, `Today ${hm(v.today)} of ${hm(streak.target)} h`)}
               {running ? tr(' · شغال دلوقتي', ' · running') : ''}
             </Txt>
           </View>
           <Ionicons name={isAr ? 'chevron-back' : 'chevron-forward'} size={22} color={ink} />
         </View>
-        <View style={{ height: 10, borderRadius: 5, backgroundColor: '#2B3245', overflow: 'hidden' }}>
+        <View style={{ height: 10, borderRadius: 5, backgroundColor: 'rgba(255,255,255,0.3)', overflow: 'hidden' }}>
           <View style={{ width: `${Math.round(v.pct * 100)}%`, height: '100%', backgroundColor: TOXIC.lime, borderRadius: 5 }} />
         </View>
       </View>

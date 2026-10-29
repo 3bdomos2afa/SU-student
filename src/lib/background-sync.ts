@@ -3,7 +3,7 @@
 import { Platform } from 'react-native';
 import { setupBackground } from './background-guard';
 import { loadPrivate, savePrivate } from './vault';
-import { getJSON } from './storage';
+import { getJSON, setJSON } from './storage';
 import { requestPortal, SYNC_ORDER, PortalError, type Session } from './portal';
 import type { Cache } from './academic';
 import { diffAlerts, gradeActions } from './change-alerts';
@@ -43,6 +43,7 @@ export async function runBackgroundSync() {
   if (still?.studentId !== session.studentId) return;
   const fresh = pruneGrades(next);
   await savePrivate(key, fresh);
+  await setJSON('su:v2:bg-last', new Date().toISOString()).catch(() => {});
   const study = await loadPrivate<{ reminders?: { gender?: 'auto' | 'm' | 'f' } } | null>(`su:v2:study:${session.studentId}`, null);
   await deliverAlerts(session.studentId, diffAlerts(prev, fresh, isAr, new Date(), isFemale(study?.reminders?.gender, fresh)), isAr);
   // New KMoodle lecture files and assignments (silent if KMoodle was never opened).

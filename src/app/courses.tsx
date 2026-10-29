@@ -28,7 +28,7 @@ export default function Courses() {
       return <Expand key={c.code} color={palette.primary}
         head={<View style={{ gap: 2 }}>
           <Txt variant="label" numberOfLines={2}>{c.title}</Txt>
-          <Txt variant="caption">{[c.code, c.credits !== null ? tr(`${c.credits} ساعات`, `${c.credits} cr`) : '', pct !== null ? tr(`غياب ${pct}%`, `absence ${pct}%`) : '', total ? `${fmt(total.score)} / ${fmt(total.outOf)}` : ''].filter(Boolean).join(' · ')}</Txt>
+          <Txt variant="caption">{[c.credits !== null ? tr(`${c.credits} ساعات`, `${c.credits} cr`) : '', pct !== null ? tr(`غياب ${pct}%`, `absence ${pct}%`) : '', total ? `${fmt(total.score)} / ${fmt(total.outOf)}` : ''].filter(Boolean).join(' · ')}</Txt>
         </View>}>
         <Txt variant="h3">{tr('المواعيد', 'Times')}</Txt>
         {own.length ? own.map((s, i) => <SlotCard key={i} slot={s} showDay />) : <Txt variant="sub">{tr('مواعيدها مش منشورة.', 'Times not published.')}</Txt>}

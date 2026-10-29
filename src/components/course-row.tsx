@@ -44,9 +44,6 @@ export function CourseRow({ course, status, onPress, onToggle, right }: Props) {
         <Txt variant="label" numberOfLines={2}>
           {course.title}
         </Txt>
-        <Txt variant="caption" numberOfLines={1}>
-          {course.code}
-        </Txt>
       </View>
       {right ?? (
         <View style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10, backgroundColor: alpha(color === palette.faint ? palette.primary : color, 0.15) }}>

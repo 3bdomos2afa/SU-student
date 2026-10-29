@@ -21,10 +21,11 @@ import { PageTop } from '@/components/page';
 import { Button, Field, Glass, PressScale, Screen, Txt } from '@/components/ui';
 
 const FOLD = [
-  { tab: '#8EFF01', box: '#8EFF01' },
-  { tab: '#8B53FE', box: '#C9AEFF' },
-  { tab: '#FFD23F', box: '#FFE58A' },
-  { tab: '#FF5C8A', box: '#FFB3C7' },
+  { tab: '#B8E04F', box: '#D6F77E' },
+  { tab: '#B3A3FF', box: '#D9D0FF' },
+  { tab: '#F5CF55', box: '#FFE99A' },
+  { tab: '#FFA9BE', box: '#FFD3DD' },
+  { tab: '#9CC6FF', box: '#CFE3FF' },
 ] as const;
 const FILE_ICON: Record<FileKind, IconName> = {
   pdf: 'document-text', slides: 'easel', doc: 'document', sheet: 'grid', archive: 'archive', image: 'image', media: 'play-circle', other: 'document-attach',
@@ -34,27 +35,26 @@ const ITEM_ICON: Record<MItem['kind'], IconName> = {
 };
 
 function Folder({ c, color, count, offline, onPress }: { c: MCourse; color: (typeof FOLD)[number]; count: number; offline: number; onPress: () => void }) {
-  const { palette, row, tr, isAr } = useApp();
-  const off = !c.ref?.enrolled;
+  const { row, tr, isAr } = useApp();
+  const off = !c.ref?.enrolled; const INK = '#17161D'; const SUB = 'rgba(23,22,29,0.62)';
   const meta = !c.ref ? tr('مش على Moodle', 'Not on Moodle') : off ? tr('مش مسجّل فيها', 'Not enrolled') : filesLabel(count, isAr);
   return (
     <PressScale style={{ width: '48%' }} label={c.title} onPress={onPress}>
-      <View style={{ opacity: off ? 0.62 : 1 }}>
-        <View style={{ width: '48%', height: 15, marginStart: 14, borderTopLeftRadius: 9, borderTopRightRadius: 9, backgroundColor: color.tab, borderWidth: 2.5, borderBottomWidth: 0, borderColor: 'transparent' }} />
-        <View style={{ marginTop: -2, minHeight: 132, padding: 13, gap: 10, borderRadius: 18, backgroundColor: palette.card, borderWidth: 2.5, borderColor: 'transparent', boxShadow: hard(palette.ink, 4) }}>
+      <View style={{ opacity: off ? 0.6 : 1 }}>
+        <View style={{ width: '46%', height: 16, marginStart: 16, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: color.tab }} />
+        <View style={{ marginTop: -2, minHeight: 140, padding: 14, gap: 10, borderRadius: 20, backgroundColor: color.box, justifyContent: 'space-between' }}>
           <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <View style={{ width: 44, height: 44, borderRadius: 13, backgroundColor: color.box, borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name={off ? 'folder-outline' : 'folder-open'} size={22} color={readableOn(color.box)} />
+            <View style={{ width: 42, height: 42, borderRadius: 21, backgroundColor: 'rgba(255,255,255,0.7)', alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons name={off ? 'folder-outline' : 'folder-open'} size={21} color={INK} />
             </View>
             <View style={{ alignItems: 'flex-end', gap: 2 }}>
-              <Txt variant="caption" color={palette.sub}>{meta}</Txt>
-              {offline ? <Txt variant="caption" color={palette.sub} style={{ fontSize: 11, lineHeight: 15 }}>{tr(`${offline} على الموبايل`, `${offline} offline`)}</Txt> : null}
+              <Txt variant="caption" color={SUB}>{meta}</Txt>
+              {offline ? <Txt variant="caption" color={SUB} style={{ fontSize: 11, lineHeight: 15 }}>{tr(`${offline} على الموبايل`, `${offline} offline`)}</Txt> : null}
             </View>
           </View>
           <View style={{ gap: 1 }}>
-            <Txt variant="h3" numberOfLines={1}>{c.code}</Txt>
-            <Txt variant="caption" numberOfLines={2}>{c.title}</Txt>
-            {c.ref ? <Txt variant="caption" color={palette.sub} style={{ fontSize: 11, lineHeight: 15 }}>{termLabel(termOf(c.ref), isAr)}</Txt> : null}
+            <Txt variant="h3" color={INK} numberOfLines={2}>{c.title || c.code}</Txt>
+            {c.ref ? <Txt variant="caption" color={SUB} style={{ fontSize: 11, lineHeight: 15 }}>{termLabel(termOf(c.ref), isAr)}</Txt> : null}
           </View>
         </View>
       </View>
@@ -67,7 +67,7 @@ function FileCard({ f, saved, pct, read, showCourse, onAction, onRead, onLong }:
 }) {
   const { palette, row, tr, isAr } = useApp();
   const box = read ? palette.lim : palette.lil;
-  const meta = [showCourse ? f.course : f.section, fmtSize(saved?.size ?? f.size, isAr), ago(f.time, isAr)].filter(Boolean).join(' · ');
+  const meta = [read ? tr('ذاكرته ✓', 'Studied ✓') : '', showCourse ? f.courseTitle : f.section, fmtSize(saved?.size ?? f.size, isAr), ago(f.time, isAr)].filter(Boolean).join(' · ');
   const busy = pct !== undefined;
   const btn = busy
     ? { bg: palette.soft, fg: palette.text, icon: null, label: `${Math.round(pct! * 100)}%` }
@@ -79,19 +79,22 @@ function FileCard({ f, saved, pct, read, showCourse, onAction, onRead, onLong }:
   return (
     <PressScale label={f.title} onPress={onAction} onLongPress={onLong}>
       <View style={{ flexDirection: row, alignItems: 'center', gap: 11, padding: 11, borderRadius: 16, backgroundColor: palette.card, borderWidth: 2.5, borderColor: 'transparent', boxShadow: hard(palette.ink, 3) }}>
-        <PressScale label={tr('قريته', 'Read')} onPress={onRead} disabled={!onRead}>
-          <View style={{ width: 42, height: 42, borderRadius: 12, backgroundColor: box, borderWidth: 2, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
-            <Ionicons name={read ? 'checkmark' : FILE_ICON[f.direct ? kindOf(f.name) : 'other']} size={21} color={palette.text} />
-          </View>
-        </PressScale>
+        <View style={{ width: 42, height: 42, borderRadius: 12, backgroundColor: box, alignItems: 'center', justifyContent: 'center' }}>
+          <Ionicons name={FILE_ICON[f.direct ? kindOf(f.name) : 'other']} size={21} color={palette.text} />
+        </View>
         <View style={{ flex: 1, minWidth: 0 }}>
-          <Txt variant="label" numberOfLines={2} style={read ? { opacity: 0.65 } : undefined}>{f.title}</Txt>
+          <Txt variant="label" numberOfLines={2} style={read ? { opacity: 0.6, textDecorationLine: 'line-through' } : undefined}>{f.title}</Txt>
           {meta ? <Txt variant="caption" numberOfLines={1}>{meta}</Txt> : null}
         </View>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 5, height: 36, paddingHorizontal: 12, borderRadius: 12, backgroundColor: btn.bg, borderWidth: 2, borderColor: 'transparent' }}>
           {btn.icon ? <Ionicons name={btn.icon} size={15} color={btn.fg} /> : null}
           <Txt variant="label" style={{ color: btn.fg, fontSize: 13, lineHeight: 18 }}>{btn.label}</Txt>
         </View>
+        {onRead ? <PressScale label={read ? tr('لسه مذاكرتوش', 'Not studied yet') : tr('ذاكرته', 'Studied')} onPress={onRead}>
+          <View style={{ width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: read ? '#7BC62D' : 'transparent', borderWidth: 2, borderColor: read ? '#7BC62D' : palette.faint }}>
+            {read ? <Ionicons name="checkmark" size={19} color="#FFFFFF" /> : null}
+          </View>
+        </PressScale> : null}
       </View>
     </PressScale>
   );
@@ -203,7 +206,7 @@ export default function Moodle() {
 
   function oldFolder(c: MCourse, o: MOld) {
     const files = courseRows({ ...c, items: o.items }); const on = oldOpen === o.ref.id;
-    const term = termLabel(termOf(o.ref), isAr);
+    const term = termLabel(termOf(o.ref), isAr) || tr('نسخة أقدم', 'Older copy');
     return <View key={o.ref.id} style={{ gap: 8 }}>
       <PressScale label={term} onPress={() => setOldOpen(on ? null : o.ref.id)}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 10, padding: 10, borderRadius: 14, backgroundColor: palette.card, borderWidth: 2, borderColor: 'transparent' }}>
@@ -246,8 +249,8 @@ export default function Moodle() {
             <Ionicons name="folder-open" size={26} color="#0B0D14" />
           </View>
           <View style={{ flex: 1 }}>
-            <Txt variant="h2" color="#0B0D14" numberOfLines={1}>{c.code}</Txt>
-            <Txt variant="caption" color="#2A2E3A" numberOfLines={2}>{[c.title, c.ref ? termLabel(termOf(c.ref), isAr) : '', (c.ref?.teachers.length ? c.ref.teachers : c.teachers ?? []).join('، ')].filter(Boolean).join(' · ')}</Txt>
+            <Txt variant="h2" color="#0B0D14" numberOfLines={2}>{c.title || c.code}</Txt>
+            <Txt variant="caption" color="#2A2E3A" numberOfLines={2}>{[c.ref ? termLabel(termOf(c.ref), isAr) : '', (c.ref?.teachers.length ? c.ref.teachers : c.teachers ?? []).join('، ')].filter(Boolean).join(' · ')}</Txt>
           </View>
         </View>
         <Txt variant="caption" color="#2A2E3A" style={{ marginTop: 10 }}>

@@ -5,10 +5,14 @@ import { useApp } from '@/context/app-context';
 import { FocusCard } from '@/components/focus-card';
 import { PageTop } from '@/components/page';
 import { useTicker } from '@/components/streak-card';
-import { Button, Chip, Glass, ProgressRing, Screen, SectionTitle, Txt } from '@/components/ui';
+import { Button, Chip, Glass, PressScale, ProgressRing, Screen, SectionTitle, Txt } from '@/components/ui';
 import { freshFocus, startFocus } from '@/lib/focus';
-import { computeStreak, hm, TARGETS, type DotState } from '@/lib/streak';
-import { TOXIC, hard } from '@/lib/theme';
+import { computeStreak, dayTotals, hm, liveStreak, TARGETS } from '@/lib/streak';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Fire } from '@/components/fire';
+
+const ORANGE = '#FF2D17';
+const INK = '#17161D';
 
 const DAYS_AR = ['سبت', 'حد', 'اتنين', 'تلات', 'أربع', 'خميس', 'جمعة'];
 const DAYS_EN = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -23,13 +27,9 @@ export default function StreakScreen() {
   const freeSecs = freeOn ? Math.max(0, Math.floor((now - streak.free!) / 1000)) : 0;
   const clock = `${Math.floor(freeSecs / 3600)}:${String(Math.floor((freeSecs % 3600) / 60)).padStart(2, '0')}:${String(freeSecs % 60).padStart(2, '0')}`;
   const left = Math.max(0, streak.target - v.today);
-
-  const dot = (s: DotState) =>
-    s === 'met' ? { bg: TOXIC.lime, fg: '#0B0D14', icon: 'flame' as const }
-      : s === 'rest' ? { bg: '#C9AEFF', fg: '#0B0D14', icon: 'snow' as const }
-        : s === 'today' ? { bg: 'transparent', fg: '#F2F2F2', icon: 'ellipse-outline' as const }
-          : s === 'missed' ? { bg: '#2B3245', fg: '#6B7385', icon: 'close' as const }
-            : { bg: 'transparent', fg: '#4A5266', icon: null };
+  const totals = dayTotals(liveStreak(streak, focus, now));
+  const weekTotal = v.week.reduce((m, d) => m + (totals[d.key]?.total ?? 0), 0);
+  const barMax = Math.max(streak.target, ...v.week.map(d => totals[d.key]?.total ?? 0), 1);
 
   const kindLabel = (k: 'timer' | 'free' | 'task') => (k === 'timer' ? tr('تايمر', 'Timer') : k === 'free' ? tr('مذاكرة حرة', 'Free study') : tr('مهمة خلصت', 'Task done'));
   const kindIcon = (k: 'timer' | 'free' | 'task') => (k === 'timer' ? 'timer-outline' : k === 'free' ? 'stopwatch-outline' : 'checkmark-circle-outline') as 'timer-outline';
@@ -39,35 +39,55 @@ export default function StreakScreen() {
       <PageTop title={tr('الستريك', 'Streak')} subtitle={tr('ذاكر هدفك كل يوم وماتكسرش السلسلة', 'Hit your daily goal and keep the chain')} />
 
       {v.met ? <Confetti /> : null}
-      {/* Flame card */}
-      <View style={{ backgroundColor: TOXIC.navy, borderRadius: 24, borderWidth: 2.5, borderColor: 'transparent', padding: 20, gap: 18, boxShadow: hard('#0B0D14', 5) }}>
+      {/* Flame card (V14 peach) */}
+      <LinearGradient colors={['#E50914', '#FF2D17', '#FF7A00']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ borderRadius: 26, padding: 20, gap: 18, overflow: 'hidden' }}>
         <View style={{ flexDirection: row, alignItems: 'center', gap: 16 }}>
-          <View style={{ width: 76, height: 76, borderRadius: 22, backgroundColor: TOXIC.lime, borderWidth: 2.5, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-6deg' }] }}>
-            <Ionicons name="flame" size={44} color="#0B0D14" />
-          </View>
+          <Fire size={96} lit={v.current > 0 || v.met} />
           <View style={{ flex: 1 }}>
-            <Txt variant="display" color="#F2F2F2" style={{ fontSize: 46, lineHeight: 56 }}>{v.current}</Txt>
-            <Txt variant="label" color="#F2F2F2">{tr('يوم ورا بعض', 'days in a row')}</Txt>
-            <Txt variant="caption" color="#9AA3B5">{tr(`أطول ستريك: ${v.best} يوم`, `Longest: ${v.best} days`)}</Txt>
+            <Txt variant="display" color="#FFFFFF" style={{ fontSize: 52, lineHeight: 62 }}>{v.current}</Txt>
+            <Txt variant="label" color="#FFFFFF">{tr('يوم ورا بعض 🔥', 'days in a row 🔥')}</Txt>
+            <Txt variant="caption" color="rgba(255,255,255,0.85)">{tr(`أطول ستريك: ${v.best} يوم`, `Longest: ${v.best} days`)}</Txt>
           </View>
         </View>
         <View style={{ flexDirection: row, justifyContent: 'space-between' }}>
           {v.week.map((d, i) => {
-            const s = dot(d.state);
+            const met = d.state === 'met'; const today = d.state === 'today'; const rest = d.state === 'rest'; const missed = d.state === 'missed';
             return (
               <View key={d.key} style={{ alignItems: 'center', gap: 6 }}>
-                <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: s.bg, borderWidth: 2, borderColor: d.state === 'future' ? '#2B3245' : d.state === 'today' ? TOXIC.lime : '#0B0D14', alignItems: 'center', justifyContent: 'center' }}>
-                  {s.icon ? <Ionicons name={s.icon} size={17} color={s.fg} /> : null}
+                <View style={{ width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center',
+                  backgroundColor: met ? '#FFFFFF' : rest ? '#C9AEFF' : missed ? 'rgba(0,0,0,0.18)' : 'rgba(255,255,255,0.22)',
+                  borderWidth: today ? 2.5 : 0, borderColor: '#FFFFFF' }}>
+                  {met ? <Ionicons name="flame" size={19} color={ORANGE} /> : rest ? <Ionicons name="snow" size={17} color={INK} /> : missed ? <Ionicons name="close" size={16} color="rgba(255,255,255,0.85)" /> : null}
                 </View>
-                <Txt variant="caption" color={d.state === 'today' ? TOXIC.lime : '#9AA3B5'} style={{ fontSize: 11, lineHeight: 15 }}>{(isAr ? DAYS_AR : DAYS_EN)[i]}</Txt>
+                <Txt variant="caption" color={today ? '#FFFFFF' : 'rgba(255,255,255,0.82)'} style={{ fontSize: 11, lineHeight: 15 }}>{(isAr ? DAYS_AR : DAYS_EN)[i]}</Txt>
               </View>
             );
           })}
         </View>
-        <Txt variant="caption" color="#9AA3B5">
+        <Txt variant="caption" color="rgba(255,255,255,0.85)">
           {v.restLeft ? tr('❄️ معاك يوم راحة واحد الأسبوع ده — لو فوّت يوم الستريك مش هيتكسر', '❄️ 1 rest day left this week — miss a day and the streak survives') : tr('❄️ استخدمت يوم الراحة بتاع الأسبوع ده', '❄️ This week’s rest day is used')}
         </Txt>
-      </View>
+      </LinearGradient>
+
+      {/* Weekly bars */}
+      <Glass padding={16}>
+        <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+          <Txt variant="h3">{tr('مذاكرتك الأسبوع ده', 'This week')}</Txt>
+          <Txt variant="caption">{tr(`${hm(weekTotal)} ساعة`, `${hm(weekTotal)} h`)}</Txt>
+        </View>
+        <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'flex-end', height: 120 }}>
+          {v.week.map((d, i) => {
+            const m = totals[d.key]?.total ?? 0; const h = Math.max(6, Math.round((m / barMax) * 96));
+            const hit = m >= streak.target; const today = d.state === 'today';
+            return (
+              <View key={d.key} style={{ alignItems: 'center', gap: 6, width: 34 }}>
+                <View style={{ width: 22, height: h, borderRadius: 11, backgroundColor: hit ? ORANGE : today ? palette.ink : palette.soft }} />
+                <Txt variant="caption" style={{ fontSize: 11, lineHeight: 15, color: today ? palette.text : palette.sub }}>{(isAr ? DAYS_AR : DAYS_EN)[i]}</Txt>
+              </View>
+            );
+          })}
+        </View>
+      </Glass>
 
       {/* Daily target */}
       <SectionTitle title={tr('هدفك اليومي', 'Daily goal')} />
@@ -116,9 +136,14 @@ export default function StreakScreen() {
         </Glass>
       ) : null}
       {!timerOn && !freeOn ? (
-        <View style={{ flexDirection: row, gap: 10 }}>
-          <Button style={{ flex: 1 }} icon="timer-outline" title={tr('ابدأ تايمر', 'Start timer')} onPress={() => a.setFocus(startFocus(freshFocus(focus.duration / 60 || 25)))} />
-          <Button style={{ flex: 1 }} variant="glass" icon="stopwatch-outline" title={tr('ذاكر بحرية', 'Free study')} onPress={a.startFree} />
+        <View style={{ gap: 10 }}>
+          <PressScale label={tr('ابدأ تايمر', 'Start timer')} onPress={() => a.setFocus(startFocus(freshFocus(focus.duration / 60 || 25)))}>
+            <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'center', gap: 8, height: 54, borderRadius: 27, backgroundColor: palette.ink }}>
+              <Ionicons name="timer-outline" size={20} color={palette.onInk} />
+              <Txt variant="label" style={{ color: palette.onInk, fontSize: 16 }}>{tr('ابدأ تايمر', 'Start timer')}</Txt>
+            </View>
+          </PressScale>
+          <Button variant="glass" icon="stopwatch-outline" title={tr('ذاكر بحرية', 'Free study')} onPress={a.startFree} />
         </View>
       ) : null}
       <Txt variant="caption" center>{tr('المهمة اللي ركّزت عليها بالتايمر مش بتتحسب مرتين لما تعلّم عليها إنها خلصت.', 'A task you timed is not counted twice when you tick it done.')}</Txt>

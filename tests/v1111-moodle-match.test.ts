@@ -46,13 +46,13 @@ test('without a doctor match: newest copy of the code, no other doctor’s old f
 });
 
 test('term of each copy: first, second or summer with the academic year', () => {
-  assert.equal(termLabel(termOf(list[0])), 'ترم أول · 2025/26');
-  assert.equal(termLabel(termOf(list[2])), 'سمر · 2024/25');
-  assert.equal(termLabel(termOf(list[3])), 'ترم تاني · 2024/25');
+  assert.equal(termLabel(termOf(list[0])), 'ترم أول · سنة 2025/26');
+  assert.equal(termLabel(termOf(list[2])), 'سمر · سنة 2024/25');
+  assert.equal(termLabel(termOf(list[3])), 'ترم تاني · سنة 2024/25');
   assert.equal(termLabel(termOf(list[3]), false), 'Spring · 2024/25');
-  assert.equal(termLabel(termOf(C(9, 'SWE 301', ts(2026, 2, 14)))), 'ترم تاني · 2025/26');
-  assert.equal(termLabel(termOf(C(9, 'برمجيات الفصل الدراسي الأول 2024', 0))), 'ترم أول · 2024/25');
-  assert.equal(termLabel(termOf(C(9, 'X', 0))), 'ترم مش معروف');
+  assert.equal(termLabel(termOf(C(9, 'SWE 301', ts(2026, 2, 14)))), 'ترم تاني · سنة 2025/26');
+  assert.equal(termLabel(termOf(C(9, 'برمجيات الفصل الدراسي الأول 2024', 0))), 'ترم أول · سنة 2024/25');
+  assert.equal(termLabel(termOf(C(9, 'X', 0))), '');
 });
 
 test('doctors come from the lecture slots of the timetable', () => {

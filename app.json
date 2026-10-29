@@ -2,7 +2,7 @@
   "expo": {
     "name": "SU+",
     "slug": "abdelrahman",
-    "version": "1.14.1",
+    "version": "1.15.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "unicodesis",
@@ -18,7 +18,8 @@
               "NSIncludesSubdomains": false
             }
           }
-        }
+        },
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {

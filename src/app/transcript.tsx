@@ -20,7 +20,7 @@ export default function Transcript() {
     return <PressScale key={`${code}-${i}`} label={code} onPress={() => router.push(`/course/${encodeURIComponent(code)}` as never)}>
       <View style={{ flexDirection: row, alignItems: 'center', gap: 12, paddingVertical: 4 }}>
         <View style={{ flex: 1, gap: 2 }}><Txt variant="label" numberOfLines={2}>{title(c)}</Txt>
-          <Txt variant="caption">{[code, text(c.CreditHours) ? tr(`${text(c.CreditHours)} ساعات`, `${text(c.CreditHours)} cr`) : ''].filter(Boolean).join(' · ')}</Txt></View>
+          <Txt variant="caption">{[text(c.CreditHours) ? tr(`${text(c.CreditHours)} ساعات`, `${text(c.CreditHours)} cr`) : ''].filter(Boolean).join(' · ')}</Txt></View>
         <Txt variant="h3" color={tone(g)}>{g}</Txt>
       </View></PressScale>; };
   const newest = [...list].reverse();

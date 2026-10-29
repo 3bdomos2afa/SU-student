@@ -41,10 +41,9 @@ export default function CourseScreen() {
       </Pressable>
       <View style={{ gap: 6 }}>
         <Txt variant="h1">{course.title}</Txt>
-        <Txt variant="sub" color={palette.sub}>{course.code}</Txt>
         <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 8, marginTop: 6 }}>
           <Chip label={statusLabel} color={statusColor} active />
-          <Chip label={tr(`المستوى ${course.level}`, `Level ${course.level}`)} icon="layers" />
+          <Chip label={tr(`سنة ${['أولى','تانية','تالتة','رابعة','خامسة','سادسة'][course.level - 1] ?? course.level}`, `Year ${course.level}`)} icon="layers" />
           <Chip label={tr(`الترم ${course.semester}`, `Term ${course.semester}`)} icon="calendar" />
           <Chip label={`${course.credits} ${tr('ساعة', 'credits')}`} icon="time" />
         </View>

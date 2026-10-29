@@ -23,7 +23,7 @@ const L:Record<string,[string,string]>={
 const V:Record<string,[string,string]>={
  LCTR:['محاضرة','Lecture'],LCLB:['سكشن / عملي','Section / lab'],LCTU:['تمارين','Tutorial'],
  'Unexcused Absent':['غياب بدون عذر','Unexcused absence'],'Excused Absent':['غياب بعذر','Excused absence'],Absent:['غياب','Absent'],Present:['حضور','Present'],
- Finished:['خلصت','Finished'],Fall:['خريف','Fall'],Spring:['ربيع','Spring'],Summer:['صيف','Summer'],
+ Finished:['خلصت','Finished'],Fall:['خريف','Fall'],Spring:['ربيع','Spring'],Summer:['سمر','Summer'],
  Saturday:['السبت','Saturday'],Sunday:['الأحد','Sunday'],Monday:['الاتنين','Monday'],Tuesday:['التلات','Tuesday'],Wednesday:['الأربع','Wednesday'],Thursday:['الخميس','Thursday'],Friday:['الجمعة','Friday'],
 };
 const HIDE=/(^|[a-z_])(ID|Id)$|Serial$|^serial$|^(id|IsSelected|IsConflict|StudentAllowedSerial|CourseSubtype|AvailableSeats|TransferGrade|TermLabelEN|TermLabelAR|Semester_year|SemesterYearserial|DataByApplicantIDList|SectionsList|ScheduleLst|ProfessorLst|Schedule|Name|ParentBirthPlace)$/;

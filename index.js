@@ -1,6 +1,10 @@
 // Keep Metro's web runtime first, as required by Expo Router custom entry points.
 require('@expo/metro-runtime');
 
+// Background sync must be defined when the bundle starts, before Expo Router. When Android wakes SU+
+// with the app closed, no screen renders, so a task defined only from app/_layout never runs.
+try { require('./src/lib/background-sync'); } catch {}
+
 try {
   require('expo-router/entry');
 } catch (error) {

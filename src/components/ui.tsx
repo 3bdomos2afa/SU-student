@@ -212,8 +212,8 @@ export function Button({ title, onPress, icon, variant = 'primary', loading, dis
 
 export function Chip({ label, active, onPress, icon, color }: { label?: string; active?: boolean; onPress?: () => void; icon?: IconName; color?: string }) {
   const { palette, row } = useApp();
-  const c = color ?? palette.purple;
-  const fg = active ? readableOn(c) : palette.sub;
+  const c = color ?? palette.ink;
+  const fg = active ? (color ? readableOn(c) : palette.onInk) : palette.sub;
   const body = (
     <View
       style={{
@@ -278,10 +278,10 @@ export function Segmented<T extends string>({ options, value, onChange }: { opti
             }}
             style={{
               flex: 1, height: 40, borderRadius: 13, alignItems: 'center', justifyContent: 'center', flexDirection: row, gap: 6,
-              backgroundColor: active ? palette.purple : 'transparent', borderWidth: active ? 2 : 0, borderColor: 'transparent',
+              backgroundColor: active ? palette.ink : 'transparent', borderWidth: active ? 2 : 0, borderColor: 'transparent',
             }}>
-            {o.icon ? <Ionicons name={o.icon} size={15} color={active ? '#FFFFFF' : palette.sub} /> : null}
-            <Txt variant="label" style={{ color: active ? '#FFFFFF' : palette.sub, fontSize: 13, lineHeight: 18 }}>
+            {o.icon ? <Ionicons name={o.icon} size={15} color={active ? palette.onInk : palette.sub} /> : null}
+            <Txt variant="label" style={{ color: active ? palette.onInk : palette.sub, fontSize: 13, lineHeight: 18 }}>
               {o.label}
             </Txt>
           </Pressable>
@@ -479,8 +479,7 @@ export function SectionTitle({ title, action, onAction }: { title: string; actio
   return (
     <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}>
       <View style={{ flexDirection: row, alignItems: 'center', gap: 8 }}>
-        <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: palette.primary, borderWidth: 2, borderColor: 'transparent' }} />
-        <Txt variant="h3">{title}</Txt>
+                <Txt variant="h3">{title}</Txt>
       </View>
       {action ? (
         <Pressable onPress={onAction} hitSlop={10} style={{ flexDirection: row, alignItems: 'center', gap: 2, paddingHorizontal: 10, height: 30, borderRadius: 15, backgroundColor: alpha(palette.primary, 0.1) }}>

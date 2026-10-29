@@ -11,6 +11,10 @@ import { googleTapAgain } from '@/lib/google-tap';
 import { isPortalURL, parseSession, PORTAL_LOGIN, PORTAL_ORIGIN } from '@/lib/portal';
 import { navigationPolicy } from '@/lib/navigation-policy';
 import { PORTAL_BRIDGE } from './portal-modal';
+import { setReloginRunning } from '@/lib/relogin-state';
+
+/** Marks the hidden WebView so the native popup stays invisible (no account chooser on screen). */
+export const SILENT_UA = GOOGLE_TEST_USER_AGENT + ' SUSilent';
 
 const COOLDOWN = 10 * 60000, TIMEOUT = 45000;
 
@@ -32,9 +36,10 @@ export function SilentRelogin() {
   }, [want, run]);
   useEffect(() => { if (!run) return; const t = setTimeout(() => setRun(0), TIMEOUT); return () => clearTimeout(t); }, [run]);
   useEffect(() => { if (!want && run) setRun(0); }, [want, run]);
+  useEffect(() => { setReloginRunning(!!run); return () => setReloginRunning(false); }, [run]);
   if (!run) return null;
   return <View pointerEvents="none" style={{ position: 'absolute', width: 1, height: 1, opacity: 0, left: -10, top: -10 }}>
-    <WebView<{}> key={run} ref={web} source={{ uri: PORTAL_LOGIN }} userAgent={GOOGLE_TEST_USER_AGENT}
+    <WebView<{}> key={run} ref={web} source={{ uri: PORTAL_LOGIN }} userAgent={SILENT_UA}
       originWhitelist={['*']} setSupportMultipleWindows javaScriptCanOpenWindowsAutomatically thirdPartyCookiesEnabled sharedCookiesEnabled={false}
       javaScriptEnabled domStorageEnabled mixedContentMode="never" allowFileAccess={false} saveFormDataDisabled webviewDebuggingEnabled={false}
       injectedJavaScript={PORTAL_BRIDGE} injectedJavaScriptForMainFrameOnly

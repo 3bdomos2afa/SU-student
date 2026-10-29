@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.15.0
+- **Android only.** Releases and docs now target Android.
+- **Design back to the V14 mockups:** lavender background, pastel cards, black active chips, round back button, black pill tab bar.
+- **Fonts:** Thmanyah for Arabic, Froople for Latin.
+- **Home:** name with the ID under it, red fire streak badge, "passed X credits" hero, then services, today's classes, absence and the study plan (week strip, "today's progress" gauge, tasks with a round check, "add task" button).
+- **Timetable "جدولي":** black day chips, pastel class cards and a time column.
+- **Streak:** red fire card with an animated flame, glow and sparks, plus a weekly study bars card.
+- **KMoodle:** coloured course folders, a "studied ✓" check next to every file, and old copies labelled with their year and term (no "unknown").
+- **Settings:** black profile card with passed credits, CGPA and study year.
+- **Study time picker:** 24-hour clock, every minute, durations every 5 minutes.
+- **Wording:** سنة instead of مستوى, سمر instead of صيفي, الإعدادات instead of على راحتك, كورس وورك instead of أعمال السنة. No course codes anywhere.
+- **Silent Google re-login** and **automatic KMoodle sign-in** after the first Google sign-in (Android).
+- **Fixed background sync with the app closed:** the sync task is now defined in `index.js` before Expo Router, so absence, warnings, grades and KMoodle alerts arrive while SU+ is closed. Settings shows the last background check.
+
 ## 1.14.1
 - Aligned Expo SDK 58 patch versions: `expo` 58.0.20, `expo-auth-session` 58.0.15, `expo-file-system` 58.0.12, `expo-router` 58.0.27 and `expo-web-browser` 58.0.7.
 - `expo-doctor` now passes 20/20, which fixes the EAS build check.

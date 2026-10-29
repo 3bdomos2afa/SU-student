@@ -1,4 +1,5 @@
 import { FocusCard } from '@/components/focus-card';
+import { PageTop } from '@/components/page';
 import { ReminderSettings } from '@/components/reminder-settings';
 import { curriculumCourses } from '@/data/curriculum';
 import { freshFocus, startFocus } from '@/lib/focus';
@@ -12,8 +13,8 @@ import { useApp, type Task } from '@/context/app-context';
 import { localDate, validDate, validTime } from '@/lib/academic';
 
 const HOURS=Array.from({length:24},(_,h)=>h);
-const MINUTES=Array.from({length:12},(_,i)=>i*5);
-const DURATIONS=[15,25,30,45,60,75,90,120,150,180,240];
+const MINUTES=Array.from({length:60},(_,i)=>i);
+const DURATIONS=Array.from({length:96},(_,i)=>(i+1)*5);
 const REMINDS=[0,5,10,15,30,45,60,120,-1];
 const pad=(n:number)=>String(n).padStart(2,'0');
 const startOf=(t:Task)=>t.date&&t.time?new Date(`${t.date}T${t.time}:00`).getTime():NaN;
@@ -35,7 +36,7 @@ export default function Study(){
  const openOn=(k:string)=>tasks.filter(t=>t.date===k&&!t.done).length;
  const span=(ms:number)=>{const m=Math.max(1,Math.round(ms/60000));if(m<60)return tr(`${m} دقيقة`,`${m} min`);const h=Math.floor(m/60),r=m%60;if(h<24)return r?tr(`${h} ساعة و${r} دقيقة`,`${h}h ${r}m`):tr(`${h} ساعة`,`${h}h`);const d=Math.round(h/24);return tr(`${d} يوم`,`${d} days`);};
  const remindLabel=(n:number)=>n<0?tr('من غير تذكير','No reminder'):n===0?tr('وقت ما تبدأ بالظبط','Right at the start'):n>=60?tr(n===60?'قبلها بساعة':`قبلها بساعتين`,n===60?'1 hour before':'2 hours before'):tr(`قبلها بـ ${n} دقيقة`,`${n} min before`);
- const hourLabel=(h:number)=>lang==='ar'?`${h%12||12} ${h<12?'الصبح':h<17?'الضهر':'بالليل'}`:`${h%12||12} ${h<12?'AM':'PM'}`;
+ const hourLabel=(h:number)=>`${pad(h)}:00`;
  const durLabel=(m:number)=>m<60?tr(`${m} دقيقة`,`${m} min`):m%60?tr(`${Math.floor(m/60)} ساعة و${m%60} دقيقة`,`${Math.floor(m/60)}h ${m%60}m`):tr(m===60?'ساعة':m===120?'ساعتين':`${m/60} ساعات`,`${m/60}h`);
  const hour=Number(time.slice(0,2))||0,minute=Number(time.slice(3,5))||0;
  const dayOptions=Array.from({length:30},(_,i)=>{const d=new Date();d.setDate(d.getDate()+i);const k=localDate(d);return {value:k,label:i===0?tr('النهارده','Today'):i===1?tr('بكرة','Tomorrow'):d.toLocaleDateString(locale,{weekday:'long',day:'numeric',month:'long'}),hint:i<2?d.toLocaleDateString(locale,{weekday:'long',day:'numeric',month:'long'}):undefined};});
@@ -69,8 +70,7 @@ export default function Study(){
  const complete=list.filter(t=>t.done).length;
  const totalMinutes=list.reduce((n,t)=>n+(t.duration??0),0),doneMinutes=list.filter(t=>t.done).reduce((n,t)=>n+(t.duration??0),0);
  return <Screen padBottom={false}>
-  <Button small variant="glass" title={tr('رجوع','Back')} onPress={()=>router.canGoBack()?router.back():router.replace('/(tabs)')}/>
-  <Header title={tr('جدول المذاكرة','Study planner')} subtitle={tr('خطّط يومك، ركّز، وعلّم على اللي خلص.','Plan your day, focus, tick it off.')}/>
+  <PageTop title={tr('جدول المذاكرة','Study planner')} subtitle={tr('خطّط يومك، ركّز، وعلّم على اللي خلص.','Plan your day, focus, tick it off.')}/>
   <Toast message={toast} onHide={()=>setToast('')}/>
 
   {upcoming?<Glass><View style={{gap:12}}>
@@ -138,14 +138,14 @@ export default function Study(){
    <Field icon="create-outline" placeholder={tr('هتذاكر إيه؟ مثلًا: مراجعة شابتر 3','What will you study?')} value={text} onChangeText={v=>{setText(v);setError('');}} maxLength={180}/>
    <Dropdown icon="calendar-outline" label={tr('اليوم','Day')} title={tr('اختار اليوم','Pick a day')} value={date} options={dayOptions} onChange={setDate}/>
    <View style={{flexDirection:row,gap:10}}>
-    <Dropdown icon="time-outline" label={tr('الساعة','Hour')} title={tr('اختار الساعة','Pick the hour')} value={hour} options={HOURS.map(h=>({value:h,label:hourLabel(h),hint:`${pad(h)}:00`}))} onChange={h=>setTime(`${pad(h)}:${pad(minute)}`)}/>
+    <Dropdown icon="time-outline" label={tr('الساعة','Hour')} title={tr('اختار الساعة','Pick the hour')} value={hour} options={HOURS.map(h=>({value:h,label:hourLabel(h),hint:tr(`${h%12||12} ${h<12?'ص':'م'}`,`${h%12||12} ${h<12?'AM':'PM'}`)}))} onChange={h=>setTime(`${pad(h)}:${pad(minute)}`)}/>
     <Dropdown label={tr('الدقيقة','Minute')} title={tr('اختار الدقيقة','Pick the minute')} value={MINUTES.includes(minute)?minute:minute} options={(MINUTES.includes(minute)?MINUTES:[...MINUTES,minute].sort((x,y)=>x-y)).map(m=>({value:m,label:pad(m)}))} onChange={m=>setTime(`${pad(hour)}:${pad(m)}`)}/>
    </View>
    <View style={{flexDirection:row,gap:10}}>
     <Dropdown icon="hourglass-outline" label={tr('المدة','Duration')} title={tr('هتذاكر قد إيه؟','How long?')} value={Number(duration)} options={durationOptions} onChange={v=>setDuration(String(v))}/>
     <Dropdown icon="notifications-outline" label={tr('الإشعار','Reminder')} title={tr('الإشعار يجيلك إمتى؟','When should we remind you?')} value={remind} options={remindOptions} onChange={setRemind}/>
    </View>
-   <Txt variant="caption">{tr(`الجلسة: ${new Date(`${date}T12:00:00`).toLocaleDateString(locale,{weekday:'long',day:'numeric',month:'long'})} · ${hourLabel(hour).replace(/^\d+/,String(hour%12||12)+':'+pad(minute))} · ${durLabel(Number(duration)||0)}`,`Session: ${date} · ${time} · ${durLabel(Number(duration)||0)}`)}</Txt>
+   <Txt variant="caption">{tr(`الجلسة: ${new Date(`${date}T12:00:00`).toLocaleDateString(locale,{weekday:'long',day:'numeric',month:'long'})} · ${pad(hour)}:${pad(minute)} · ${durLabel(Number(duration)||0)}`,`Session: ${date} · ${time} · ${durLabel(Number(duration)||0)}`)}</Txt>
    <Field placeholder={tr('دوّر باسم المادة (اختياري)','Search course name (optional)')} value={courseSearch} onChangeText={v=>{setCourseSearch(v);setCourse('');}} maxLength={100}/>
    {!!courseSearch&&!course&&curriculumCourses.filter(c=>`${c.title} ${c.code}`.toLowerCase().includes(courseSearch.toLowerCase())).slice(0,5).map(c=><Button key={c.code} small variant="glass" title={c.title} onPress={()=>{setCourse(c.code);setCourseSearch(c.title);}}/>)}
    <Field placeholder={tr('ملاحظات وخطوات','Notes & steps')} value={notes} onChangeText={setNotes} multiline maxLength={1000}/>

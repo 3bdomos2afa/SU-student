@@ -9,10 +9,10 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { failed: 
     // A failed render must not leave the native splash covering the recovery screen.
     try { Promise.resolve(require('expo-splash-screen').hideAsync()).catch(() => {}); } catch {}
   }
-  // SU+ 1.14.1 — no raw error message, stack, student data or credentials are persisted or sent remotely.
+  // SU+ 1.15.0 — no raw error message, stack, student data or credentials are persisted or sent remotely.
   render() {
     if (!this.state.failed) return this.props.children;
-    // Friendly recovery only: no error code or "send to developer" (the bug-report page is hidden in 1.14.1).
+    // Friendly recovery only: no error code or "send to developer" (the bug-report page is hidden in 1.15.0).
     return <View style={{ flex: 1, backgroundColor: '#F4F1FF', padding: 28, justifyContent: 'center', gap: 18 }}>
       <Text style={{ fontSize: 24, color: '#1E1446', textAlign: 'center', fontWeight: '700' }}>حصلت لخبطة صغيرة</Text>
       <Text style={{ fontSize: 16, textAlign: 'center', color: '#4B3F7A' }}>

@@ -36,6 +36,9 @@
         Activity activity = mWebView.getThemedReactContext().getCurrentActivity();
         if (activity == null || activity.isFinishing()) return false;
         if (suGoogleDialog != null) suGoogleDialog.dismiss();
+        // Silent re-login: the popup works in the background, invisible and untouchable.
+        String parentUa = parent.getSettings().getUserAgentString();
+        final boolean silent = parentUa != null && parentUa.endsWith(" SUSilent");
 
         final android.app.Dialog dialog = new android.app.Dialog(activity);
         suGoogleDialog = dialog;
@@ -61,7 +64,7 @@
         android.webkit.WebSettings settings = child.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
-        settings.setUserAgentString(parent.getSettings().getUserAgentString());
+        settings.setUserAgentString(parentUa == null ? null : parentUa.replace(" SUSilent", ""));
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
         settings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_NEVER_ALLOW);
@@ -129,7 +132,13 @@
         layout.addView(child, new android.widget.LinearLayout.LayoutParams(
             android.view.ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
         dialog.setContentView(layout);
+        if (silent) layout.setAlpha(0f);
         dialog.show();
+        if (silent && dialog.getWindow() != null) {
+            dialog.getWindow().setDimAmount(0f);
+            dialog.getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                | android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        }
         if (dialog.getWindow() != null) dialog.getWindow().setLayout(
             android.view.ViewGroup.LayoutParams.MATCH_PARENT,
             android.view.ViewGroup.LayoutParams.MATCH_PARENT);

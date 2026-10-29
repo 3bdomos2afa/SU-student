@@ -54,17 +54,17 @@ export default function MapScreen() {
     <Header title={tr('الخريطة', 'Map')} subtitle={tr('دي كل مواد تخصصك ترم بترم. دوس على أي مادة وشوف بتفتحلك إيه.', 'Your whole major, term by term. Tap a course to see what it unlocks.')} />
 
     <Entrance>
-      <Glass padding={18}>
+      <Glass padding={18} tint={palette.ink}>
         <View style={{ gap: 12 }}>
           <View style={{ flexDirection: row, alignItems: 'flex-end', justifyContent: 'space-between' }}>
             <View style={{ gap: 2 }}>
-              <Txt variant="caption">{tr('ساعاتك الناجحة', 'Passed credits')}</Txt>
-              <Txt variant="display" color={palette.primary}>{credits}<Txt variant="sub">{` / ${TOTAL}`}</Txt></Txt>
+              <Txt variant="caption" color={palette.onInk}>{tr('ساعاتك الناجحة', 'Passed credits')}</Txt>
+              <Txt variant="display" color={palette.onInk}>{credits}<Txt variant="sub" color={palette.onInk}>{` / ${TOTAL}`}</Txt></Txt>
             </View>
-            <Txt variant="h2" color={palette.primary}>{pct}%</Txt>
+            <View style={{ backgroundColor: palette.lime, borderRadius: 14, paddingHorizontal: 10, paddingVertical: 2 }}><Txt variant="h3" color={palette.onLime}>{pct}%</Txt></View>
           </View>
-          <View style={{ height: 10, borderRadius: 6, backgroundColor: palette.inputBg, overflow: 'hidden' }}>
-            <View style={{ width: `${pct}%`, height: '100%', borderRadius: 6, backgroundColor: palette.primary }} />
+          <View style={{ height: 10, borderRadius: 6, backgroundColor: 'rgba(255,255,255,0.16)', overflow: 'hidden' }}>
+            <View style={{ width: `${pct}%`, height: '100%', borderRadius: 6, backgroundColor: palette.lime }} />
           </View>
           <View style={{ flexDirection: row, gap: 8 }}>
             {(['passed', 'registered', 'available', 'locked'] as St[]).map(s => <PressScale key={s} label={label[s]} style={{ flex: 1 }} onPress={() => setFilter(f => f === s ? 'all' : s)}>
@@ -103,7 +103,7 @@ export default function MapScreen() {
               </View>
               <View style={{ flex: 1, gap: 2 }}>
                 <Txt variant="label" numberOfLines={2}>{c.title}</Txt>
-                <Txt variant="caption">{c.code} · {c.credits} {tr('ساعات', 'cr')}{it.manual ? tr(' · إنت معلّمها', ' · manual') : ''}</Txt>
+                <Txt variant="caption">{c.credits} {tr('ساعات', 'cr')}{it.manual ? tr(' · إنت معلّمها', ' · manual') : ''}</Txt>
               </View>
               {it.failures > 0 ? <View style={{ backgroundColor: '#E11D48', borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2 }}><Txt variant="caption" color="#fff">F×{it.failures}</Txt></View> : null}
               <Ionicons name={isOpen ? 'chevron-up' : 'chevron-down'} size={18} color={palette.faint} />

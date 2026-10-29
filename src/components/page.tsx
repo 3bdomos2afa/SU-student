@@ -6,20 +6,21 @@ import { useApp } from '@/context/app-context';
 import { terms, type Cache, type Term } from '@/lib/academic';
 import { entryYearOf, studyLabel, studyTerms, type LabelPart } from '@/lib/term-label';
 import { studentCode } from '@/lib/student';
-import { Glass, Header, PressScale, Txt } from './ui';
+import { Glass, PressScale, Txt } from './ui';
 
 export function PageTop({ title, subtitle, right }: { title: string; subtitle?: string; right?: ReactNode }) {
   const { tr, row, palette, isAr } = useApp();
-  return <View style={{ gap: 6 }}>
-    <View style={{ flexDirection: row }}>
-      <PressScale label={tr('رجوع', 'Back')} onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)' as never))}>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 4, paddingVertical: 6, paddingHorizontal: 12, borderRadius: 18, backgroundColor: palette.card, borderWidth: 1, borderColor: palette.glassBorder }}>
-          <Ionicons name={isAr ? 'chevron-forward' : 'chevron-back'} size={18} color={palette.primary} />
-          <Txt variant="label" color={palette.primary}>{tr('رجوع', 'Back')}</Txt>
-        </View>
-      </PressScale>
+  return <View style={{ flexDirection: row, alignItems: 'center', gap: 10 }}>
+    <View style={{ flex: 1 }}>
+      <Txt variant="h1">{title}</Txt>
+      {subtitle ? <Txt variant="sub">{subtitle}</Txt> : null}
     </View>
-    <Header title={title} subtitle={subtitle} right={right} />
+    {right}
+    <PressScale label={tr('رجوع', 'Back')} onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)' as never))}>
+      <View style={{ width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: palette.card, borderWidth: 1, borderColor: palette.glassBorder }}>
+        <Ionicons name={isAr ? 'arrow-forward' : 'arrow-back'} size={20} color={palette.text} />
+      </View>
+    </PressScale>
   </View>;
 }
 

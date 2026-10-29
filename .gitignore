@@ -11,8 +11,6 @@ dist*/
 *.jks
 *.keystore
 
-assets/fonts/*.otf
-assets/fonts/Froople.ttf
 src/lib/fonts.ts
 
 # Optional local font-upload policy; do not commit.

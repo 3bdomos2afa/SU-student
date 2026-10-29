@@ -1,4 +1,4 @@
-import { courseRows, canonical, number, text, timetable, type Cache, type Row } from './academic';
+import { courseRows, canonical, number, rowsDeep, text, timetable, type Cache, type Row } from './academic';
 import { recordsOf } from './portal';
 import { courseByCode } from '../data/curriculum-helpers';
 /** University student code (starts with 20…), not the internal StudentID. */
@@ -36,4 +36,14 @@ export function currentCourses(cache: Cache): CurrentCourse[] {
 /** Saturday-first week order (Egyptian week). */
 export const WEEK = [6, 0, 1, 2, 3, 4] as const;
 export const DAY_COLORS: Record<number, string> = { 6: '#4F46E5', 0: '#0891B2', 1: '#16A34A', 2: '#D97706', 3: '#DB2777', 4: '#7C3AED', 5: '#64748B' };
-export const toMinutes = (t: string) => { const m = /^(\d{1,2}):(\d{2})/.exec(t || ''); return m ? Number(m[1]) * 60 + Number(m[2]) : 9999; };
+export const toMinutes = (t: string) => { const m = /^(\d{1,2}):(\d{2})/.exec(t || ''); return m ? Number(m[1]) * 60 + Number(m[2]) : 9999; };/** Academic year: the portal's level field when present, otherwise estimated from earned credits (36 per year). */
+export function studyYear(cache: Cache, earned: number | null): number | null {
+  const rows = [...rowsDeep(cache.SEC_PROFILE?.data), ...rowsDeep(cache.SEC_PERSONAL?.data)];
+  for (const r of rows) for (const k of ['LevelID', 'Level', 'LevelNo', 'StudyLevel', 'AcademicLevel', 'StudentLevel']) {
+    const n = number(r[k]); if (n !== null && n >= 1 && n <= 6) return Math.round(n);
+  }
+  if (earned == null) return null;
+  return earned < 36 ? 1 : earned < 72 ? 2 : earned < 108 ? 3 : 4;
+}
+const YEARS_AR = ['الأولى', 'التانية', 'التالتة', 'الرابعة', 'الخامسة', 'السادسة'];
+export const yearLabel = (y: number, lang: 'ar' | 'en') => lang === 'ar' ? `الفرقة ${YEARS_AR[y - 1] ?? y}` : `Year ${y}`;

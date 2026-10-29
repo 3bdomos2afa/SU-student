@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { backgroundSyncAvailable } from '@/lib/background-sync';
 import { requestReminders } from '@/lib/notifications';
 import { ReminderSettings } from '@/components/reminder-settings';
@@ -7,7 +8,8 @@ import { Alert, Switch, View } from 'react-native';
 import { router } from 'expo-router';
 import { Button, Glass, Header, Screen, Segmented, Txt } from '@/components/ui';
 import { useApp, type ThemePref } from '@/context/app-context';
-import { studentCode } from '@/lib/student';
+import { studentCode, studyYear } from '@/lib/student';
+import { academic } from '@/lib/academic';
 import { PortalModal } from '@/components/portal-entry';
 import { setJSON } from '@/lib/storage';
 
@@ -17,6 +19,8 @@ export default function Settings(){
  const [msg,setMsg]=useState('');
  const [busy,setBusy]=useState(false);
  const code=studentCode(a.cache??{});
+ const ac=academic(a.cache);const earned=ac.earned;const year=studyYear(a.cache??{},earned);
+ const name=(ac.name||session?.name||'').trim();
  const fail=()=>setMsg(tr('المسح منجحش، جرّب تاني','Could not clear storage; retry'));
  const signOut=()=>Alert.alert(tr('تسجيل الخروج؟','Sign out?'),
    tr('هتخرج من حساب الجامعة، والدرجات والجدول ومهامك المحفوظة على الجهاز هتتمسح. الكشكول هيفضل لحد ما تمسح كل البيانات.','You will be signed out. Saved grades, timetable and tasks on this device will be erased. Your notebook stays until you erase all data.'),
@@ -25,11 +29,26 @@ export default function Settings(){
    tr('هيتمسح من الجهاز نهائي:\n• تسجيل دخولك\n• الدرجات والجدول والسجل المحفوظ\n• الكشكول بكل صفحاته ورسوماته\n• جدول المذاكرة والتذكيرات\n• مواد الخطة والحاسبة وبيانات مودل\n\nمفيش رجوع بعد كده. حسابك على موقع الجامعة مش هيتأثر.','This permanently erases from this device:\n• your sign-in\n• saved grades, timetable and records\n• the notebook with all pages and drawings\n• the study schedule and reminders\n• planner, calculator and Moodle data\n\nThis cannot be undone. Your university account is not affected.'),
    [{text:tr('إلغاء','Cancel'),style:'cancel'},{text:tr('امسح كله','Erase everything'),style:'destructive',onPress:()=>{setBusy(true);void a.eraseAll().then(()=>router.replace('/login')).catch(fail).finally(()=>setBusy(false));}}]);
  return <Screen>
-   <Header title={tr('على راحتك','Make it yours')} subtitle="SU+ / 1.14.1"/>
-   {!backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('المزامنة في الخلفية مش متاحة في النسخة دي. بس التحديث لما تفتح الأبلكيشن أو تعمل ريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
+   <Header title={tr('الإعدادات','Settings')} subtitle="SU+ / 1.15.0"/>
+   {Platform.OS !== 'web' && !backgroundSyncAvailable ? <Glass><Txt variant="caption">{tr('المزامنة في الخلفية مش متاحة في النسخة دي. بس التحديث لما تفتح الأبلكيشن أو تعمل ريفرش لسه شغال.','Background sync is unavailable in this build. Foreground and manual refresh still work.')}</Txt></Glass> : null}
+   {session?<Glass padding={18} tint={palette.ink}><View style={{gap:16}}>
+     <View style={{flexDirection:row,alignItems:'center',gap:14}}>
+       <View style={{width:58,height:58,borderRadius:29,backgroundColor:palette.lime,alignItems:'center',justifyContent:'center'}}><Txt variant="h2" color={palette.onLime}>{(name||'S').charAt(0)}</Txt></View>
+       <View style={{flex:1}}>
+         <Txt variant="h3" color={palette.onInk} numberOfLines={2}>{name}</Txt>
+         <Txt variant="caption" color="rgba(244,243,249,0.7)">{code||tr('رقم الطالب هيظهر بعد التحديث','ID shows after refresh')}</Txt>
+       </View>
+     </View>
+     <View style={{flexDirection:row,gap:8}}>
+       {[[earned==null?'—':String(earned),tr('ساعة ناجح','credits')],[ac.gpa==null?'—':ac.gpa.toFixed(2),'CGPA'],[year?tr(['أولى','تانية','تالتة','رابعة','خامسة','سادسة'][year-1]??String(year),`Year ${year}`):'—',tr('السنة','Year')]].map(([v,l],k)=>
+         <View key={k} style={{flex:1,borderRadius:16,paddingVertical:10,alignItems:'center',backgroundColor:k===0?palette.lime:'rgba(255,255,255,0.1)'}}>
+           <Txt variant="h3" color={k===0?palette.onLime:palette.onInk}>{v}</Txt>
+           <Txt variant="caption" style={{fontSize:11,lineHeight:15}} color={k===0?palette.onLime:'rgba(244,243,249,0.7)'}>{l}</Txt>
+         </View>)}
+     </View>
+   </View></Glass>:null}
    <Glass><View style={{gap:12}}>
-     <Txt variant="h3">{session?.name??tr('أدوات المذاكرة على جهازك','Local study tools')}</Txt>
-     <Txt variant="caption">{session?`${tr('رقم الطالب','Student ID')}: ${code||tr('هيظهر بعد ما بياناتك تتحدث','shows after your data refreshes')}`:tr('مفيش حساب جامعة مربوط','No university account connected')}</Txt>
+     <Txt variant="h3">{tr('حساب جوجل','Google account')}</Txt>
      <Button icon="logo-google" title={session?tr('جدّد الدخول بجوجل','Renew Google sign-in'):tr('ادخل بحساب جوجل الجامعي','Sign in with university Google')} onPress={()=>setOpen(true)}/>
      <Txt variant="caption">{tr('حساب جوجل بيفضل محفوظ على الموبايل لحد ما تعمل تسجيل خروج. لو الجلسة خلصت، دوسة واحدة بتدخلك تاني من غير ما تكتب الإيميل.','Your Google account stays remembered on this phone until you sign out. If the session ends, one tap signs you back in.')}</Txt>
      <Button small variant="glass" icon="person-remove-outline" title={tr('انسى حساب جوجل','Forget Google account')} onPress={()=>{void Promise.all([setJSON('su:v2:forget-web',true),setJSON('su:v2:google-used',false)]).then(()=>setMsg(tr('تمام، المرة الجاية هتختار الحساب من الأول.','Done — next time you pick the account again.'))).catch(fail);}}/>
