@@ -2,17 +2,17 @@
 
 [← Back to README](../README.md)
 
-The screens are taken from the SU+ 1.12 design and show sample data.
+The screens are real SU+ 1.15.0 pages with sample data. Every page in light and dark is in [SCREENS](SCREENS.md), and the videos and posters are in [MEDIA](MEDIA.md).
 
 ## Tabs
 
 | Tab | What it shows |
 |---|---|
-| **Home** | Greeting, a week strip, a "today's progress" ring, the next class card with its countdown, quick tools (KMoodle, map, calculator, notebook) and today's tasks |
-| **Timetable** | The day picker plus lecture and section cards with time, room and instructor. The current class shows a "now" badge and remaining time, and breaks are shown between classes |
-| **Files (KMoodle)** | Course folders filtered by this term, downloaded, assignments or all terms, plus search |
+| **Home** | Name with the ID under it, red fire streak badge, language chip, "passed X credits" hero, services, today's classes, absence, and the study plan: week strip, "today's progress" gauge, tasks with a round check and an "add task" button |
+| **Timetable (جدولي)** | Black day chips, pastel lecture and section cards with a time column, room and instructor. The current class shows a "دلوقتي" badge |
+| **Files (KMoodle)** | Coloured course folders, filters (this term, downloaded, assignments, all terms), search, and a "studied ✓" check on every file |
 | **Grades** | CGPA with its trend chart, earned hours, attendance %, courses with A or higher, and the latest term |
-| **More** | Profile card (CGPA, hours, streak), services and settings |
+| **More / Settings** | Black profile card (passed credits, CGPA, study year), services and settings |
 
 <p align="center">
 <img src="images/screens-1.png" width="100%"/>
@@ -36,12 +36,14 @@ The screens are taken from the SU+ 1.12 design and show sample data.
 
 - Folders are matched automatically to registered courses and their doctors.
 - **Latest files** with type (PDF or PPTX), size and download progress.
-- **Old files** from the same course in previous terms.
+- **Old files** from the same course in previous terms, labelled with their year and term (first term, second term or summer).
+- **"Studied ✓" check:** tap the circle next to a file to mark it studied; the name is struck through and the mark is saved on the phone.
 - **Assignments** are highlighted, and new uploads trigger N12.
 
 ## Study system
 
 - **Streak:**
+  - A red fire card with an animated flame, glow and sparks.
   - Day chain, rest days and longest streak.
   - A daily goal from 1 to 6 hours.
   - A weekly chart.

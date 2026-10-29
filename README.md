@@ -24,7 +24,7 @@ A student companion app for **Sinai University**, built with Expo and React Nati
 ![expo-doctor](https://img.shields.io/badge/expo--doctor-20%2F20-2ea44f?style=for-the-badge)
 ![Arabic first](https://img.shields.io/badge/UI-عربي_·_English-C9BBFA?style=for-the-badge&labelColor=17161D)
 
-[**Features**](#-features) · [**Screens**](#-screens) · [**Notifications**](#-smart-notifications) · [**Architecture**](#-architecture) · [**Getting started**](#-getting-started) · [**Docs**](#-documentation) · [**Presentation**](docs/presentation/SU-Plus-Presentation.pdf)
+[**Features**](#-features) · [**What's new**](#-whats-new-in-115) · [**Screens**](#-screens) · [**Videos**](#-videos--posters) · [**Notifications**](#-smart-notifications) · [**Architecture**](#-architecture) · [**Getting started**](#-getting-started) · [**Docs**](#-documentation) · [**Presentation**](docs/presentation/SU-Plus-Presentation.pdf)
 
 </div>
 
@@ -123,30 +123,59 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 
 ---
 
+## 🆕 What's new in 1.15.0
+
+- **Design back to the V14 mockups:** lavender background, pastel cards, black chips, round back button and a black pill tab bar.
+- **Fonts:** Thmanyah for Arabic, Froople for Latin.
+- **Home:** your name with your ID under it, a red fire streak badge, the "passed X credits" hero, services, today's classes, absence, and the study plan (week strip, "today's progress" gauge, tasks with a round check, "add task" button).
+- **Streak:** red fire card with an animated flame, glow and sparks, plus a weekly study chart.
+- **KMoodle:** coloured course folders, a **"studied ✓" check** next to every file, and old copies labelled with their year and term.
+- **Settings:** black profile card with passed credits, CGPA and study year.
+- **Study time picker:** 24-hour clock with every minute.
+- **Background sync with the app closed** now works, so absence, warning, grade and KMoodle alerts arrive while SU+ is closed.
+- **Wording:** سنة, سمر, الإعدادات, كورس وورك, and no course codes anywhere.
+
+The full list is in [CHANGELOG.md](CHANGELOG.md).
+
+---
+
 ## 📱 Screens
 
-> High-fidelity design screens of the SU+ 1.12 redesign, shown with **sample data**.
+> Real SU+ 1.15.0 pages with **sample data**. All **26 pages** in light and dark are in [docs/SCREENS.md](docs/SCREENS.md).
 
 <table>
 <tr>
-<td align="center"><img src="docs/images/screens/s1-1.png" width="190"/><br/><sub><b>Home</b></sub></td>
-<td align="center"><img src="docs/images/screens/s1-2.png" width="190"/><br/><sub><b>Timetable</b></sub></td>
-<td align="center"><img src="docs/images/screens/s1-3.png" width="190"/><br/><sub><b>Study plan</b></sub></td>
-<td align="center"><img src="docs/images/screens/s1-4.png" width="190"/><br/><sub><b>Streak</b></sub></td>
+<td align="center"><img src="media/screens/light/home.jpg" width="190"/><br/><sub><b>Home</b></sub></td>
+<td align="center"><img src="media/screens/light/timetable.jpg" width="190"/><br/><sub><b>Timetable</b></sub></td>
+<td align="center"><img src="media/screens/light/study.jpg" width="190"/><br/><sub><b>Study plan</b></sub></td>
+<td align="center"><img src="media/screens/light/streak.jpg" width="190"/><br/><sub><b>Streak</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/images/screens/s2-1.png" width="190"/><br/><sub><b>KMoodle files</b></sub></td>
-<td align="center"><img src="docs/images/screens/s2-2.png" width="190"/><br/><sub><b>Grades</b></sub></td>
-<td align="center"><img src="docs/images/screens/s2-3.png" width="190"/><br/><sub><b>Transcript</b></sub></td>
-<td align="center"><img src="docs/images/screens/s2-4.png" width="190"/><br/><sub><b>Degree map</b></sub></td>
+<td align="center"><img src="media/screens/light/moodle.jpg" width="190"/><br/><sub><b>KMoodle files</b></sub></td>
+<td align="center"><img src="media/screens/light/grades.jpg" width="190"/><br/><sub><b>Grades</b></sub></td>
+<td align="center"><img src="media/screens/light/transcript.jpg" width="190"/><br/><sub><b>Transcript</b></sub></td>
+<td align="center"><img src="media/screens/light/plan.jpg" width="190"/><br/><sub><b>Degree map</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/images/screens/s3-1.png" width="190"/><br/><sub><b>Tools · GPA</b></sub></td>
-<td align="center"><img src="docs/images/screens/s3-2.png" width="190"/><br/><sub><b>Notebook</b></sub></td>
-<td align="center"><img src="docs/images/screens/s3-3.png" width="190"/><br/><sub><b>Notebook page</b></sub></td>
-<td align="center"><img src="docs/images/screens/s3-4.png" width="190"/><br/><sub><b>Settings</b></sub></td>
+<td align="center"><img src="media/screens/light/tools.jpg" width="190"/><br/><sub><b>Tools · GPA</b></sub></td>
+<td align="center"><img src="media/screens/light/notebook.jpg" width="190"/><br/><sub><b>Notebook</b></sub></td>
+<td align="center"><img src="media/screens/light/note.jpg" width="190"/><br/><sub><b>Notebook page</b></sub></td>
+<td align="center"><img src="media/screens/light/settings.jpg" width="190"/><br/><sub><b>Settings</b></sub></td>
 </tr>
 </table>
+
+---
+
+## 🎬 Videos & posters
+
+<table>
+<tr>
+<td align="center" width="50%"><a href="media/videos/SU-Plus-1.15.0-Demo.mp4"><img src="media/posters/00-cover.jpg" width="100%"/></a><br/><b>▶️ <a href="media/videos/SU-Plus-1.15.0-Demo.mp4">Demo video</a></b> — the live app in an Android phone</td>
+<td align="center" width="50%"><a href="media/videos/SU-Plus-1.15.0-Showcase.mp4"><img src="media/posters/01-features.jpg" width="100%"/></a><br/><b>▶️ <a href="media/videos/SU-Plus-1.15.0-Showcase.mp4">Showcase video</a></b> — every feature, poster by poster</td>
+</tr>
+</table>
+
+22 posters, both videos and a PDF showcase are in [docs/MEDIA.md](docs/MEDIA.md).
 
 The full design system (colors, icons, type and motion) is in [docs/DESIGN.md](docs/DESIGN.md).
 
@@ -280,6 +309,8 @@ The full details are in [docs/SECURITY.md](docs/SECURITY.md).
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | Layers, modules map, sync engine, storage, diagrams |
 | [FEATURES](docs/FEATURES.md) | Every screen and what it does |
 | [NOTIFICATIONS](docs/NOTIFICATIONS.md) | N1–N12, scheduling, background sync, battery, iOS limits |
+| [SCREENS](docs/SCREENS.md) | All 26 pages, light and dark |
+| [MEDIA](docs/MEDIA.md) | Demo and showcase videos, posters and PDF |
 | [UNIVERSITY-API](docs/UNIVERSITY-API.md) | UnicodeSIS endpoints, transcript chain, GPA scale, KMoodle |
 | [SECURITY](docs/SECURITY.md) | Threat model, vault, sign-in sandbox |
 | [DESIGN](docs/DESIGN.md) | Brand, palette, icons, typography, motion |

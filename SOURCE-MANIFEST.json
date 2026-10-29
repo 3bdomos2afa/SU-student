@@ -1,7 +1,7 @@
 [
   {
     "path": ".easignore",
-    "sha256": "26f40996c3a138bfc7411e3f8fc3c24ea79b12b465fd8fe9351ca6375ca2621b"
+    "sha256": "a1297ab7fbce7180dd6353f1e85ddefbce8066ba1402ca14f0539f140ed9aafb"
   },
   {
     "path": ".gitignore",
@@ -33,7 +33,7 @@
   },
   {
     "path": "README.md",
-    "sha256": "8bb133b4269d6225d5baf3d7c10c7bd16c19a39b33aadababd4e518129c8bd3f"
+    "sha256": "0cc34fe874d2a7f2b3848d7b3405c3b7af263ebba5de402a70752a731750db6b"
   },
   {
     "path": "STARTUP-FIX-1.7.2-AR.md",
@@ -109,11 +109,19 @@
   },
   {
     "path": "docs/FEATURES.md",
-    "sha256": "05c61f9195a7c51233ef03d37d44c75fecbb5910b01154582ab929e9265973b2"
+    "sha256": "42d693c8de1efef332fbcd3c6f48d6694cb9601e50b4e2dcc7e7eba0c8136984"
+  },
+  {
+    "path": "docs/MEDIA.md",
+    "sha256": "224599c82dd1c4afe5b98e4ab17b3b0fec48a2d445b4426e84c6f28ade0697ce"
   },
   {
     "path": "docs/NOTIFICATIONS.md",
     "sha256": "e67cc2f3aa7cec9ae4b5bde8d60f9fe4bac7d9f82c34bcb13542fb497e982d3a"
+  },
+  {
+    "path": "docs/SCREENS.md",
+    "sha256": "1be9f87b998b2557fbff98b4fcec4d40350691709fdc25c67768eedf27f468ff"
   },
   {
     "path": "docs/SECURITY.md",
@@ -149,15 +157,15 @@
   },
   {
     "path": "docs/images/screens-1.png",
-    "sha256": "ac5fa91956f5d55a0f72d4ca992e5d1e91379b9a33d5e773c541b93f24de7475"
+    "sha256": "154f87d7d716a8f974ca0b3747ed3d6de417f3834ae8571624ba7e0f579dab40"
   },
   {
     "path": "docs/images/screens-2.png",
-    "sha256": "d8a51d2bb4829cf687226f59214bda8f4b41f1fe8e082bf350f5341878204bfd"
+    "sha256": "f2446dfea1650256086f99b8fc1bd5657cbebcaf324c750f1e2317db90c45eec"
   },
   {
     "path": "docs/images/screens-3.png",
-    "sha256": "8cdaace0b2e20c9969f9ebc140405c5093b3c73225d280d9d54beaf8b5f57b07"
+    "sha256": "48887d197a2af0d04533f5669eee44283e41825e5166eb47d52c3437bbd8277f"
   },
   {
     "path": "docs/images/screens/s1-1.png",
