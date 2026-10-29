@@ -23,4 +23,4 @@ npm run test:server # node --test server/test/broker.test.mjs
 | `v1140` | Battery and maker guidance |
 | `v1120-suplus`, `crash-reporter` | Branding, version and hidden bug-report screen |
 
-Real-device testing is done separately on Android and iPhone `preview` builds.
+Real-device testing is done separately on Android `preview` builds.

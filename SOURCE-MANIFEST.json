@@ -17,7 +17,7 @@
   },
   {
     "path": "CHANGELOG.md",
-    "sha256": "944d7234482715062a0653eb4360e88dcd166b197d540d233ff674b510d8e9ae"
+    "sha256": "a32e6c7fc72e249072d59fec5e8c334e09a7a7b1a4e3bad712011d3704b060e1"
   },
   {
     "path": "CRASH-REPORT-AR.md",
@@ -33,7 +33,7 @@
   },
   {
     "path": "README.md",
-    "sha256": "0cc34fe874d2a7f2b3848d7b3405c3b7af263ebba5de402a70752a731750db6b"
+    "sha256": "a34470e321bc3b01e8c15c8a9f1ca31851a7842e971f6bdd2e1a192a9296342d"
   },
   {
     "path": "STARTUP-FIX-1.7.2-AR.md",
@@ -97,19 +97,19 @@
   },
   {
     "path": "docs/ARCHITECTURE.md",
-    "sha256": "81a9538bb8228edd0c8aec20a10017f77285dc8eafc8c9e8bbbddf0e00c17570"
+    "sha256": "0aad68ca4dff79a34147da846c644027a4ce16ba1c2249a40c09f180a3302768"
   },
   {
     "path": "docs/BUILD.md",
-    "sha256": "dbcb9dd75672b19d552a9f1c835439ed68de9d423508430ac024e3925d5bbb79"
+    "sha256": "937b76a000e90d487f81cd3fc6c95294cff96811296ffbfba58660a85463914e"
   },
   {
     "path": "docs/DESIGN.md",
-    "sha256": "e3f6770ce6a6aaf8fff907566140bcb40d5adbdaf018371c9014b176e7f5fbd7"
+    "sha256": "d1deb48056bab1c37b4788797871fcb2863e1a4efae3d8627cf7a185d08c2bdd"
   },
   {
     "path": "docs/FEATURES.md",
-    "sha256": "42d693c8de1efef332fbcd3c6f48d6694cb9601e50b4e2dcc7e7eba0c8136984"
+    "sha256": "40a82457e441518d023e1a81fb4f6ae2160469a0496cd4a92f27615eb1567f56"
   },
   {
     "path": "docs/MEDIA.md",
@@ -117,7 +117,7 @@
   },
   {
     "path": "docs/NOTIFICATIONS.md",
-    "sha256": "e67cc2f3aa7cec9ae4b5bde8d60f9fe4bac7d9f82c34bcb13542fb497e982d3a"
+    "sha256": "ee894e3700c587c2c14321b1eb258430db042c1d68627ee64938ec033531f486"
   },
   {
     "path": "docs/SCREENS.md",
@@ -125,11 +125,11 @@
   },
   {
     "path": "docs/SECURITY.md",
-    "sha256": "f0282192f1853d270df3b437f2004865304e89390f72022a518d4b018e3cf6fc"
+    "sha256": "7537d9505db737b492ca60f07c42251189741c6f9823cad79724568367b09a2f"
   },
   {
     "path": "docs/TESTING.md",
-    "sha256": "4b539d5ec5c34c4cc61b4373cbc438e17c316f2a0cdc725cb38eba079b871527"
+    "sha256": "ad3950d357a9d840571f236d531c6ce62dd21bc5feae7785042a11afcd2fed07"
   },
   {
     "path": "docs/UNIVERSITY-API.md",
@@ -141,19 +141,11 @@
   },
   {
     "path": "docs/images/banner.png",
-    "sha256": "fdd8dbfc35800cd49049e236c1f72c7a2631368b7bde8383917e5a991ce70143"
-  },
-  {
-    "path": "docs/images/brand-board.png",
-    "sha256": "d7bacb4168667ca44bc3c88fdbdffe000f32af474844213dd104822f2bbccad8"
+    "sha256": "9b9283b8df63d83f821f2a1672486e60c190997b19060c02af6de6113b8b7090"
   },
   {
     "path": "docs/images/icons.png",
     "sha256": "7d6c48228cd290c2a983363fbb4232aaf157f41e6eeb82a26fb0bee11842264a"
-  },
-  {
-    "path": "docs/images/presentation-cover.png",
-    "sha256": "0744891656025e25ed8c08fc1301f90e96e889867c1ca4b6f5e7044928112c1a"
   },
   {
     "path": "docs/images/screens-1.png",
@@ -166,62 +158,6 @@
   {
     "path": "docs/images/screens-3.png",
     "sha256": "48887d197a2af0d04533f5669eee44283e41825e5166eb47d52c3437bbd8277f"
-  },
-  {
-    "path": "docs/images/screens/s1-1.png",
-    "sha256": "1f4736fe50dca3fc9927ac87b5c3d209f1010568fa80c653205fd9990b7239d6"
-  },
-  {
-    "path": "docs/images/screens/s1-2.png",
-    "sha256": "fa94712b6005eae9b89af4ceb1053020751012ade7e48565e9d00327bec09551"
-  },
-  {
-    "path": "docs/images/screens/s1-3.png",
-    "sha256": "7201b93df40208cde734a037a22485753ccce518734da1cead0e127432ee6733"
-  },
-  {
-    "path": "docs/images/screens/s1-4.png",
-    "sha256": "8be3936118c0011a6aefbf3f5383aebc2309daf810f53c15c32191bd8818f655"
-  },
-  {
-    "path": "docs/images/screens/s2-1.png",
-    "sha256": "c8cfff29d4ec19d6cb29e1ed16550e8a2719cfbd652e70d820d1ad48fb7877f3"
-  },
-  {
-    "path": "docs/images/screens/s2-2.png",
-    "sha256": "e22a3f62fcb4c6ad89ff59a999c8dabb207a67cc8707c60b24307f80646b8605"
-  },
-  {
-    "path": "docs/images/screens/s2-3.png",
-    "sha256": "9f425bdd3502996aba71b3e8e94b4683ded59e10832214aa19a7cfa66401a8b4"
-  },
-  {
-    "path": "docs/images/screens/s2-4.png",
-    "sha256": "897d6b56eb0326605dc2cc6e5e72c9613ac452151ec66a266d0ff6a923149777"
-  },
-  {
-    "path": "docs/images/screens/s3-1.png",
-    "sha256": "a22370e4d670989f4bfae8b1217650a38e45afb9cf1f170a516e70a5d9ffa607"
-  },
-  {
-    "path": "docs/images/screens/s3-2.png",
-    "sha256": "d1abf29f085e271c97d584c702332ebead8e2fc0ecb6cb54f02cb11de73534f9"
-  },
-  {
-    "path": "docs/images/screens/s3-3.png",
-    "sha256": "1b64ea6af1a8bea516a28c96da383e4aed4295a218430ea76da8fd23308c3735"
-  },
-  {
-    "path": "docs/images/screens/s3-4.png",
-    "sha256": "048f4f7aada6d7cef0e0b7023af3f659865021b67381d4fdd643523fcb5f050d"
-  },
-  {
-    "path": "docs/presentation/SU-Plus-Presentation.pdf",
-    "sha256": "e26ab78eadd613c5c9204f19e1b88436185248c78f1ea36cfd54187c3ec2acb8"
-  },
-  {
-    "path": "docs/presentation/index.html",
-    "sha256": "f4799d2c526aaec4dcff103c046e791f6078acba204abe297a764a02397a8ad3"
   },
   {
     "path": "eas.json",

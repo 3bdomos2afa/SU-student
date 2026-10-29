@@ -13,6 +13,7 @@
 - **Wording:** سنة instead of مستوى, سمر instead of صيفي, الإعدادات instead of على راحتك, كورس وورك instead of أعمال السنة. No course codes anywhere.
 - **Silent Google re-login** and **automatic KMoodle sign-in** after the first Google sign-in (Android).
 - **Fixed background sync with the app closed:** the sync task is now defined in `index.js` before Expo Router, so absence, warnings, grades and KMoodle alerts arrive while SU+ is closed. Settings shows the last background check.
+- **Docs:** new README banner, GIF previews, every page in light and dark, 22 posters, demo and showcase videos and a showcase PDF. The old 1.12 mockups and presentation were removed.
 
 ## 1.14.1
 - Aligned Expo SDK 58 patch versions: `expo` 58.0.20, `expo-auth-session` 58.0.15, `expo-file-system` 58.0.12, `expo-router` 58.0.27 and `expo-web-browser` 58.0.7.

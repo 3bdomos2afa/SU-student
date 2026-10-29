@@ -32,7 +32,7 @@ The wording is **gender-aware**: انت غبت becomes انتي غبتي for a f
 
 ```mermaid
 flowchart LR
-  OS["Android WorkManager / iOS BGTask"] -->|"~15 min"| T["background-sync task"]
+  OS["Android WorkManager<br/>app closed"] -->|"~15 min"| T["background-sync task"]
   T --> L["Light sync<br/>UnicodeSIS"]
   L --> D["diffAlerts"]
   T --> M["moodleCheck"]
@@ -44,7 +44,8 @@ flowchart LR
 | Platform | Reality |
 |---|---|
 | **Android** | The minimum interval is 15 minutes. Battery optimisation and maker "auto-start" managers can delay or kill it, so the Settings **background-health card** guides the student to exempt SU+. A typical grade alert arrives within 15–30 minutes. |
-| **iOS** | iOS decides when background fetch runs, based on how often the student opens the app. Alerts may wait until the app is opened. |
+
+The task is defined in `index.js` before Expo Router, so it runs when Android wakes SU+ with no screen open. Each run saves a time stamp that Settings shows as "آخر مرة شيّك على الجامعة والأبلكيشن مقفول".
 
 There is no persistent notification and no server, which is why the app polls instead of receiving pushes.
 

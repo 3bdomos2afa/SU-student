@@ -2,7 +2,7 @@
 
 [← Back to README](../README.md)
 
-<p align="center"><img src="images/brand-board.png" width="100%" alt="SU+ brand board"/></p>
+<p align="center"><img src="../media/posters/01-features.jpg" width="70%" alt="SU+ 1.15.0"/></p>
 
 ## Brand
 
@@ -18,8 +18,8 @@
 | Lilac | `#C9BBFA` | Active tab pill, lecture cards |
 | Lime | `#D6F77E` | Highlights, "now" badges, success |
 | Ink | `#17161D` | Tab bar, headings, primary buttons |
-| Mist | `#F4F3F9` | App background |
-| Peach | `#FFDCC4` | Streak card |
+| Lavender | `#F1EEF9` | App background |
+| Fire | `#E5242B` → `#FF7A1A` | Streak card and badge |
 | Sky | `#CBE7FF` | Lecture cards |
 | Butter | `#FFEBA3` | Section cards |
 | Rose | `#FFD0DE` | Course cards |
@@ -33,21 +33,24 @@ Lucide-style icons: soft, rounded 2-px strokes, drawn with `react-native-svg`.
 
 ## Typography
 
-- **Arabic:** Thmanyah Sans (Regular / Bold) when bundled, with **Cairo** as the fallback.
-- **Latin and numbers:** Froople when bundled, with **Inter** as the fallback.
+- **Arabic:** Thmanyah Sans (Regular / Bold).
+- **Latin and numbers:** Froople.
 
-Fonts are optional local files and are never committed. `scripts/prepare-fonts.cjs` picks the right set at install time.
+Both are bundled in `assets/fonts/` with the Thmanyah licence.
 
 ## Motion
 
 - Spring press-scale on cards.
 - An animated tab bubble.
-- Rings and counters that fill from zero.
+- The "today's progress" gauge and counters that fill from zero.
+- An animated fire (flicker, glow and sparks) on the streak card and badge.
 - Staggered card entrance.
 - Confetti when the daily goal is met.
 
 ## Layout rules
 
 - **RTL-first:** every screen is designed in Arabic and mirrors for English.
-- A dark pill tab bar floats above the content.
+- A black pill tab bar floats above the content; selected chips and tabs are black.
+- Round 44 px back button next to each page title.
+- No course codes on any screen.
 - Large rounded cards (24 px radius) with generous whitespace.

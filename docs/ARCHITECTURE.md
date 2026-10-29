@@ -93,7 +93,7 @@ Alerts are computed by **diffing** the previous and new cache. The app never ask
 
 | Data | Where |
 |---|---|
-| Encryption key | Keychain (iOS) / Keystore (Android) via `expo-secure-store` |
+| Encryption key | Android Keystore via `expo-secure-store` |
 | Cached portal data, KMoodle data, study state | AsyncStorage, **AES-GCM ciphertext only** |
 | Web preview | Memory only, never persisted |
 
@@ -105,4 +105,4 @@ Alerts are computed by **diffing** the previous and new cache. The app never ask
   - `openAutostart`
   - `openAppSettings`
 - **`plugins/with-google-webview-test.cjs`:** injects a hardened Java popup for Google sign-in inside the portal WebView. Only Google-owned HTTPS hosts and the portal are allowed, and the popup closes automatically on hand-off.
-- **`plugins/with-portal-network.cjs`:** Android network security config for the portal host. iOS uses an ATS exception for the same host only.
+- **`plugins/with-portal-network.cjs`:** Android network security config for the portal host.

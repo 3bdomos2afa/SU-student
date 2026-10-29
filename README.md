@@ -24,7 +24,7 @@ A student companion app for **Sinai University**, built with Expo and React Nati
 ![expo-doctor](https://img.shields.io/badge/expo--doctor-20%2F20-2ea44f?style=for-the-badge)
 ![Arabic first](https://img.shields.io/badge/UI-عربي_·_English-C9BBFA?style=for-the-badge&labelColor=17161D)
 
-[**Features**](#-features) · [**What's new**](#-whats-new-in-115) · [**Screens**](#-screens) · [**Videos**](#-videos--posters) · [**Notifications**](#-smart-notifications) · [**Architecture**](#-architecture) · [**Getting started**](#-getting-started) · [**Docs**](#-documentation) · [**Presentation**](docs/presentation/SU-Plus-Presentation.pdf)
+[**Features**](#-features) · [**What's new**](#-whats-new-in-1150) · [**Screens**](#-screens) · [**Videos**](#-videos--posters) · [**Notifications**](#-smart-notifications) · [**Architecture**](#-architecture) · [**Getting started**](#-getting-started) · [**Docs**](#-documentation) · [**Showcase PDF**](media/SU-Plus-1.15.0-Showcase.pdf)
 
 </div>
 
@@ -39,9 +39,9 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 | | |
 |---|---|
 | 🎓 **One sign-in** | The student signs in once on the university's own page, with the university Google account. The app never sees or stores the password. |
-| 🔄 **Always fresh** | Light auto-sync while the app is open, a background sync about every 15 minutes, and a silent re-login when the session drops. |
+| 🔄 **Always fresh** | Light auto-sync while the app is open, a background sync about every 15 minutes **even while the app is closed**, and a silent re-login when the session drops. |
 | 🔔 **Tells you first** | 12 notification types: grades the moment they appear, absence and warnings, new lecture files, class and task reminders, and a study streak. Each type has its own switch. |
-| 🔐 **Private by design** | Data is encrypted on the device (AES-GCM, with the key kept in the Keychain or Keystore). There is no backend that holds student data. |
+| 🔐 **Private by design** | Data is encrypted on the device (AES-GCM, with the key kept in the Android Keystore). There is no backend that holds student data. |
 
 > [!NOTE]
 > SU+ is an independent student project. It is **not an official Sinai University app**, and it is not affiliated with or endorsed by the university.
@@ -51,15 +51,19 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 
 <br/>
 
-**SU+** أبلكيشن لطلاب جامعة سيناء. بيجمع بوابة الجامعة (UnicodeSIS) وKMoodle في مكان واحد على الموبايل:
+**SU+** أبلكيشن لطلاب جامعة سيناء، **للأندرويد بس**. بيجمع بوابة الجامعة (UnicodeSIS) وKMoodle في مكان واحد على الموبايل:
 
-- الجدول
-- الدرجات والسجل الأكاديمي والتراكمي
-- الغياب والإنذارات
-- ملفات المواد
-- الستريك والمهام والكشكول
+- **الرئيسية:** اسمك ورقمك، وستريك النار، و"ناجح في X ساعة"، والخدمات، ومحاضرات النهارده، والغياب، وجدول المذاكرة والمهام.
+- **جدولي:** أيام الأسبوع، وكروت ملوّنة للمحاضرات والسكاشن، وعلامة "دلوقتي".
+- **الدرجات والسجل والخريطة:** الكورس وورك والميد والفاينل، والـ CGPA، والمواد اللي خلصت واللي فاضلة.
+- **الغياب والإنذارات:** نسبة الغياب في كل مادة.
+- **ملفات مودل:** فولدر ملوّن لكل مادة، وعلامة **"ذاكرته ✓"** جنب كل ملف، والملفات القديمة مكتوب عليها السنة والترم.
+- **الستريك:** كارت أحمر بنار متحركة، وعواميد المذاكرة في الأسبوع.
+- **الكشكول:** ملاحظات لكل مادة بالكتابة والرسم.
 
-بتدخل مرة واحدة بإيميل الجامعة، والأبلكيشن مش بيشوف الباسورد ولا بيحفظه. كمان بيبعتلك 12 نوع إشعار، وكل نوع تقدر تقفله لوحده من الإعدادات:
+بتدخل مرة واحدة بإيميل الجامعة، والأبلكيشن مش بيشوف الباسورد ولا بيحفظه. وبعدها بيدخل مودل لوحده.
+
+بيبعتلك 12 نوع إشعار **حتى والأبلكيشن مقفول**، وكل نوع تقدر تقفله لوحده من الإعدادات:
 
 - الدرجات أول ما تنزل
 - الغياب والإنذارات
@@ -78,8 +82,8 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 <td width="50%" valign="top">
 
 ### 📚 Academics
-- **Home dashboard:** today's progress ring, the next class with a countdown, quick tools and tasks.
-- **Timetable:** each day by lecture or section, with room and instructor, and live "now" and "remaining" indicators.
+- **Home:** your name and ID, the fire streak badge, "passed X credits", services, today's classes, absence and the study plan.
+- **Timetable (جدولي):** black day chips and pastel lecture and section cards with a time column, room, instructor and a "دلوقتي" badge.
 - **Grades:** coursework, quiz, midterm and final per course, plus the CGPA trend.
 - **Transcript:** **CGPA-first** term-by-term chart and earned hours.
 - **Absence and warnings:** percentage per course against the 25% exclusion limit.
@@ -89,8 +93,10 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 <td width="50%" valign="top">
 
 ### 🗂️ KMoodle
-- Course **folders matched automatically** to your registered courses and doctors.
-- Latest files, assignments, and old terms of the same course.
+- **Coloured course folders**, matched automatically to your registered courses and doctors.
+- A **"studied ✓" check** next to every file.
+- **Automatic sign-in** after the first Google sign-in.
+- Latest files, assignments, and old copies labelled with their **year and term**.
 - In-app download and open, with progress.
 - **New file and assignment alerts.**
 - Silent token renewal with the remembered Google account.
@@ -101,11 +107,11 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 <td valign="top">
 
 ### 🔥 Study system
-- **Streak** with a daily goal (1–6 h), rest days and your longest streak.
-- **Planner** of tasks with lead-time reminders.
-- **Focus timer** and free-study sessions.
+- **Red fire streak** with an animated flame, a daily goal (1–6 h), rest days and your longest streak.
+- **Study plan on Home:** week strip, "today's progress" gauge, and tasks with a round check and lead-time reminders.
+- **Focus timer** and free-study sessions, with a 24-hour time picker.
 - **Weekly study chart** and an end-of-day summary.
-- **Notebook** of course-tagged notes with search.
+- **Notebook (الكشكول)** of course-tagged pages with rich text, colours and drawing.
 
 </td>
 <td valign="top">
@@ -113,7 +119,8 @@ The university already has its systems: **UnicodeSIS** (the student portal) and 
 ### 🧰 Tools and settings
 - **GPA calculator** on the official university scale.
 - **Term planner** with expected CGPA.
-- Arabic / English, dark mode and a **fingerprint / Face ID lock**.
+- **Black profile card** with passed credits, CGPA and study year.
+- Arabic / English, a brighter dark mode and a **fingerprint lock**.
 - A switch for each notification type, plus **masculine or feminine wording**.
 - A **background-health card** for battery optimisation and maker auto-start.
 
@@ -170,6 +177,15 @@ The full list is in [CHANGELOG.md](CHANGELOG.md).
 
 <table>
 <tr>
+<td align="center"><img src="media/gifs/demo-1.gif" width="190"/></td>
+<td align="center"><img src="media/gifs/demo-2.gif" width="190"/></td>
+<td align="center"><img src="media/gifs/demo-3.gif" width="190"/></td>
+<td align="center"><img src="media/gifs/demo-4.gif" width="190"/></td>
+</tr>
+</table>
+
+<table>
+<tr>
 <td align="center" width="50%"><a href="media/videos/SU-Plus-1.15.0-Demo.mp4"><img src="media/posters/00-cover.jpg" width="100%"/></a><br/><b>▶️ <a href="media/videos/SU-Plus-1.15.0-Demo.mp4">Demo video</a></b> — the live app in an Android phone</td>
 <td align="center" width="50%"><a href="media/videos/SU-Plus-1.15.0-Showcase.mp4"><img src="media/posters/01-features.jpg" width="100%"/></a><br/><b>▶️ <a href="media/videos/SU-Plus-1.15.0-Showcase.mp4">Showcase video</a></b> — every feature, poster by poster</td>
 </tr>
@@ -202,7 +218,7 @@ The full design system (colors, icons, type and motion) is in [docs/DESIGN.md](d
 - The wording follows the student's gender (taken from the university profile, or set by hand).
 - There are **no noisy "synced" pings**.
 
-How delivery, background sync, and Android and iOS limits work is in [docs/NOTIFICATIONS.md](docs/NOTIFICATIONS.md).
+How delivery and background sync with the app closed work is in [docs/NOTIFICATIONS.md](docs/NOTIFICATIONS.md).
 
 ---
 
@@ -239,7 +255,7 @@ The layers, modules, data flow and storage are in [docs/ARCHITECTURE.md](docs/AR
 | Security | `expo-secure-store` + `@noble/ciphers` AES-GCM vault, `expo-local-authentication` |
 | Native | Kotlin Expo module **SuFocus** (focus and battery health) and a Java WebView popup through a config plugin |
 | Quality | Node test runner + `tsx` (**137 tests, 27 suites**), build preflight, `expo-doctor` |
-| Delivery | **EAS Build** (`preview`: Android APK and iOS internal) |
+| Delivery | **EAS Build** (`preview`: Android APK) |
 
 ---
 
@@ -248,7 +264,6 @@ The layers, modules, data flow and storage are in [docs/ARCHITECTURE.md](docs/AR
 **Prerequisites:**
 - Node.js 24 and npm.
 - An Expo account with access to `@x3bdoxs-team/abdelrahman`.
-- For an iPhone build: an Apple Developer account.
 
 ```sh
 npm ci                       # install exact, locked dependencies
@@ -259,12 +274,12 @@ npx expo start               # run in development
 
 # cloud builds (EAS)
 npx eas-cli@latest build --profile preview --platform android
-npx eas-cli@latest build --profile preview --platform ios
 ```
 
 > [!IMPORTANT]
 > - Builds from 1.12.0 onward use a **new signing key**, so uninstall the old app before installing.
-> - Notification permissions and native plugins changed in 1.13–1.14, so you need a **new native build**. An OTA update is not enough.
+> - 1.15.0 fixes background sync with the app closed and bundles new fonts, so you need a **new native build**. An OTA update is not enough.
+> - After installing, open **Settings → Background notifications** and allow SU+ to run in the background.
 
 Profiles, fonts, checks and troubleshooting are in [docs/BUILD.md](docs/BUILD.md).
 
@@ -285,7 +300,8 @@ su-student/
 ├─ server/              # optional Google SSO broker (Node) and its tests
 ├─ scripts/             # preflight, source verification, fonts, build helpers
 ├─ tests/               # 27 test suites
-└─ docs/                # this documentation and the presentation
+├─ docs/                # documentation
+└─ media/               # posters, screenshots, GIFs, videos, PDF (repo only, not in builds)
 ```
 
 ---
@@ -293,10 +309,10 @@ su-student/
 ## 🛡️ Privacy and security
 
 - **No password handling:** sign-in happens on the university's own page, and the app captures only the session.
-- **Encrypted at rest:** every cached record is AES-GCM encrypted, with the key in the platform Keychain or Keystore.
+- **Encrypted at rest:** every cached record is AES-GCM encrypted, with the key in the Android Keystore.
 - **No student-data server:** the app talks directly to UnicodeSIS and KMoodle from the phone.
 - **Strict sign-in sandbox:** the Google popup allows only Google-owned HTTPS hosts and the portal, with no JS bridges.
-- **Optional app lock** with fingerprint or Face ID.
+- **Optional app lock** with the fingerprint.
 
 The full details are in [docs/SECURITY.md](docs/SECURITY.md).
 
@@ -308,7 +324,7 @@ The full details are in [docs/SECURITY.md](docs/SECURITY.md).
 |---|---|
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | Layers, modules map, sync engine, storage, diagrams |
 | [FEATURES](docs/FEATURES.md) | Every screen and what it does |
-| [NOTIFICATIONS](docs/NOTIFICATIONS.md) | N1–N12, scheduling, background sync, battery, iOS limits |
+| [NOTIFICATIONS](docs/NOTIFICATIONS.md) | N1–N12, scheduling, background sync with the app closed, battery and maker settings |
 | [SCREENS](docs/SCREENS.md) | All 26 pages, light and dark |
 | [MEDIA](docs/MEDIA.md) | Demo and showcase videos, posters and PDF |
 | [UNIVERSITY-API](docs/UNIVERSITY-API.md) | UnicodeSIS endpoints, transcript chain, GPA scale, KMoodle |
@@ -317,12 +333,12 @@ The full details are in [docs/SECURITY.md](docs/SECURITY.md).
 | [BUILD](docs/BUILD.md) | EAS profiles, release checks, troubleshooting |
 | [TESTING](docs/TESTING.md) | Test suites and what they guard |
 | [CHANGELOG](CHANGELOG.md) | Version history |
-| [🎞️ Presentation (PDF)](docs/presentation/SU-Plus-Presentation.pdf) | The project in 12 slides ([HTML source](docs/presentation/index.html)) |
+| [🎞️ Showcase (PDF)](media/SU-Plus-1.15.0-Showcase.pdf) | Every feature of 1.15.0, poster by poster |
 
 <div align="center">
 <br/>
-<a href="docs/presentation/SU-Plus-Presentation.pdf"><img src="docs/images/presentation-cover.png" width="80%" alt="SU+ presentation"/></a>
-<br/><sub>Click to open the presentation</sub>
+<a href="media/SU-Plus-1.15.0-Showcase.pdf"><img src="media/posters/00-cover.jpg" width="60%" alt="SU+ 1.15.0 showcase"/></a>
+<br/><sub>Click to open the 1.15.0 showcase (PDF)</sub>
 </div>
 
 ---

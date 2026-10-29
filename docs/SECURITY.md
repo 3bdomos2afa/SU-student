@@ -13,7 +13,7 @@
 
 | Piece | Detail |
 |---|---|
-| Key | 256-bit random key, generated once and stored in the **Keychain / Keystore** (`expo-secure-store`) |
+| Key | 256-bit random key, generated once and stored in the **Android Keystore** (`expo-secure-store`) |
 | Cipher | **AES-GCM** (`@noble/ciphers`), authenticated, with a fresh nonce per write |
 | Storage | AsyncStorage holds ciphertext only |
 | Web preview | Memory-only; university credentials are never persisted |
@@ -41,7 +41,7 @@ These rules are enforced by tests (`tests/google-trial.test.ts`), including evil
 | `SCHEDULE_EXACT_ALARM` / `USE_EXACT_ALARM` | On-time class and task reminders |
 | `RECEIVE_BOOT_COMPLETED` | Re-arm reminders after a reboot |
 | `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` | Lets the student exempt SU+ from battery optimisation, so background alerts aren't delayed |
-| Face ID / biometrics | Optional app lock |
+| Fingerprint | Optional app lock |
 
 ## Reporting
 
