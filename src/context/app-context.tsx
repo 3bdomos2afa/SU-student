@@ -58,6 +58,7 @@ function useModel() {
   const cacheRef = useRef(cache); cacheRef.current=cache;
   const sessRef = useRef(session); sessRef.current=session;
   const syncBusy = useRef(false);
+  const syncStart = useRef(0);
   const offline = useRef(false);
   const connectionInitialized = useRef(false);
   const lockedRef = useRef(locked); lockedRef.current=locked;
@@ -206,8 +207,12 @@ function useModel() {
     }
   },[online,tr]);
   const refreshAll=useCallback(async(full=true)=>{
-    if(syncBusy.current||!online||!sessRef.current||lockedRef.current)return false;
-    syncBusy.current=true;setRefreshing(true);
+    // A stuck run (phone slept mid-sync) must never block later refreshes.
+    if(syncBusy.current&&Date.now()-syncStart.current>90000)syncBusy.current=false;
+    // Pull-to-refresh always tries, even when Android wrongly reports no internet.
+    if(syncBusy.current||!sessRef.current||lockedRef.current)return false;
+    if(!online&&!full)return false;
+    syncBusy.current=true;syncStart.current=Date.now();setRefreshing(true);
     const generation=epoch.current;
     lastAuto.current=Date.now();const before=cacheRef.current;
     // Pull-to-refresh fetches everything; automatic syncs fetch what changes (fast) and the heavy walkers every 6 h.
@@ -229,7 +234,7 @@ function useModel() {
       // Drop marks of courses that are no longer registered (new term).
       if(generation===epoch.current){const pruned=pruneGrades(cacheRef.current);if(pruned!==cacheRef.current){cacheRef.current=pruned;setCache(pruned);}}
       const owner=sessRef.current;
-      if(owner&&generation===epoch.current)await enqueue(()=>generation===epoch.current?savePrivate(`su:v2:cache:${owner.studentId}`,cacheRef.current):Promise.resolve());
+      if(owner&&generation===epoch.current)await Promise.race([enqueue(()=>generation===epoch.current?savePrivate(`su:v2:cache:${owner.studentId}`,cacheRef.current):Promise.resolve()),new Promise(r=>setTimeout(r,8000))]);
       if(owner&&generation===epoch.current&&settingsRef.current.alerts!==false){const ar=settingsRef.current.lang!=='en';void deliverAlerts(owner.studentId,diffAlerts(before,cacheRef.current,ar,new Date(),femaleRef.current),ar).catch(()=>0);
         // KMoodle new files, at most every 20 minutes.
         if(Date.now()-lastMoodle.current>1200000){lastMoodle.current=Date.now();void moodleCheck(owner.studentId,cacheRef.current,ar).catch(()=>0);}}

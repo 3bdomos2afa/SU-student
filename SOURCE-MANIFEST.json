@@ -397,7 +397,7 @@
   },
   {
     "path": "src/components/background-health.tsx",
-    "sha256": "b3f66614edd871dd8be1e396f0e7faad1bb90d01d59e81bd7ead4799d89dd8c6"
+    "sha256": "a525b3d8571e785aa1e251017719eb12bbd3361851fccd8c1a80340ba789f94a"
   },
   {
     "path": "src/components/bars.tsx",
@@ -497,7 +497,7 @@
   },
   {
     "path": "src/context/app-context.tsx",
-    "sha256": "acdb65109d17b07e1cbdda2adcbc0aafe5f05a2d387e0b2c5555af404c0853c6"
+    "sha256": "65f6cc9f6cd02d0e205b04d1f9db4ab24a2c4fcf1ce4fc6fc97e84d7fd62c0f8"
   },
   {
     "path": "src/data/curriculum-helpers.ts",
@@ -533,7 +533,7 @@
   },
   {
     "path": "src/lib/background-sync.ts",
-    "sha256": "bb3930e109fe5cfe6cd7d330ada5a939c6eefcd5101812b637c76d30847744be"
+    "sha256": "c9e275ffc8e9469d45bf65e8918aea60f0fd1225af2c2ce5abe02f9ec00d7abe"
   },
   {
     "path": "src/lib/battery-vendor.ts",

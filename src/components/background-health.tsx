@@ -33,10 +33,14 @@ export function BackgroundHealth() {
   const [h, setH] = useState<BatteryState>(read);
   const [vendorDone, setVendorDone] = useState(false);
   const [last, setLast] = useState<string | null>(null);
+  const [bgStatus, setBgStatus] = useState<string | null>(null);
+  const [bgRun, setBgRun] = useState<string | null>(null);
   const refresh = useCallback(() => setH(read()), []);
   useEffect(() => {
     void getJSON<boolean>(DONE_KEY, false).then(setVendorDone);
     void getJSON<string | null>('su:v2:bg-last', null).then(setLast);
+    void getJSON<string | null>('su:v2:bg-status', null).then(setBgStatus);
+    void getJSON<string | null>('su:v2:bg-run', null).then(setBgRun);
     // Re-check when the student comes back from the system dialog / settings page.
     const sub = AppState.addEventListener('change', s => { if (s === 'active') refresh(); });
     return () => sub.remove();
@@ -79,6 +83,9 @@ export function BackgroundHealth() {
     <Txt variant="caption">{last
       ? tr(`آخر مرة شيّك على الجامعة والأبلكيشن مقفول: ${new Date(last).toLocaleString('ar-EG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false })}`, `Last background check: ${new Date(last).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`)
       : tr('لسه مشيّكش في الخلفية. سيب الأبلكيشن مقفول ربع ساعة وارجع شوف.', 'No background check yet. Close the app for 15 minutes and look again.')}</Txt>
+    {bgRun ? <Txt variant="caption">{tr(`آخر مرة أندرويد شغّل المزامنة: ${new Date(bgRun).toLocaleString('ar-EG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false })}`, `Android last ran the sync: ${new Date(bgRun).toLocaleString('en-GB')}`)}</Txt> : null}
+    {bgStatus === 'expired' ? <Txt variant="caption">{tr('⚠️ جلسة الجامعة خلصت والأبلكيشن مقفول. افتح الأبلكيشن مرة علشان يسجّل دخولك تاني.', '⚠️ University session ended in the background. Open the app once to sign in again.')}</Txt> : null}
+    {bgStatus === 'error' ? <Txt variant="caption">{tr('⚠️ آخر مزامنة في الخلفية وقعت. هتتجرّب تاني لوحدها.', '⚠️ The last background sync failed. It will retry.')}</Txt> : null}
     {allGood && h.supported ? <Txt variant="caption">{tr('كده تمام. الأبلكيشن هيشيّك على الجامعة كل ربع ساعة تقريباً حتى وهو مقفول.', 'All set. SU+ checks roughly every 15 minutes even when closed.')}</Txt> : null}
   </View></Glass>;
 }

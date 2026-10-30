@@ -27,6 +27,12 @@ async function pool(actions: string[], session: Session, next: Cache, state: { e
 }
 
 export async function runBackgroundSync() {
+  await setJSON('su:v2:bg-run', new Date().toISOString()).catch(() => {});
+  try { await runBackgroundSyncInner(); }
+  catch (e) { await setJSON('su:v2:bg-status', 'error').catch(() => {}); throw e; }
+}
+
+async function runBackgroundSyncInner() {
   const settings = await getJSON<{ lang?: string; alerts?: boolean }>('su:v2:settings', {});
   if (settings?.alerts === false) return;
   const isAr = settings?.lang !== 'en';
@@ -38,6 +44,11 @@ export async function runBackgroundSync() {
   const state = { expired: false };
   await pool(backgroundOrder(prev), session, next, state);
   if (!state.expired) await pool(gradeActions(next), session, next, state);
+  if (state.expired) {
+    await setJSON('su:v2:bg-status', 'expired').catch(() => {});
+    return;
+  }
+  await setJSON('su:v2:bg-status', 'ok').catch(() => {});
   // Re-check the session so a sign-out during the run never writes data back.
   const still = await loadPrivate<Session | null>('su:v2:session', null);
   if (still?.studentId !== session.studentId) return;
