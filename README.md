@@ -4,6 +4,8 @@
 
 An Expo (React Native) mobile app for the UnicodeSIS student portal: glass UI, Arabic and English, dark and light themes, offline-first caching, optional biometric lock, 18 student services, an IT study-plan tracker and GPA tools. Web preview: https://su-student-ivory.vercel.app
 
+![UnicodeSIS web sign-in screen](docs/preview.svg)
+
 > Quick summary in English above; the rest of this README is in Arabic.
 
 ---
