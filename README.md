@@ -1,5 +1,7 @@
 # UnicodeSIS Mobile 📱
 
+![Expo](https://img.shields.io/badge/Expo-000020?style=flat) ![React Native](https://img.shields.io/badge/React_Native-61DAFB?style=flat) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 An Expo (React Native) mobile app for the UnicodeSIS student portal: glass UI, Arabic and English, dark and light themes, offline-first caching, optional biometric lock, 18 student services, an IT study-plan tracker and GPA tools. Web preview: https://su-student-ivory.vercel.app
 
 > Quick summary in English above; the rest of this README is in Arabic.
